@@ -15,7 +15,7 @@
 			</p>
 		</div>
 		<div class="bClientList_center">
-			<ul>
+			<ul  style="padding-bottom: 4rem;">
 				<li v-for="(item,index) in data" :key='index'>
 					<router-link :to="{name:'BbClientDetails',query:{id:item.customerId}}">
 						<span>
@@ -25,10 +25,9 @@
 							</span>
 
 						</span>
-						<div class="center_div1">
-							<p style="margin-top: 0.875rem;"><span class="s1">{{item.customerName}}【{{item.community}}】</span><span class="s2">{{item.customerMobile}}</span>
-							</p>
-							<p class="p1">{{item.customerMergerName}}</p>
+						<div class="center_div1" style="padding-top: 0.7rem;">
+							<p ><span class="sz1">{{item.customerName}}【{{item.community}}】</span><span class="sz2">{{item.customerMobile}}</span></p>
+							<p class="pz1" style="padding: 0;">{{item.customerMergerName}}</p>
 						</div>
 					</router-link>
 				</li>
@@ -89,13 +88,22 @@
 					this.seachData()
                 },
 			seachData(){
+				var startTimeA=''
+				var endTimeA=''
+				if (this.endTime == '结束时间' && this.startTime == '开始时间') {
+						 startTimeA=''
+						 endTimeA=''
+				}else{
+						startTimeA=this.startTime
+					endTimeA=this.endTime
+				}
 				
 				var that = this
 				that.axios({
 					method: 'get',
 				
 					// url: '/wxapi/b/companyCustomers?type0=1'
-					url: '/wxapi/b/companyCustomers?type0='+that.status+ (that.ways == '' ? '' : '&type1=' + that.ways)+(that.telName == '' ? '' : '&condation=' + that.telName)+(that.startTime == '' ? '' : '&startTime=' + that.startTime)+(that.endTime == '' ? '' : '&endTime=' + that.endTime)
+					url: '/wxapi/b/companyCustomers?type0='+that.status+ (that.ways == '' ? '' : '&type1=' + that.ways)+(that.telName == '' ? '' : '&condation=' + that.telName)+(startTimeA == '' ? '' : '&startTime=' + startTimeA)+(endTimeA == '' ? '' : '&endTime=' + endTimeA)
 				
 				}).then(function(res) {
 					that.data = res.data.data.result;
@@ -271,49 +279,52 @@
 		position: relative;
 	}
 
-	.center_div1>p>.s1 {
+	.center_div1>p>.sz1 {
 
-		font-size: 0.675rem;
+		font-size: 0.7rem;
 		color: #000000;
 		font-weight: 500;
 	}
 
-	.center_div1>p>.s2 {
+	.center_div1>p>.sz2 {
 		display: inline-block;
-		font-size: 0.5rem;
+		font-size: 0.65rem;
 		color: rgba(99, 99, 99, 1);
 		position: absolute;
 		top: 0.1rem;
 		right: 0.75rem;
 	}
 
-	.center_div1>.p1 {
+	.center_div1>.pz1 {
 		margin-top: 0.4rem;
 		font-size: 0.6rem;
 		color: rgba(99, 99, 99, 1);
+		margin-bottom: 0.5rem;
 	}
 
 	.divBtn {
+			transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		-webkit-overflow-scroll:touch;
 		position: fixed;
-		bottom: 1.9rem;
-		left: 50%;
-		margin-left: -8.875rem;
-
+		bottom: 0rem;
+		left: 0rem;
+		background: rgba(255, 255, 255, 1);
+		width: 100%;
 	}
 
-	.divBtn .btn {
-
-		background: linear-gradient(90deg, rgba(129, 118, 91, 1) 0%, rgba(183, 171, 133, 1) 100%);
-		border-radius: 0.25rem;
-
-
-		width: 17.75rem;
-		height: 2rem;
+	.divBtn button{
+		width: 18.75rem;
+		border: none;
+		height: 2.3rem;
 		box-shadow: 0rem 0rem 1.075rem 0rem rgba(210, 210, 210, 0.68);
-		color: white;
+		color: rgba(99, 99, 99, 1);
 		font-size: 0.575rem;
 		font-family: PingFang-SC-Medium;
 		font-weight: 500;
 		line-height: 0.75rem;
+		background: url(../../../F/assets/img/supplier/btnimg.png) no-repeat  ;
+		background-position: 6.5rem;
+		background-size: 1rem 1.1rem;
 	}
 </style>

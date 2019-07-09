@@ -292,8 +292,8 @@
 					url: '/wxapi/f/produceStatements/year/' + that.shengchanchoose
 			
 				}).then(function(res) {
-					// console.log(res.data.data)
-					that.yeardata = res.data.data.countByYearDto
+					console.log(res)
+					that.yeardata = res.data.data
 					that.yearlist = res.data.data.type
 					// console.log(that.yeardata)
 			
@@ -544,29 +544,73 @@
 					},
 					 // color:['red', 'green','yellow','blueviolet'],
 					calculable: false,
-					series: [
-						
+						series: [
+					
 					
 					
 						{
-							name: '详细信息',
-							type: 'pie',
-							radius: [40, 65],
-							 center: ['50%', '50%'], 
-							// for funnel
-							x: '60%',
-							width: '35%',
-							funnelAlign: 'left',
-							// max: 1048,
+							// 		name: '详细信息',
+							// 		type: 'pie',
+							// 		radius: [40, 65],
+							// 		 center: ['50%', '50%'], 
+							// 		// for funnel
+							// 		x: '60%',
+							// 		width: '35%',
+							// 		funnelAlign: 'left',
+							// 		// max: 1048,
+							// 
+							// 		data: listdata,
+							// 		itemStyle: {
+							// 			normal: {
+							// 				borderColor: "#FFFFFF",
+							// 				borderWidth: 5,
+							// 			}
+							// 		},
 					
-							data: listdata,
-							itemStyle: {
+							funnelAlign: 'left',
+							type: 'pie',
+							radius: ['40%', '55%'],
+							label: {
 								normal: {
-									borderColor: "#FFFFFF",
-									borderWidth: 5,
+									formatter: '{b}\n{c} {per|{d}%}  ',
+									backgroundColor: '#eee',
+									borderColor: '#aaa',
+									
+									borderRadius: 4,
+									rich: {
+										a: {
+											color: '#999',
+											lineHeight: 22,
+											align: 'center',
+											
+										},
+										// abg: {
+										//     backgroundColor: '#333',
+										//     width: '100%',
+										//     align: 'right',
+										//     height: 22,
+										//     borderRadius: [4, 4, 0, 0]
+										// },
+										hr: {
+											borderColor: '#aaa',
+											width: '100%',
+											borderWidth: 0.5,
+											height: 0
+										},
+										b: {
+											fontSize: 12,
+											lineHeight: 20
+										},
+										per: {
+											color: '#eee',
+											backgroundColor: 'rgba(84, 128, 120, 1)',
+											padding: [2, 4],
+											borderRadius: 2
+										}
+									}
 								}
 							},
-					
+							data: listdata
 					
 						}
 					]

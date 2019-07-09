@@ -181,10 +181,15 @@
 					that.birthdayAA		=res.data.data.birthday.substring(0,10)
 				    that.depts=res.data.data.depts
 					
-					for (var i=0 ;i<2 ;i++) {
-						that.dept.push( that.depts[i])
-					}
+				
 					
+					
+					if ( res.data.data.depts.length > 1) {
+							for (var i=0 ;i<2 ;i++) {
+							that.dept.push( that.depts[i])
+						}
+						
+					}
 				
 				}).catch(function(err) {
 					console.log(err)

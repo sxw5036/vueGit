@@ -8,12 +8,12 @@
 				<li>
 					<span class="wenzi">电话:</span><span class="ipt1"><input type="tel" placeholder="请输入电话号码" v-model="tel" /> </span>
 				</li>
-				<li>
+				<li style="color: rgba(99,99,99,1);">
 					<span class="wenzi" style="margin-right: 0.6rem;">性别:</span><span class="spselect">
 						
 
 							<select class="select" v-model="ways" >
-							
+								<option disabled="" value="" >请选择性别</option>
 								<option :value="item.value" v-for="(item,index) in payways" :key="index">{{item.name}}</option>
 							</select>
 						
@@ -205,7 +205,11 @@
 		height: auto;
 		position: absolute;
 	}
-
+	input::-webkit-input-placeholder {
+	     /* placeholder颜色  */
+	     font-size: 0.7rem;
+	    
+	 }
 	/* 上部开始 */
 	.clienttop {
 		width: 17.75rem;

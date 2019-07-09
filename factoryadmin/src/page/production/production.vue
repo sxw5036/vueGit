@@ -14,7 +14,7 @@
 				<div class="panel">
 					<div class="panel_nav">
 						<div class="panel_center">
-							<h3 class="head "><div class="left_icon first-child"><img src="../../assets/img/order/list-01.png"/></div>今日太生产数量</h3>
+							<h3 class="head "><div class="left_icon first-child"><img src="../../assets/img/order/list-01.png"/></div>今日生产数量</h3>
 							<div class="panel_con">
 
 								<div class="order_head_statistics">
@@ -185,7 +185,7 @@
 
 			<div>
 
-				<Table :columns="columns1" :data="data1" border></Table>
+				<Table :columns="columns1" :data="data8" border></Table>
 				<div class="ui_tableBottom">
 
 					<div class="ui_operate">
@@ -400,6 +400,9 @@
 	export default {
 		data() {
 			return {
+				
+				tableData:[],
+				
 				productuploadFiles: [],
 				orderstatue: '',
 				customname: '',
@@ -751,8 +754,12 @@
 
 							const row = params.row;
 							var text;
+							
+							if(row.estimatedDeliveryDate!=''){
+								text = row.estimatedDeliveryDate
+							}
 
-							text = row.estimatedDeliveryDate.substr(0, 10)
+							
 
 							return h('div', [
 								h('span', {
@@ -782,7 +789,7 @@
 							const row = params.row;
 							var text;
 
-							text = row.plannedTime.substr(0, 10)
+							text = row.plannedTime
 
 							return h('div', [
 								h('span', {
@@ -894,7 +901,7 @@
 							const row = params.row;
 							var text;
 
-							text = row.estimatedDeliveryDate.substr(0, 10)
+							text = row.estimatedDeliveryDate
 
 							return h('div', [
 								h('span', {
@@ -924,7 +931,7 @@
 							const row = params.row;
 							var text;
 
-							text = row.plannedTime.substr(0, 10)
+							text = row.plannedTime
 
 							return h('div', [
 								h('span', {
@@ -969,12 +976,13 @@
 									},
 									on: {
 										click: () => {
-											this.$router.push({
-												name: 'productionDetails',
-												query: {
-													id: this.data1[params.index].id
-												}
-											})
+											this.$emit('openWindow', ('productionDetails'), ('生产单详情'), ('9-3'), ('productionDetails'), ('productionDetails'),(this.data8[params.index].customOrderId+','+this.data8[params.index].id))
+//											this.$router.push({
+//												name: 'productionDetails',
+//												query: {
+//													id: this.data1[params.index].id
+//												}
+//											})
 //											this.orderdetails(params.index)
 										}
 									}
@@ -1252,15 +1260,54 @@
 						that.getorderdatas();
 					}
 				})
+			},
+			
+			//查询生产订单接口
+			
+			produceorder:function  () {
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+
+				var that = this
+
+
+				this.axios({
+					method: 'get',
+
+					url: '/api/f/customorders/produces/plans?pageNum=' + that.currents + '&pageSize=' + that.pageSize,
+
+				}).then(function(res) {
+					setTimeout(msg, 100);
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+					
+					var data=res.data.data
+					
+					that.tableData=data
+
+
+					
+				}).catch(function(err) {
+					setTimeout(msg, 100);
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
 			}
+			
 		},
 		mounted() {
-			this.axios.defaults.headers['X-P'] = this.$route.query.pkey + "-" + this.$route.query.key + "-view"
-			const keydata = this.$route.query.key;
-			let operation = this.operation;
-			Isjurisdiction.user_jurisdiction(keydata, operation);
-			console.log(this.operation)
-			this.getorderdatas();
+//			this.axios.defaults.headers['X-P'] = this.$route.query.pkey + "-" + this.$route.query.key + "-view"
+//			const keydata = this.$route.query.key;
+//			let operation = this.operation;
+//			Isjurisdiction.user_jurisdiction(keydata, operation);
+//			console.log(this.operation)
+//			this.getorderdatas();
+
+            this.getorderplansdatas()
 
 		}
 	}

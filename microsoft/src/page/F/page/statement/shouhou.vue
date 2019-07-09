@@ -60,8 +60,8 @@
 					<div v-show="shouhouchoose==3" style="height: 1rem; width: 100%;">
 				
 					</div> -->
-					<div class="keepContentShow1" style=" position: relative; height: 15.5rem; width: 95%; margin: 1rem auto; padding-top: 1rem;  background: white; border-radius: 0.25rem;">
-						<div class="show1YB" id="show1SH" style="height: 15.5rem; width: 95%; margin: 0 auto;">
+					<div class="keepContentShow1" style=" position: relative; height: 17.5rem; width: 95%; margin: 1rem auto; padding-top: 1rem;  background: white; border-radius: 0.25rem;">
+						<div class="show1YB" id="show1SH" style="height: 16.5rem; width: 95%; margin: 0 auto;">
 				
 						</div>
 					<!-- 	<div  v-show="shouhouchoose==0" class="show1YBtext" style=" position: absolute; left: 20%; bottom: 10%; font-size: 0.6rem; ">
@@ -534,30 +534,74 @@
 						},
 						
 						calculable: false,
-						series: [
-							
-					
-					
+							series: [
+						
+						
+						
 							{
-								name: '详细信息',
-								type: 'pie',
-								radius: [40, 65],
-								 center: ['50%', '50%'], 
-								// for funnel
-								x: '60%',
-								width: '35%',
+								// 		name: '详细信息',
+								// 		type: 'pie',
+								// 		radius: [40, 65],
+								// 		 center: ['50%', '50%'], 
+								// 		// for funnel
+								// 		x: '60%',
+								// 		width: '35%',
+								// 		funnelAlign: 'left',
+								// 		// max: 1048,
+								// 
+								// 		data: listdata,
+								// 		itemStyle: {
+								// 			normal: {
+								// 				borderColor: "#FFFFFF",
+								// 				borderWidth: 5,
+								// 			}
+								// 		},
+						
 								funnelAlign: 'left',
-								// max: 1048,
-					
-								data: listdata,
-								itemStyle: {
+								type: 'pie',
+								radius: ['40%', '55%'],
+								label: {
 									normal: {
-										borderColor: "#FFFFFF",
-										borderWidth: 5,
+										formatter: '{b}\n{c} {per|{d}%}  ',
+										backgroundColor: '#eee',
+										borderColor: '#aaa',
+										
+										borderRadius: 4,
+										rich: {
+											a: {
+												color: '#999',
+												lineHeight: 22,
+												align: 'center',
+												
+											},
+											// abg: {
+											//     backgroundColor: '#333',
+											//     width: '100%',
+											//     align: 'right',
+											//     height: 22,
+											//     borderRadius: [4, 4, 0, 0]
+											// },
+											hr: {
+												borderColor: '#aaa',
+												width: '100%',
+												borderWidth: 0.5,
+												height: 0
+											},
+											b: {
+												fontSize: 12,
+												lineHeight: 20
+											},
+											per: {
+												color: '#eee',
+												backgroundColor: 'rgba(84, 128, 120, 1)',
+												padding: [2, 4],
+												borderRadius: 2
+											}
+										}
 									}
 								},
-					
-					
+								data: listdata
+						
 							}
 						]
 					});

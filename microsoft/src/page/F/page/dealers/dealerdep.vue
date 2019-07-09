@@ -191,7 +191,7 @@
 						</div>
 						<div style="float: right; border-bottom: 1px solid #dcdee2; padding: 0.8rem 0.5rem; width:11rem; height:auto;  word-break: break-all; ">
 							<ul class="as_fj_tu_d">
-								<li v-for="item in dealerfujians"><img style="width: 100%;" :src="item"></li>
+								<li :key='index' v-for="(item,index) in dealerfujians"><img style="width: 100%;" :src="item"></li>
 
 							</ul>
 						</div>
@@ -216,7 +216,7 @@
 							<span >账户余额：</span>
 						</div>
 						<div style="float: right; padding: 0.8rem 0.5rem; width:11rem; height:auto;   word-break: break-all;color: #8d8d8d; ">
-							&nbsp{{dealerdata.accountBalances}}
+							&nbsp;{{dealerdata.accountBalances}}
 							<!-- 预付货款余额<span style="color: red;">2900.00</span>元；另有订单<span style="color: red;">228369</span>元，总金额<span style="color: red;">12000.00</span>元，挂账。 -->
 						</div>
 						<div class="clearfix"></div>
@@ -227,7 +227,7 @@
 							<span >其他资金：</span>
 						</div>
 						<div style="float: right; padding: 0.8rem 0.5rem; width:11rem; height:auto;   word-break: break-all;color: #8d8d8d; ">
-							&nbsp{{dealerdata.otherFundRemarks}}
+							&nbsp;{{dealerdata.otherFundRemarks}}
 							<!-- 活动保证金<span style="color: red;">10000.00</span>元；软件使用费<span style="color: red;">5000.00</span>元；退网后退会；品牌保证金<span style="color: red;">5000.00</span>元。 -->
 						</div>
 						<div class="clearfix"></div>

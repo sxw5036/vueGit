@@ -17,33 +17,33 @@
 						<div class="summarize">
 							<ul>
 								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>订单编号</h3>
-									<p>20190527-03</p>
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>售后单编号</h3>
+									<p>{{ aftersale.no }}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>售后状态</h3>
-									<p>待处理</p>
+									<p>{{ aftersale.statusName }}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>售后类型</h3>
-									<p>反馈单</p>
+									<p>{{ aftersale.typeName }}</p>
 								</li>
 
 								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>公司名称</h3>
-									<p>万佳家博园</p>
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>经销商名称</h3>
+									<p>{{ aftersale.companyName }}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>c端客户姓名</h3>
-									<p>张明洋</p>
+									<p>{{ aftersale.customerName }}</p>
 								</li>
 
 								<li>
 									<h3><img src="../../assets/lwxflogo.png"/>创建时间</h3>
-									<p>2019-6-27 12:00:15</p>
+									<p>{{ aftersale.created }}</p>
 								</li>
 							</ul>
 						</div>
@@ -96,44 +96,40 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 															<li>
 																<span class="lable">订单编号：</span>
 																<div class="value">
-																	<p>JB201902003</p>
+																	<p>{{ aftersale.orderNo }}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">售后状态：</span>
 																<div class="value">
-																	<p>待处理</p>
+																	<p>{{ aftersale.statusName }}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">售后类型：</span>
 																<div class="value">
-																	<p>反馈单</p>
+																	<p>{{ aftersale.typeName }}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">公司名称：</span>
 																<div class="value">
-																	<p>万佳家博园</p>
+																	<p>{{ aftersale.companyName }}</p>
 																</div>
 															</li>
-
 															<li>
 																<span class="lable">c端客户姓名：</span>
 																<div class="value">
-																	<p>蓝墨云</p>
+																	<p>{{ aftersale.customerName }}</p>
 																</div>
 															</li>
-
-															
-															
 															<li>
 																<span class="lable">创建时间：</span>
 																<div class="value">
-																	<p>2019-06-20 10:48</p>
+																	<p>{{ aftersale.created }}</p>
 																</div>
 															</li>
 														</ul>
@@ -144,7 +140,82 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 										</div>
 										</div>
 										<div class="ivu-tabs-tabpane padding">
-											  <p>待处理</p>
+											  <div class="dealer_tab_nav">
+											  	<Collapse>
+											  		<Panel v-for = "product in aftersaleProducts" name="1">
+														<span v-if="product.type==0">
+											  			产品名称:橱柜
+														</span>
+														<span v-if="product.type==1">
+														产品名称:衣柜
+														</span>
+														<span v-if="product.type==2">
+														产品名称:成品家具
+														</span>
+														<span v-if="product.type==3">
+														产品名称:电器
+														</span>
+														<span v-if="product.type==4">
+														产品名称:五金
+														</span>
+														<span v-if="product.type==5">
+														产品名称:样块
+														</span>
+											  			<div slot="content">
+											  				<div class="tab_center ">
+											  					<div class=" tab_item">
+											  						<div class="supplier_msg">
+											  							<ul>
+											  								<li>
+											  									<span class="lable">系列：</span>
+											  									<div class="value">
+											  										<p>{{product.type}}</p>
+											  									</div>
+											  								</li>
+											  
+											  								<li>
+											  									<span class="lable">颜色：</span>
+											  									<div class="value">
+											  										<p>{{product.color}}</p>
+											  									</div>
+											  								</li>
+											  
+											  								<li>
+											  									<span class="lable">门型:</span>
+											  									<div class="value">
+											  										<p>{{product.door}}</p>
+											  									</div>
+											  								</li>
+											  							</ul>
+											  						</div>
+											  					</div>
+											  					<div class=" tab_item">
+											  						<div class="supplier_msg">
+											  							<ul>
+											  
+											  									<li>
+											  									<span class="lable">备注：</span>
+											  									<div class="value">
+											  										<p>{{product.notes}}</p>
+											  									</div>
+											  								</li>
+											  																			  
+											  								<li>
+											  									<span class="lable">价格：</span>
+											  									<div class="value">
+											  										<p>{{product.price}}</p>
+											  									</div>
+											  								</li>
+											  							</ul>
+											  						</div>
+											  					</div>
+											  
+											  				</div>
+											  			</div>
+											  		</Panel>
+											  
+											  	</Collapse>
+											  </div>
 										</div>
 										
 										<div class="ivu-tabs-tabpane padding">
@@ -322,24 +393,6 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 				<div class="panel marBtm">
 					<div class="panel_nav">
 						<div class="panel_center">
-							<h3 class="head">特殊操作区</h3>
-							<div class="panel_con">
-								<div class="but_op">
-									
-									<button class="details_opBut">财务审核</button>
-									<button class="details_opBut">新建生产</button>
-									<button class="details_opBut">新建外协</button>
-									<button class="details_opBut">新建配货</button>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel marBtm">
-					<div class="panel_nav">
-						<div class="panel_center">
 							<h3 class="head">通用操作区</h3>
 							<div class="panel_con">
 								<div class="but_op">
@@ -362,29 +415,10 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 										<ul>
 											<li>
 												<router-link  :to="{ name: 'dealercompanydetails', query: { id: '50zl1lxk6sxs'}}" >查看经销商</router-link>
-												
 											</li>
 											<li>
 												<router-link  :to="{ name: 'orderDetails', query: { id: '123456780'}}" >查看订单</router-link>
-												
 											</li>
-											
-											<li>
-												<router-link  :to="{ name: 'outsource', query: { id: '123456780'}}" >查看外协</router-link>
-												
-											</li>
-											
-											<li>
-												<router-link  :to="{ name: 'finishedDetails', query: { id: '123456780'}}" >查看包装</router-link>
-												
-											</li>
-											
-											<li>
-												<router-link  :to="{ name: 'outsourcedetails', query: { id: '123456780'}}" >查看外协</router-link>
-												
-											</li>
-											
-
 										</ul>>
 									</div>
 
@@ -406,485 +440,17 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 	export default {
 		data() {
 			return {
-				
-				orderPhead:[
-				{
-						title: '类型',
-						key: 'type',
-						
-						align: 'center',
-					    	render: (h, params) => {
-					    	const row = params.row;
-					    	var text
-					    	if (row.type == 0) {
-					    		text = '橱柜'
-					    	} else if (row.type == 1) {
-					    		text = '衣柜'
-					    	} else if (row.type == 2) {
-					    		text = '成品家具'
-					    	}else if (row.type == 3) {
-					    		text = '电器'
-					    	}else if (row.type == 4) {
-					    		text = '五金'
-					    	}
-					    	return h('div', text);
-					    }
-					},
-					{
-						title: '产品颜色',
-						key: 'color',
-						align: 'center',
-						
-
-					},
-					
-					
-					{
-						title: '门型',
-						key: 'door',
-						
-						align: 'center',
-					
-					},
-					{
-						title: '系列',
-						key: 'series',
-						
-						align: 'center',
-					    	render: (h, params) => {
-					    	const row = params.row;
-					    	var text
-					    	if (row.series == 0) {
-					    		text = '定制实木'
-					    	} else if (row.series == 1) {
-					    		text = '特供实木'
-					    	} else if (row.series == 2) {
-					    		text = '美克'
-					    	}else if (row.series == 3) {
-					    		text = '康奈'
-					    	}else if (row.series == 4) {
-					    		text = '慧娜'
-					    	}else if (row.series == 5) {
-					    		text = '模压'
-					    	}
-					    	return h('div', text);
-					    }
-					},
-
-					
-					{
-						title: '修改人',
-						key: 'updateUserName',
-						
-						align: 'center',
-
-					},
-					
-					{
-						title: '修改时间',
-						key: 'updateTime',
-						
-						align: 'center',
-
-					},
-
-					{
-						title: '备注',
-						key: 'notes',
-						
-						align: 'center',
-
-					},
-					
-
-					
-
-					{
-						title: '操作',
-						align: 'center',
-						fixed: 'right',
-						width: 120,
-						align: 'center',
-						render: (h, params) => {
-
-							var designer = params.row.designer
-
-							return h('div', [
-								h('Button', {
-										props: {
-											type: 'info',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
- 														this.color= '';
- 														this.door= '';
- 														this.series= '';
- 														this.type= '';
- 														this.updateUser= '';
- 														this.updateTime= '';
- 														this.notes= '';
-														this.openOrdetails = false;
-														this.DemandOpen = true;
-														this.getOrdemand(params.index);
-												        this.setindexdep=params.index;
-											}
-										}
-									},
-									'需求详情'),
-// 									h('Button', {
-// 											props: {
-// 												type: 'error',
-// 												size: 'small'
-// 											},
-// 											style: {
-// 												marginRight: '5px'
-// 											},
-// 											on: {
-// 												click: () => {
-// 									
-// // 													this.Demandobj = {
-// // 														"customOrderDemand": {
-// // 															"content": "",
-// // 															"created": "",
-// // 															"creator": "",
-// // 															"customOrderId": "",
-// // 															"id": "",
-// // 															"name": "",
-// // 															"no": "",
-// // 														}
-// // 													}
-// 													// this.openOrdetails = false
-// 													this.DemandOpen = true
-// 													this.getOrdemand(params.index)
-// 									
-// 												}
-// 											}
-// 										},
-// 										'取消分配设计师'),
-
-							]);
-
-						}
-
-					}],
-				orderPdata:[],
-
-				designHead: [{
-						title: '设计编号',
-						key: 'no',
-
-					},
-
-					{
-						title: '设计名称',
-						key: 'name',
-
-					},
-
-					{
-						title: '设计说明',
-						key: 'notes',
-
-					},
-
-					{
-						title: '设计状态',
-						key: 'status',
-
-						render: (h, params) => {
-
-							var status = params.row.status
-
-							if(status == 0) {
-
-								var texts = '设计中'
-							} else if(status == 1) {
-
-								var texts = '待审核'
-							} else if(status == 2) {
-
-								var texts = '设计发布'
-							} else if(status == 3) {
-
-								var texts = '待确认'
-							} else if(status == 4) {
-
-								var texts = '已完成'
-							}
-
-							return h('div', texts)
-						}
-
-					},
-
-					{
-						title: '修改意见',
-						key: 'amendments',
-
-					},
-
-					{
-						title: '估价',
-						key: 'valuation',
-
-					},
-
-					{
-						title: '设计师姓名',
-						key: 'designName',
-
-					},
-
-					{
-						title: '设计师电话',
-						key: 'designMobile',
-
-					},
-
-					{
-						title: '操作',
-						align: 'center',
-						fixed: 'right',
-						width: 100,
-						render: (h, params) => {
-
-							var status = params.row.status
-
-							if(status == 0 && this.isSub == false) {
-								return h('div', [
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-
-												this.getdesignersObj(params.index, 0)
-
-											}
-										}
-									}, '查看'),
-
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-												this.opendesignerscheme = false;
-												this.designersIndex = params.index
-												this.getdesignersObj(params.index, 1)
-											}
-										}
-									}, '编辑'),
-
-									h('Button', {
-										props: {
-											type: 'info',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-												this.designersIndex = params.index
-												/*this.putdnstatus(params.index)*/
-												this.opendesigners = true
-												this.opendesignerscheme = false
-												this.opendnstatus(params.index)
-											}
-										}
-									}, '提交'),
-									h('Poptip', {
-										props: {
-											confirm: true,
-											title: '您确定要删除这条数据吗?',
-											transfer: true
-										},
-										on: {
-											'on-ok': () => {
-												this.delTabData(params.index)
-											}
-										}
-									}, [
-										h('div', [
-											h('Button', {
-												props: {
-													type: 'error',
-													size: 'small'
-												}
-											}, '删除')
-										])
-									])
-								]);
-							} else if(status == 0 && this.isSub == true) {
-								return h('div', [
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-
-												this.getdesignersObj(params.index, 0)
-
-											}
-										}
-									}, '查看'),
-
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-												this.opendesignerscheme = false;
-												this.designersIndex = params.index
-												this.getdesignersObj(params.index, 1)
-											}
-										}
-									}, '编辑'),
-
-									h('Poptip', {
-										props: {
-											confirm: true,
-											title: '您确定要删除这条数据吗?',
-											transfer: true
-										},
-										on: {
-											'on-ok': () => {
-												this.delTabData(params.index)
-											}
-										}
-									}, [
-										h('div', [
-											h('Button', {
-												props: {
-													type: 'error',
-													size: 'small'
-												}
-											}, '删除')
-										])
-									])
-								]);
-							} else if(status == 1 || status == 2 || status == 3) {
-								return h('div', [
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-
-												this.getdesignersObj(params.index, 0)
-
-											}
-										}
-									}, '查看'),
-
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px',
-										},
-										on: {
-											click: () => {
-
-												this.getdesignersOk(params.index)
-
-											}
-										}
-									}, '确认方案'),
-
-									/*h('Poptip', {
-										props: {
-											confirm: true,
-											title: '您确定要删除这条数据吗?',
-											transfer: true
-										},
-										on: {
-											'on-ok': () => {
-												this.delTabData(params.index)
-											}
-										}
-									}, [
-										h('div', [
-											h('Button', {
-												props: {
-													type: 'error',
-													size: 'small'
-												}
-											}, '删除')
-										])
-									])*/
-								]);
-							} else if(status == 4) {
-								return h('div', [
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small'
-										},
-										style: {
-											marginRight: '5px'
-										},
-										on: {
-											click: () => {
-
-												this.getdesignersObj(params.index, 0)
-
-											}
-										}
-									}, '查看'),
-
-								]);
-							}
-
-						}
-
-					}
-				],
-				designData: [],
-				tabIndexs:0,
-
-			};
+				aftersale: [],
+				aftersaleId:"",
+				aftersaleProducts:[],
+				aftersalePayment:[],
+				tabIndexs: 0,
+				};
 		},
 
 		methods: {
-			
-			
 
-
-
-TabsChange:function  (index) {				
+			TabsChange:function  (index) {				
                     this.tabIndexs=index						
 			},
 			
@@ -892,9 +458,7 @@ TabsChange:function  (index) {
 				var index=this.tabIndexs
 				 let style = {}
                  style['transform'] = 'translate3D(' + index*100 + '%' + ', 0px,0px)'
-                 
                  return style
-				
 			},
 			
 			
@@ -910,11 +474,38 @@ TabsChange:function  (index) {
 			goback:function  () {
 				this.$emit('openWindow', ('client'), ('售后管理'), ('11'), ('client'), ('client'))
 			},
-
+			getdata: function() {
+				var that = this
+				this.aftersaleId = this.$route.query.pathUrl
+				var id = this.aftersaleId
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+				this.axios({
+					method: 'get',
+					url: '/api/f/aftersales/v2/aftersaleApplies/' + id + '',
+				}).then(function(res) {
+					setTimeout(msg, 100);
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+					that.aftersale =res.data.data.aftersaleApply
+					that.aftersaleProducts = res.data.data.aftersaleProduct
+					that.aftersalePayment = res.data.data.payment
+					console.log(that.aftersalePayment)
+				}).catch(function(err) {
+					setTimeout(msg, 100);
+					console.log(err);
+					that.$Message.error('出错了，请稍后重试！');
+			
+				})
+			}
 		},
+	
 
 		mounted: function() {
-
+			this.getdata();
 		}
 
 	}

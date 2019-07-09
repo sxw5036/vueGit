@@ -48,6 +48,7 @@
 
 		data() {
 			return {
+				BASE_URL1:'',
 				securitymobile: "",
 				codeArry: [],
 				codeButShow: false,
@@ -171,9 +172,9 @@
 					let type = data.type
 
 					if(type == 0) {
-						window.location.href = "https://erp4.hnlwxf.com/#/F?token=" + data.token
+						window.location.href = that.BASE_URL1+"/F?token=" + data.token
 					} else if(type == 1) {
-						window.location.href = "https://erp4.hnlwxf.com/#/B?token=" + data.token
+						window.location.href = that.BASE_URL1+"/F?token=" + data.token
 					}
 
 				}).catch(function(err) {
@@ -188,7 +189,13 @@
 		},
 
 		mounted: function() {
-
+			this.axios.get('/config.json').then((res) => {
+				// 基础地址			res
+				
+				var data=res.data
+				this.BASE_URL1=data.BASE_URL1
+				
+			})
 			//从小程序第一次跳转的主页路径中获取的openId
 			this.openId = openId
 

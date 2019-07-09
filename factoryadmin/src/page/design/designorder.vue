@@ -1970,6 +1970,7 @@
 					this.pageIndex = index;
 					this.searchData();
 				} else {
+					var searchObj = this.searchObj
 					searchObj.customerTel='';
 					searchObj.no='';
 					this.pageIndex = index;

@@ -62,13 +62,13 @@
 								<p @click="addsiteshow=!addsiteshow" v-show="searchObj.cityIdName==''">地区</p>
 								<p @click="addsiteshow=!addsiteshow" v-show="searchObj.cityIdName!=''">{{searchObj.cityIdName}}</p>
 
-								<span class="select_icon"><img src="../assets/img/finance/xljt.png"/></span>
+								<span class="select_icon"  style="width: 0.5rem;"><img src="../assets/img/finance/xljt.png"/></span>
 							</div>
 							<div class="linkBlock_item select">
 								<p @click="dealersearchshow=!dealersearchshow" v-show="searchObj.dealerName==''">经销商</p>
 								<p @click="dealersearchshow=!dealersearchshow" v-show="searchObj.dealerName!=''">{{searchObj.dealerName}}</p>
 
-								<span class="select_icon"><img src="../assets/img/finance/xljt.png"/></span>
+								<span class="select_icon" style="width: 0.5rem;"><img src="../assets/img/finance/xljt.png"/></span>
 							</div>
 						</li>
 

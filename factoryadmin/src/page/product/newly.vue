@@ -93,7 +93,7 @@
 
 					<div class="iv_form_but center">
 						<button class="details_opBut auto linkBlock smallsize" @click="formeReset">重置</button>
-						<button class="details_opBut linkBlock smallsize" @click="">确认</button>
+						<button class="details_opBut linkBlock smallsize" @click="sure">确认</button>
 						<!--<Button type="primary">确认</Button>-->
 
 					</div>
@@ -259,6 +259,10 @@
 			
 			//选择分类后请求分类下产品材质和颜色
 			SelectCategory: function(val) {
+				
+				if(!val){
+					return false;
+				}
 
 				this.productMaterial = []
 				this.productColor = []
@@ -266,9 +270,6 @@
 				this.objGetData.productMaterialId = ""
 				this.objGetData.productColor = ""
 				this.objGetData.productSpec = ""
-				this.SetGetData.SetproductMaterialId = ""
-				this.SetGetData.SetproductColor = ""
-				this.SetGetData.SetproductSpec = ""
 				this.getcategorycategory(val)
 				/*this.getcategorycolor(val)
 				this.getcategoryspec(val)*/
@@ -347,6 +348,167 @@
 				})
 
 			},
+			
+			
+			
+			sure: function() {
+
+				var objGetData = this.objGetData
+				var name = objGetData.name
+				var notes = objGetData.notes
+				var productCategory = objGetData.productCategoryId
+				var productMaterial = objGetData.productMaterialId
+				var productColor = objGetData.productColor
+				var productspec = objGetData.productSpec
+				var lowerShelf = objGetData.lowerShelf
+
+				var unit = objGetData.unit
+				var model = objGetData.model
+				var factoryPrice = objGetData.factoryPrice
+
+				if(name == "" || name == null || name.trim().length == 0) {
+
+					this.$Message.error('产品名称不能为空！');
+					return false;
+				} else if(model == "" || model == null || model.trim().length == 0) {
+
+					this.$Message.error('产品型号不能为空！');
+					return false;
+				} else if(productCategory == "" || productCategory == null || productCategory.trim().length == 0) {
+
+					this.$Message.error('产品分类不能为空！！');
+					return false;
+				} else if(unit == "" || unit == null) {
+
+					this.$Message.error('产品单位不能为空！');
+					return false;
+				} else {
+
+					const msg = this.$Message.loading({
+						content: 'Loading...',
+						duration: 0
+					});
+
+					var that = this
+					//                    /
+					this.axios({
+						method: 'post',
+						url: '/api/f/products',
+
+						data: {
+							"name": name,
+							"notes": notes,
+							"productCategoryId": productCategory,
+							"productMaterial": productMaterial,
+							"productColor": productColor,
+							"productSpec": productspec,
+
+							"unit": unit,
+							"lowerShelf": lowerShelf,
+							"model": model,
+							"factoryPrice": factoryPrice
+
+						}
+
+					}).then(function(res) {
+
+						var verify = [{
+								"name": "name",
+								"note": "产品名称"
+							},
+							{
+								"name": "notes",
+								"note": "产品描述 "
+							},
+							{
+								"name": "productCategoryId",
+								"note": "产品分类 "
+							},
+							{
+								"name": "productSpecId",
+								"note": "产品规格 "
+							},
+							{
+								"name": "no",
+								"note": "产品标识"
+							},
+							{
+								"name": "unit",
+								"note": "产品单位"
+							},
+							{
+								"name": "model",
+								"note": "产品型号"
+							},
+						]
+
+						setTimeout(msg, 100);
+						if(Isjurisdiction.isright(res, that, verify) == false) {
+							return false
+						}
+						var data = res.data.data
+						
+						that.$Message.success("添加成功")
+						
+						that.formeReset()
+
+						
+					}).catch(function(err) {
+
+						that.$Message.error('出错了，请稍后重试！');
+						setTimeout(msg, 100);
+						
+					})
+
+				}
+
+			},
+
+            getProductClass:function  () {
+            	
+            	var that = this
+			//产品分类数据
+			this.axios({
+				method: 'get',
+				url: '/api/f/productcategories',
+
+			}).then(function(res) {
+				that.loading = false
+				if(Isjurisdiction.isright(res, that) == false) {
+					return false
+				}
+				var data = res.data.data
+
+				for(var i = 0; i < data.length; i++) {
+
+					var type = data[i].type
+
+					if(type == 0) {
+						data[i].typeName = "原材料"
+					} else if(type == 1) {
+						data[i].typeName = "尾料"
+					} else if(type == 2) {
+						data[i].typeName = "废料"
+					} else if(type == 3) {
+						data[i].typeName = "退料"
+					} else if(type == 4) {
+						data[i].typeName = "退货"
+					} else if(type == 5) {
+						data[i].typeName = "成品"
+					}
+
+				}
+
+				that.productCategory = data
+
+			}).catch(function(err) {
+
+				that.$Message.error('出错了，请稍后重试！');
+				that.loading = false
+
+			})
+            	
+            },
 
 
 
@@ -374,48 +536,11 @@
 
 		mounted: function() {
 
-			var that = this
+			this.getProductClass()
 
-			that.axios({
-				method: 'get',
+                
 
-				url: '/api/f/cities?levelType=1'
-
-			}).then(function(res) {
-
-				that.provinceData = res.data.data
-
-			}).catch(function(err) {
-				console.log(err)
-
-			})
-
-			this.axios({
-				method: 'get',
-				url: '/api/f/dealers/companies?status=1&pageNum=1&pageSize=99999',
-
-			}).then(function(res) {
-
-				if(Isjurisdiction.isright(res, that) == false) {
-					return false
-				}
-
-				var data = res.data.data
-				that.companyData = data.companyList
-
-			}).catch(function(err) {
-
-				that.$Message.error('出错了，请稍后重试！');
-
-			})
-
-			if(this.$route.query.dealerId) {
-				this.dealerDisabled = true
-				var dealerId = this.$route.query.dealerId
-				this.objmsg.companyId = dealerId
-
-				this.getDealer(dealerId)
-			}
+			
 
 		},
 

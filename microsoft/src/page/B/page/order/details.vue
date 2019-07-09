@@ -333,18 +333,15 @@
 					<!--发货-->
 					
 					<div class="order_details_list" v-show='showTime==4' >
-						<ul v-for="item in orderDispatchBill">
-							
-							
-							
+						<ul :key='index' v-for="(item,index) in orderDispatchBill">
 							<li>
 								<div class="lable"><img class="icon" src="../../assets/img/order/fahuo_pm.png"/>品名：</div>
 								<div class="cen">
-									<p v-show="items.productType==0">柜体</p>
-									<p v-show="items.productType==1">门板-自产</p>
-									<p v-show="items.productType==2">门板-外协</p>
-									<p v-show="items.productType==3">特供实木</p>
-									<p v-show="items.productType==4">五金</p>* {{items.finishedItemNum}}包裹
+									<p v-show="item.productType==0">柜体</p>
+									<p v-show="item.productType==1">门板-自产</p>
+									<p v-show="item.productType==2">门板-外协</p>
+									<p v-show="item.productType==3">特供实木</p>
+									<p v-show="item.productType==4">五金</p>* {{item.finishedItemNum}}包裹
 								</div>
 							</li>
 							

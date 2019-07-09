@@ -14,7 +14,7 @@
 					</router-link>
 				</li>
 				<li style="width: 33.33%;" :class="{btmuac:btmuacindex==1}">
-					<router-link to="/B/message/index">
+					<router-link to="/B/message/messages">
 						<span>
 						<img style="padding: 4px 7px;" src="../assets/img/floor_msg.png"/>
 					</span>

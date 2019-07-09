@@ -19,20 +19,21 @@
 
 						<FormItem label="所属订单">
 							
-							<Input style="width: 200px;" v-model="parcelObj.orderNo" placeholder="请输入所属订单..."></Input>
+							<!-- <Input style="width: 200px;" v-model="parcelObj.orderNo" placeholder="请输入所属订单..."></Input> -->
 							
-							<!--<Select  filterable v-model="objmsg.orderId" placeholder="请选择所属订单...">
-								<Option v-for="item in orderData" :value="item.id" :key="item.id">{{ item.name }}-{{ item.founderName }}</Option>
-							</Select>-->
+							<Select  filterable v-model="dingdanID" placeholder="请选择所属订单...">
+								<Option v-for="item in orderData" :value="item.id" :key="item.id">{{item.no}}-{{item.consigneeName}}</Option>
+							</Select>
 
 						</FormItem>
+							<FormItem label="包裹数量">
+							<input  class="iv_input" id="p_lea" v-model="parcelObj.count" placeholder="请输入包裹数量..." />
+							
+						</FormItem>
 						
-						<FormItem label="包裹编号">
-						<input style="width: 200px;" disabled="disabled" class="iv_input" id="p_lea" v-model="parcelObj.no" placeholder="请输入包裹编号..." /> *包裹编号自动生成
-					</FormItem>
 
 					<FormItem label="包裹类型">
-						<Select v-model="parcelObj.type" style="width:200px;">
+						<Select v-model="parcelObj.type" >
 							<Option value="0">柜体</Option>
 							<Option value="1">门板-自产</Option>
 							<Option value="2">门板-外协</Option>
@@ -41,38 +42,49 @@
 
 						</Select>
 					</FormItem>
-
-					<FormItem label="包裹数量">
-						<input style="width: 200px;" class="iv_input" id="p_lea" v-model="parcelObj.count" placeholder="请输入包裹数量..." />
-						<Button type="primary" size="small" style="margin-left: 3px;" >生成编号</Button><!--@click="getpackNos"-->
+					<FormItem label="包裹编号">
+						<input  disabled="disabled" class="iv_input" id="p_lea" v-model="parcelObj.no" placeholder="请输入包裹编号..." style="width: 365px;" />
+						<Button type="primary" size="small" style="margin-left: 3px;" @click="getpackNos()" >生成编号</Button>
 					</FormItem>
+				
 
 					<FormItem label="包裹位置">
-						<input style="width: 300px;" class="iv_input" id="p_lea" v-model="parcelObj.location" placeholder="请输入包裹位置..." />
+						<input  class="iv_input" id="p_lea" v-model="parcelObj.location" placeholder="请输入包裹位置..." />
 					</FormItem>
 
 					<FormItem label="包裹说明">
-						<Input type="textarea" style="width: 300px;" id="p_lea" v-model="parcelObj.notes" placeholder="请输入包裹说明..." /></Input>
+						<Input type="textarea"  id="p_lea" v-model="parcelObj.notes" placeholder="请输入包裹说明..." /></Input>
 					</FormItem>
 
 					<FormItem label="操作人">
-						<Select style="width: 300px;" filterable v-model="parcelObj.operator">
+						<Select  filterable v-model="parcelObj.operator">
 							<Option v-for="(item,index) in employee" :value="item.userId" :key="item.userId">{{item.userName}}</Option>
 						</Select>
 					</FormItem>
 
 					<FormItem label="打包日期">
-						<DatePicker style="width: 300px;" type="date" @on-change="getoperated" placeholder="请选择打包时间" :value="parcelObj.operated"></DatePicker>
+						<DatePicker style='width: 440px;'  type="date" @on-change="getoperated" placeholder="请选择打包时间" :value="parcelObj.operated"></DatePicker>
 					</FormItem>
 
 					<FormItem label="打包时间">
-						<TimePicker v-model="parcelObj.operatedTime" format="HH:mm:ss" placeholder="请选择时间" style="width: 300px"></TimePicker>
+						<TimePicker style='width: 440px;' v-model="parcelObj.operatedTime" format="HH:mm:ss" placeholder="请选择时间" ></TimePicker>
 					</FormItem>
-
+					<FormItem label="创建人">
+						<Select  filterable v-model="parcelObj.operator1">
+							<Option v-for="(item,index) in employee" :value="item.userId" :key="item.userId">{{item.userName}}</Option>
+						</Select>
+					</FormItem>
+						<FormItem label="创建日期">
+						<DatePicker style='width: 440px;'  type="date" @on-change="getoperated1" placeholder="请选择打包时间" :value="parcelObj.operated1"></DatePicker>
+					</FormItem>
+					
+					<FormItem label="创建时间">
+						<TimePicker style='width: 440px;' v-model="parcelObj.operatedTime1" format="HH:mm:ss" placeholder="请选择时间"></TimePicker>
+					</FormItem>
 					<FormItem label="附件">
 						<div class="pl">
 
-							<div class="demo-upload-list" v-for="(item,index) in parcelObj.files">
+							<div :key='index' class="demo-upload-list" v-for="(item,index) in parcelObj.files">
 
 								<template>
 									<img :src="item.path">
@@ -96,7 +108,7 @@
 
 					<div class="iv_form_but center">
 						<button type="reset" class="details_opBut auto linkBlock smallsize" @click="formeReset">重置</button>
-						<button class="details_opBut linkBlock smallsize" @click="">确认</button>
+						<button class="details_opBut linkBlock smallsize" @click="submitmsg()">确认</button>
 						<!--<Button type="primary">确认</Button>-->
 
 					</div>
@@ -168,7 +180,8 @@
 	export default {
 		data() {
 			return {
-
+				dingdanID:'',
+				orderData:'',
 				parcelObj: {
 					no: "",
 					parceArry: [],
@@ -176,6 +189,7 @@
 					type: "",
 					notes: "",
 					location: ""
+
 				},
 				
 				
@@ -195,7 +209,54 @@
 		},
 
 		methods: {
-			
+			getpackNos(){
+				var that=this
+				this.axios({
+					method:'get',
+					url:'/api/f/customorders/'+that.dingdanID+'/no?'+(that.parcelObj.count == '' ? '' : '&count=' + that.parcelObj.count)+(that.parcelObj.type == '' ? '' : '&type=' + that.parcelObj.type)
+				}).then(function(res){
+					that.parcelObj.no=res.data.data
+				}).catch(function(err){
+					console.log(err)
+				})
+			},
+			submitmsg(){
+				
+				var that=this
+				console.log(that.parcelObj.operated1+' '+that.parcelObj.operatedTime1)
+				var dataSub=[
+					
+				]
+				for(var i=0;i<that.parcelObj.no.length;i++){
+					var dataSubSon={	
+							barcode:that.parcelObj.no[i],
+							type:that.parcelObj.type,
+							location:that.parcelObj.location,
+							notes:that.parcelObj.notes,
+							operator:that.parcelObj.operator,
+							operated:that.parcelObj.operated+' '+that.parcelObj.operatedTime,
+							created:that.parcelObj.operated1+' '+that.parcelObj.operatedTime1,
+							creator:that.parcelObj.operator1,
+							fileIds:[]
+						}
+					dataSub.push(dataSubSon)
+				}
+				console.log(dataSub)
+				
+				var that=this
+				this.axios({
+					method:'post',
+					url:'/api/f/customorders/'+that.dingdanID,
+					data:dataSub
+						
+					
+				}).then(function(res){
+					console.log(res)
+				}).catch(function(err) {
+					that.$Message.error('出错了，请稍后重试！');
+					console.log(err)
+				})
+			},
 			goback:function  () {
 				this.$emit('openWindow', ('finishedstock'), ('产品管理'), ('9'), ('finishedstock'), ('finishedstock'))
 //              this.$router.push({
@@ -274,6 +335,9 @@
 			getoperated: function(val) {
 				this.parcelObj.operated = val
 			},
+				getoperated1: function(val) {
+				this.parcelObj.operated1 = val
+			},
 
 
 		
@@ -296,12 +360,28 @@
 		},
 
 		mounted: function() {
-
+			var cfg = window.lwxfPreload;
+			var currCpId=cfg.preload.currCompanyId
+			console.log(cfg)
+	
 			var that = this
-			
+			this.axios({
+				method:'get',
+				url:'/api/f/customorders'
+			}).then(function(res){
+				that.orderData=res.data.data
+				console.log("1111")
+				console.log(res.data.data)
+			}).catch(function(err){
+				console.log(err)
+			})
+				
+				
+				
+				
 			this.axios({
 				method: 'get',
-				url: '/api/f/depts/members',
+				url: '/api/f/depts/members?companyId='+currCpId,
 
 			}).then(function(res) {
 

@@ -232,7 +232,7 @@
 						}),
 						setTimeout(function() {
 						
-							that.$router.push({ name: 'supplierList'})
+							that.$router.push({ name: 'FsupplierList'})
 						
 						}, 2000);
 						

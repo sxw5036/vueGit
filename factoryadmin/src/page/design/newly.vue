@@ -17,10 +17,14 @@
 
 				<div class="iv_form">
 					<Form :label-width="120">
-						<Form :model="pushschemeObj" :label-width="80">
+						<Form :model="pushschemeObj" :label-width="120">
 
 							<FormItem label="订单编号">
-								<Input v-model="pushschemeObj.orderNo" placeholder="请输入所设计订单编号..."></Input>
+								<!--<Input v-model="pushschemeObj.orderNo" placeholder="请输入所设计订单编号..."></Input>-->
+
+								<Select filterable v-model="pushschemeObj.orderId" placeholder="请选择要设计的订单...">
+									<Option v-for="item in orderData" :value="item.id" :key="item.id">{{ item.no}}</Option>
+								</Select>
 							</FormItem>
 
 							<FormItem label="设计名称">
@@ -32,10 +36,16 @@
 							</FormItem>
 
 							<FormItem label="设计描述">
-								<textarea name="" v-model="pushschemeObj.notes" rows="" cols="" placeholder="请输入设计描述..."></textarea>
+								<Input type="textarea" v-model="pushschemeObj.notes" placeholder="请输入设计描述..."></Input>
 							</FormItem>
 
-							<FormItem label="设计图">
+							<FormItem label="选择设计师">
+								<Select filterable v-model="pushschemeObj.designer" placeholder="请选择要设计的设计师...">
+									<Option v-for="item in members" :value="item.userId" :key="item.userId">{{ item.userName}}</Option>
+								</Select>
+							</FormItem>
+
+							<!--<FormItem label="设计图">
 								<div class="pl">
 									<div class="demo-upload-list" v-for="(item,index) in uploadList">
 										<template v-if="item.status === 'finished'">
@@ -55,7 +65,7 @@
 										</div>
 									</Upload>
 								</div>
-							</FormItem>
+							</FormItem>-->
 
 						</Form>
 
@@ -63,7 +73,7 @@
 
 					<div class="iv_form_but center">
 						<button class="details_opBut auto linkBlock smallsize">重置</button>
-						<button class="details_opBut linkBlock smallsize" @click="">确认</button>
+						<button class="details_opBut linkBlock smallsize" @click="sure">确认</button>
 						<!--<Button type="primary">确认</Button>-->
 
 					</div>
@@ -92,7 +102,11 @@
 					name: "",
 					notes: "",
 					valuation: "0",
+					designer: ""
 				},
+
+				orderData: [],
+				members: [],
 
 				uploadpathdata: '',
 				defaultList: [],
@@ -162,21 +176,166 @@
 
 			},
 
+			sure: function() {
+
+				var pushschemeobj = this.pushschemeObj
+
+				var orderId = pushschemeobj.orderId;
+				var name = pushschemeobj.name;
+				var notes = pushschemeobj.notes;
+				var valuation = pushschemeobj.valuation;
+				var designer = pushschemeobj.designer
+
+				name = name.trim()
+				notes = notes.trim()
+				valuation = valuation.trim()
+
+				var reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+
+				if(orderId == "" || orderId == null) {
+					this.$Message.error('请选择要设计的订单！');
+					return false;
+				} else if(name == "" || name == null || name.length == 0) {
+					this.$Message.error('设计名称不能为空！');
+					return false;
+				} else if(valuation == "" || valuation == null || valuation.length == 0) {
+					this.$Message.error('设计估价不能为空！');
+					return false;
+				} else if(!/^\d{1,8}(\.\d{1,2})?$/.test(valuation)) {
+					this.$Message.error('设计估价位数过长或小数点后超两位且不能为负');
+					return false;
+				}else if(designer == "" || designer == null) {
+					this.$Message.error('请选择设计师！');
+					return false;
+				}
+
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+				var that = this
+
+				this.axios({
+					method: 'post',
+					url: '/api/f/customorders/' + orderId + '/designs',
+
+					data: {
+						name: name,
+						notes: notes,
+						valuation: valuation,
+						designer:designer
+					}
+
+				}).then(function(res) {
+
+					var verify = [{
+							"name": "name",
+							"note": "设计名称"
+						},
+						{
+							"name": "notes",
+							"note": "设计描述 "
+						},
+						{
+							"name": "valuation",
+							"note": "设计估价 "
+						},
+						{
+							"name": "designer",
+							"note": "设计师 "
+						},
+					]
+
+					setTimeout(msg, 100);
+					that.loading = false
+					if(Isjurisdiction.isright(res, that, verify) == false) {
+						return false
+					}
+					var data = res.data.data
+
+					that.$Message.success("创建成功")
+					that.pushschemeObj = {
+						orderNo: "",
+						name: "",
+						notes: "",
+						valuation: "0",
+						designer: ""
+					}
+
+				}).catch(function(err) {
+					setTimeout(msg, 100);
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
+
+			},
+
 			formeReset() {
 				this.pushschemeObj = {
-					orderNo: "",
-					name: "",
-					notes: "",
-					valuation: "0",
-				},
+						orderNo: "",
+						name: "",
+						notes: "",
+						valuation: "0",
+						designer: ""
+					},
 
-				this.uploadList = []
+					this.uploadList = []
+			},
+			//查询可设计的订单
+			getOreder: function() {
+				var that = this
+
+				this.axios({
+					method: 'get',
+					url: '/api/f/customorders?design=1&pageNum=1&pageSize=999999999',
+
+				}).then(function(res) {
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					var data = res.data.data
+					that.orderData = data
+
+				}).catch(function(err) {
+
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
+			},
+
+			//查询全部员工
+			getMembers: function() {
+				let that = this
+
+				this.axios({
+					method: 'get',
+					url: '/api/f/depts/members/?pageNum=1&pageSize=999999',
+
+				}).then(function(res) {
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					var data = res.data.data
+					that.members = data
+
+				}).catch(function(err) {
+
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
 			}
-
 		},
 
 		mounted: function() {
-			
+
+			this.getOreder() //查询可设计的订单
+			this.getMembers() //查询全部员工
+
+			//			/
 		},
 
 	}

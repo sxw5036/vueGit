@@ -172,10 +172,7 @@
 			
 			goback:function  () {
 				this.$emit('openWindow', ('client'), ('客户管理'), ('3'), ('client'), ('client'))
-                this.$router.push({
-					name: 'client',
-
-				})
+               
 			},
 
 			/*选择市*/

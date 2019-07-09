@@ -123,9 +123,9 @@
 
 						<ul class="tab">
 							<li class="tab_item">
-								<div class="lable">订单编号</div>
+								<div class="lable">物流单号</div>
 								<div class="form_nav">
-									<Input v-model="ordernumber" placeholder="请输入订单编号..." style="width: 200px;"></Input>
+									<Input v-model="ordernumber" placeholder="请输入物流单号..." style="width: 200px;"></Input>
 								</div>
 							</li>
 
@@ -133,7 +133,7 @@
 							<li class="tab_item">
 								<div class="lable"></div>
 								<div class="form_nav">
-									<Button icon="ios-search" @click="serchorder">搜索</Button>
+									<Button icon="ios-search" @click="serchorder()">搜索</Button>
 								    <Button  @click="newData"   type="primary" >重置</Button>
 								</div>
 							</li>
@@ -200,7 +200,7 @@
 			<Form :label-width="80">
 				
 				<FormItem label="包裹编号">
-					<span v-for="(item,index) in scanArry">{{item.barcode}},</span>
+					<span :key='index' v-for="(item,index) in scanArry">{{item.barcode}}</span>
 				</FormItem>
 				
 				<FormItem label="收货人">
@@ -228,7 +228,7 @@
 
 					<div style="margin-top:10px; padding:2% 0; ">
 						<div class="pl">
-							<div class="demo-upload-list" v-for="(item,index) in uploadList">
+							<div :key='index' class="demo-upload-list" v-for="(item,index) in uploadList">
 								<template>
 									<img :src="item.path">
 									<div class="demo-upload-list-cover">
@@ -344,7 +344,7 @@
 					},
 					{
 						title: '所属订单',
-						key: 'orderNo',
+						key: 'no',
 						align: 'center',
 
 					},
@@ -502,96 +502,93 @@
 						align: 'center'
 					},
 					{
-						title: '包裹编号',
-						key: 'barcode',
+						title: '物流单号',
+						key: 'logisticsNo',
 						align: 'center',
+						
+					},
+					{
+						title: '物流名称',
+						key: 'logisticsName',
+						align: 'center',
+						
+						ellipsis: true,
+					},
 					
-						// 						render: (h, params) => {
-						// 							var barcode = params.row.barcode
-						// 							return h('div', {
-						// 									style: {
-						// 										color: 'blue',
-						// 										textDecoration: 'underline',
-						// 										cursor: 'pointer'
-						// 						
-						// 									},
-						// 						
-						// 									on: {
-						// 										click: () => {
-						// 											this.Modelpack = true;
-						// 											var data = this.data1[params.index]
-						// 											this.packMsg = data
-						// 											
-						// 						
-						// 										}
-						// 									},
-						// 								},
-						// 								barcode)
-						// 						}
-					},
 					{
-						title: '所属订单',
-						key: 'orderNo',
+						title: '发货单号',
+						key: 'no',
 						align: 'center',
-						
+					// 
+					// 							render: (h, params) => {
+					// 								var barcode = params.row.dispatchBillItemDtoList.barcode
+					// 								return h('div', {
+					// 										style: {
+					// 											color: 'blue',
+					// 											textDecoration: 'underline',
+					// 											cursor: 'pointer'
+					// 							
+					// 										},
+					// 							
+					// 										on: {
+					// 											click: () => {
+					// 												this.Modelpack = true;
+					// 												var data = this.data1[params.index]
+					// 												this.packMsg = data
+					// 												
+					// 							
+					// 											}
+					// 										},
+					// 									},
+					// 									barcode)
+					// 							}
 					},
+					
 
+					
 					{
-						title: '经销商姓名',
-						key: 'dealerName',
-						align: 'center',
-						
-						ellipsis: true,
-					},
-					{
-						title: '经销商电话',
-						key: 'dealerTel',
+						title: '收货人',
+						key: 'consignee',
 						align: 'center',
 						
 						ellipsis: true,
 
 					},
 
-					{
-						title: '包裹类型',
-						key: 'typeName',
-						align: 'center',
-						
-						ellipsis: true,
-						render: (h, params) => {
-							const row = params.row;
-							var text
-							if(row.type == 0) {
-								text = '柜体'
-							} else if(row.type == 1) {
-								text = '门板-自产'
-							} else if(row.type == 2) {
-								text = '门板-外协'
-							} else if(row.type == 3) {
-								text = '特供实木'
-							} else if(row.type == 4) {
-								text = '五金'
-							} else if(row.type == 5) {
-								text = '样板'
-							}
-							this.data1[params.index].typeName = text;
-							return h('div', text);
-						}
-					},
-					{
-						title: '订单收货人',
-						key: 'consigneeName',
-						align: 'center',
-						
-						ellipsis: true,
-					},
 					{
 						title: '收货人电话',
 						key: 'consigneeTel',
 						align: 'center',
 						
 						ellipsis: true,
+						// render: (h, params) => {
+						// 	const row = params.row;
+						// 	var text
+						// 	if(row.type == 0) {
+						// 		text = '柜体'
+						// 	} else if(row.type == 1) {
+						// 		text = '门板-自产'
+						// 	} else if(row.type == 2) {
+						// 		text = '门板-外协'
+						// 	} else if(row.type == 3) {
+						// 		text = '特供实木'
+						// 	} else if(row.type == 4) {
+						// 		text = '五金'
+						// 	} else if(row.type == 5) {
+						// 		text = '样板'
+						// 	}
+						// 	this.data1[params.index].typeName = text;
+						// 	return h('div', text);
+						// }
 					},
+					{
+						title: '收货人地址',
+						key: 'address',
+						align: 'center',
+						
+						ellipsis: true,
+					},
+					
 					
 					{
 						title: '操作',
@@ -605,8 +602,8 @@
 							h('Button', {
 									props: {
 										type: 'primary',
-										size: 'small',
-										disabled: !this.operation.edit
+										size: 'small'
+										// disabled: !this.operation.edit
 									},
 									style: {
 										marginRight: '5px'
@@ -617,7 +614,7 @@
 											this.$router.push({
 												name: 'deliversDetails',
 												query: {
-													id: this.data1[params.index].id
+													id: this.data1[params.index].logisticsNo
 												}
 											})								
 									}
@@ -973,11 +970,11 @@
 
 				if(this.helps == true) {
 
-					window.location.href = '/api/f/storages/4ujh7687hips/finisheds/dispatch?' + that.ordernumber;
+					window.location.href = '/api/f/storages/finisheds/dispatch?' + that.ordernumber;
 					// url: '/api/f/storages/4ujh7687hips/finisheds/dispatch?'+ that.ordernumber
 				} else {
 					// url: '/api/f/storages/4ujh7687hips/finisheds/dispatch',
-					window.location.href = '/api/f/storages/4ujh7687hips/finisheds/dispatch';
+					window.location.href = '/api/f/storages/finisheds/dispatch';
 
 				}
 
@@ -1006,7 +1003,7 @@
 			},
 
 			setdeliver() {
-var  that = this;
+				var  that = this;
 
 				if(this.scanArry.length<1){
 					this.$Message.success("请选择发货的包裹");
@@ -1153,6 +1150,7 @@ var  that = this;
 					this.wuliucompany()
 			},
 			getsearchordersdatas() {
+			
 				let that = this;
 				this.axios({
 					method: 'get',
@@ -1160,16 +1158,19 @@ var  that = this;
 						'X-Requested-With': 'XMLHttpRequest',
 						'ContentType': 'application/json;charset=UTF-8'
 					},
-
-					url: '/api/f/storages/4ujh7687hips/finisheds?ship=1&delivery=false' + (that.ordertime == '' ? '' : '&delivered=' + that.ordertime) + (that.ordernumber == '' ? '' : '&orderNo=' + that.ordernumber) + '&pageNum=' + that.currents + '&pageSize=' + that.pageSize
+					url:'/api/f/dispatchs?logisticsNo='+that.ordernumber+ '&pageNum=' + that.currents + '&pageSize=' + that.pageSize
+					
+					// url: '/api/f/storages/finisheds?ship=1&delivery=false' +(that.ordernumber == '' ? '' : '&orderNo=' + that.ordernumber) + '&pageNum=' + that.currents + '&pageSize=' + that.pageSize
 				}).then(res => {
-
-					if(res != false) {
-						that.data1 = res.data.data;
-						that.pageSize = res.data.pagination.pageSize;
-						that.pageNum = res.data.pagination.pageNum;
-						that.totalpage = res.data.pagination.total;
-					}
+					
+					console.log(res)
+					that.data1 = res.data.data;
+					// if(res != false) {
+					// 	that.data1 = res.data.data;
+					// 	that.pageSize = res.data.pagination.pageSize;
+					// 	that.pageNum = res.data.pagination.pageNum;
+					// 	that.totalpage = res.data.pagination.total;
+					// }
 				})
 
 			},
@@ -1182,7 +1183,7 @@ var  that = this;
 						'ContentType': 'application/json;charset=UTF-8'
 					},
 					// 
-					url: '/api/f/storages/4ujh7687hips/finisheds?ship=1&delivery=false' + '&pageNum=' + that.currents + '&pageSize='+ that.pageSize
+					url: '/api/f/dispatchs?' + '&pageNum=' + that.currents + '&pageSize='+ that.pageSize
 				}).then(res => {
 
 					if(res != false) {
@@ -1192,20 +1193,22 @@ var  that = this;
 						that.pageNum = res.data.pagination.pageNum;
 						that.totalpage = res.data.pagination.total;
 
-						that.data1 = []
+						// that.data1 = []
+							that.data1 = data
 
-						for(var i = 0; i < data.length; i++) {
-
-							data[i].typeName = ""
-
-							that.data1.push(data[i])
-
-							if(!!that.barcodeChecked[data[i].barcode] == true) {
-
-								that.data1[i]._checked = true
-							}
-
-						}
+// 						for(var i = 0; i < data.length; i++) {
+// 
+// 							data[i].typeName = ""
+// 
+// 							that.data1.push(data[i])
+// 
+// 							if(!!that.barcodeChecked[data[i].barcode] == true) {
+// 
+// 								that.data1[i]._checked = true
+// 							}
+// 
+// 						}
+					
 
 					}
 				})
@@ -1229,7 +1232,7 @@ var  that = this;
 					'ContentType': 'application/json;charset=UTF-8'
 				},
 
-				url: '/api/f/storages/4ujh7687hips/finisheds?ship=1&delivery=false' + '&pageNum=1&pageSize=10000'
+				url: '/api/f/storages/fi'
 			}).then(res => {
 
 				if(res != false) {

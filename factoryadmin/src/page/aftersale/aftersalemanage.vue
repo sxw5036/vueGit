@@ -696,11 +696,15 @@
 			return {
 
 				tableHeader: [{
-						title: '订单编号',
-						key: "orderNo",
-						width: 200,
-						fixed: "left",
+						title: '售后单编号',
+						key: "no",
+						width: 150,
 					},
+					{
+							title: '订单编号',
+							key: "orderNo",
+							width: 150,
+						},
 
 					{
 						title: '售后状态 ',
@@ -825,21 +829,7 @@
 									},
 									on: {
 										click: () => {
-											
-											
-											this.$router.push({
-												name: 'aftersaleDetails',
-												query: {
-													id: this.tableData[params.index].id
-												}
-											})
-											
-//											this.reSetIndex = params.index
-//
-//											this.disposeMsg.way = ""
-//											this.disposeMsg.chargeAmount = ""
-//											/**/
-//											this.getdepdatas(params.index)
+											this.$emit('openWindow', ('aftersaleDetails'), ('售后单详情"'), ('12-3'), ('aftersaleDetails'), ('aftersaleDetails'),(this.tableData[params.index].id))
 										}
 									}
 								}, '详情'),

@@ -66,7 +66,7 @@
 						</a>
 					</li>
 					<li>
-						<a @click="newFinanceorder">
+						<a @click="newFinishedstock">
 							<img src="../assets/img/home/index_icon10.png" />
 							<p>新建包裹</p>
 						</a>
@@ -627,7 +627,7 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 			},
 
 			newOutsource: function() {
-				this.$emit('openWindow', ('outsourceNewly'), ('新建设计'), ('4-1'), ('outsourceNewly'), ('outsourceNewly'))
+				this.$emit('openWindow', ('outsourceNewly'), ('新建外协'), ('4-1'), ('outsourceNewly'), ('outsourceNewly'))
 			},
 
 			newProduction: function() {

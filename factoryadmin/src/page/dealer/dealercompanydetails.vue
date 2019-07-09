@@ -3,7 +3,7 @@
 		<div class="Breadcrumb">
 			<Breadcrumb>
 				<BreadcrumbItem to="/">首页</BreadcrumbItem>
-				<BreadcrumbItem to="/dealercompany">经销商管理</a>
+				<BreadcrumbItem><a @click="goback">经销商管理</a>
 				</BreadcrumbItem>
 				<BreadcrumbItem>经销商详情</BreadcrumbItem>
 			</Breadcrumb>
@@ -676,6 +676,10 @@
 		},
 
 		methods: {
+			
+			goback:function  () {
+				this.$emit('openWindow', ('dealercompany'), ('经销商管理'), ('2'), ('dealercompany'), ('dealercompany'))
+			},
 
 			TabsChange: function(index) {
 				this.tabIndexs = index

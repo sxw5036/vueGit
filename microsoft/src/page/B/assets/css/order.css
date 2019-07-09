@@ -317,7 +317,7 @@
 }
 
 
-.icon_nav.hover{
+.icon_nav:hover{
 	border-bottom: solid 0.1rem #d20000;
 	display: block;
 }

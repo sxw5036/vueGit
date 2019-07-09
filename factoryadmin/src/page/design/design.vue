@@ -761,180 +761,89 @@
 				dlay:0,
 
 				tableHeader: [{
-						title: '订单编号',
+						title: '设计编号',
 						key: 'no',
-						align:'center',
-						width: 200,
-						fixed: 'left',
-					},
-                    {
-                    	title: '订单类型',
-                    	key: 'type',
-                    	width: 160,
-                    	align:'center',
-                    	render: (h, params) => {
-                    
-                    		var type = params.row.type
-                    
-                    		if(type == 0) {
-                    
-                    			var texts = '正常订单'
-                    		} else if(type == 1) {
-                    
-                    			var texts = '增补订单'
-                    		} else if(type == 2) {
-                    
-                    			var texts = '返货单'
-                    		} else if(type == 3) {
-                    
-                    			var texts = '打样订单'
-                    		} else if(type == 4) {
-                    
-                    			var texts = '样板订单'
-                    		} else if(type == 5) {
-                    
-                    			var texts = '展厅订单'
-                    		}
-                    
-                    		return h('div', texts)
-                    	}
-                    
-                    },
-                    
-                    {
-                    	title: '订单状态',
-                    	width: 160,
-                    	align:'center',
-                    
-                    	render: (h, params) => {
-                    
-                    		var status = params.row.status
-                    
-                    		if(status == 0) {
-                    
-                    			var texts = '待处理'
-                    		} else if(status == 1) {
-                    
-                    			var texts = '设计费待评估'
-                    		} else if(status == 2) {
-                    
-                    			var texts = '设计费待确认'
-                    		} else if(status == 3) {
-                    
-                    			var texts = '设计费待审核'
-                    		} else if(status == 4) {
-                    
-                    			var texts = '待设计'
-                    		} else if(status == 5) {
-                    
-                    			var texts = '设计中'
-                    		} else if(status == 6) {
-                    
-                    			var texts = '设计待确认'
-                    		} else if(status == 7) {
-                    
-                    			var texts = '出厂价待确认'
-                    		} else if(status == 8) {
-                    
-                    			var texts = '经销商待确认出厂价'
-                    		} else if(status == 9) {
-                    
-                    			var texts = '货款支付审核'
-                    		} else if(status == 10) {
-                    
-                    			var texts = '待生产'
-                    		} else if(status == 11) {
-                    
-                    			var texts = '生产中'
-                    		} else if(status == 12) {
-                    
-                    			var texts = '待入库'
-                    		} else if(status == 13) {
-                    
-                    			var texts = '待出库'
-                    		} else if(status == 14) {
-                    
-                    			var texts = '待配送'
-                    		} else if(status == 15) {
-                    
-                    			var texts = '配送中'
-                    		} else if(status == 16) {
-                    
-                    			var texts = '已完成'
-                    		} 
-                    
-                    		return h('div', texts)
-                    	}
-                    
-                    },
-					{
-						title: '房屋面积',
-						key: 'acreage',
-						align:'center',
-						width: 100,
-					},
-					
-					
-					
-					{
-						title: '设计师',
-						key: 'designerName',
-						width: 160,
-						align:'center',
-						render: (h, params) => {
-					
-							var designerName = params.row.designerName
-					
-							if(!designerName) {
-					
-								var texts = '未分配'
-							} else {
-					
-								var texts = designerName
-							}
-					
-							return h('div', texts)
-						}
-					},
-					{
-						title: '经销商名称',
-						key: 'dealerName',
-						align:'center',
-						width: 160,
-					},
-					{
-						title: '客户姓名',
-						key: 'customerName',
-						align:'center',
-						width: 160,
+						
+
 					},
 
 					{
-						title: '客户电话',
-						key: 'customerTel',
-						align:'center',
-						width: 160,
+						title: '设计名称',
+						key: 'name',
+						
+
 					},
 
 					{
-						title: '创建人',
-						key: 'creatorName',
-						width: 200,
-						align:'center',
+						title: '设计说明',
+						key: 'notes',
+						
+
 					},
 
 					{
-						title: '创建日期',
-						key: 'created',
-						width: 200,
-						align:'center',
+						title: '设计状态',
+						key: 'status',
+						
+//						render: (h, params) => {
+//
+//							var status = params.row.status
+//
+//							if(status == 0) {
+//
+//								var texts = '设计中'
+//							} else if(status == 1) {
+//
+//								var texts = '待审核'
+//							} else if(status == 2) {
+//
+//								var texts = '设计发布'
+//							} else if(status == 3) {
+//
+//								var texts = '待确认'
+//							} else if(status == 4) {
+//
+//								var texts = '已完成'
+//							}
+//
+//							return h('div', texts)
+//						}
+
+					},
+
+					{
+						title: '修改意见',
+						key: 'amendments',
+						
+
+					},
+
+					{
+						title: '估价',
+						key: 'valuation',
+						
+
+					},
+
+					{
+						title: '设计师姓名',
+						key: 'designName',
+						
+
+					},
+
+					{
+						title: '设计师电话',
+						key: 'designMobile',
+						
+
 					},
 					
 					{
 						title: '操作',
 						key: 'action',
 						width: 120,
-						fixed: 'right',
+						
 						align: 'center',
 						render: (h, params) => {
 
@@ -951,7 +860,7 @@
 										on: {
 											click: () => {
 												
-												this.$emit('openWindow', ('designDetails'), ('设计详情'), ('5-3'), ('designDetails'), ('designDetails'),(this.tableData[params.index].id))
+												this.$emit('openWindow', ('designDetails'), ('设计详情'), ('5-3'), ('designDetails'), ('designDetails'),(this.tableData[params.index].customOrderId+','+this.tableData[params.index].id))
 												
 //												this.$router.push({
 //												name: 'designDetails',
@@ -2060,6 +1969,7 @@
 					this.pageIndex = index;
 					this.searchData();
 				} else {
+					var searchObj = this.searchObj
 					searchObj.customerTel='';
 					searchObj.no='';
 					this.pageIndex = index;
@@ -2831,7 +2741,7 @@
 
 					},
 					this.memberIndex = 1
-				this.designersearchData()
+				
 
 			},
 
@@ -2844,12 +2754,12 @@
 
 				this.axios({
 			    method: 'get',
-				url: '/api/f/customorders?status=1&status=3&status=4&status=5&status=6' +  '&pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize,
+				url: '/api/f/customorders/designs?pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize,
 				
 
 
 				}).then(function(res) {
-					console.log(res)
+					
 					setTimeout(msg, 100);
 					that.loading = false
 					if(Isjurisdiction.isright(res, that) == false) {
@@ -2921,7 +2831,7 @@
 
 
 			this.getDatas()
-			this.getdesignerData()
+			
 
 			//up
 

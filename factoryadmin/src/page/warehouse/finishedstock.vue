@@ -195,7 +195,7 @@
 
 			<div>
 
-				<Table border :loading="loading" :columns="tableHeader" :data="tableData" @on-select="pickselect" @on-select-all="pickselectAll" @on-select-all-cancel="cancelselectAll" @on-select-cancel="cancelselect"></Table>
+				<Table border :loading="loading" :columns="tableHeader" :data="tableData" @on-select="pickselect" @on-select-all="pickselectAll" @on-select-all-cancel="cancelselectAll" @on-select-cancel="cancelselect" ></Table>
 				<Switch v-model="loading"></Switch>
 				<div class="ui_tableBottom">
 
@@ -278,7 +278,7 @@
 
 					<li class="item af_center">
 
-						<div class="item" v-for="(item,index) in objGetData.finishedStockItemDtos">
+						<div :key="index" class="item" v-for="(item,index) in objGetData.finishedStockItemDtos">
 							<Form :model="objGetData" :label-width="120">
 								<FormItem label="包装编号/条形码">
 									<Input style="width: 300px;" v-model="item.barcode" placeholder="请输入条目包装编号/条形码..."></Input>
@@ -525,7 +525,7 @@
 					<FormItem label="附件">
 						<div class="pl">
 
-							<div class="demo-upload-list" v-for="(item,index) in packfiles">
+							<div class="demo-upload-list" :key='index' v-for="(item,index) in packfiles">
 
 								<template>
 									<img :src="item.path">
@@ -678,7 +678,7 @@
 						<p>{{deliverMsg.no}}</p>
 					</FormItem>-->
 
-					<FormItem label="发货单">
+					<FormItem label="发货单" >
 						<p>{{deliverMsg.no}}</p>
 					</FormItem>
 
@@ -756,21 +756,15 @@
 	export default {
 		data() {
 			return {
-
+				currents: 1,
 				employee: [],
 
 				tableHeader: [
 
-//					{
-//						type: 'selection',
-//						width: 60,
-//						align: 'center'
-//					},
 
-					/*{
-
+					{
+						type: 'selection',
 						width: 60,
-						fixed: "left",
 						align: "center",
 						render: (h, params) => {
 
@@ -802,8 +796,8 @@
 							])
 						}
 
-					},*/
-
+					},
+				
 					{
 						title: '包装编号/条形码',
 						key: 'barcode',
@@ -966,11 +960,11 @@
 										},
 										on: {
 											click: () => {
-												
+												console.log(this.tableData[params.index].id)
 												this.$router.push({
 												name: 'finishedDetails',
 												query: {
-													id: this.tableData[params.index].id
+													id: this.tableData[params.index].barcode
 												}
 											})
 //												this.SetModel = true
@@ -1387,7 +1381,8 @@
 					},
 
 					finishedDetails: false,
-					finishedHead: [{
+					finishedHead: [
+						{
 							title: '包装编号',
 							key: 'barcode',
 							fixed: 'left',
@@ -1837,7 +1832,8 @@
 					},
 
 					//选择数据
-					pickselectHead: [{
+					pickselectHead: [
+					{
 							title: '包装编号/条形码',
 							key: 'barcode',
 							width: 160,
@@ -1977,7 +1973,9 @@
 			},
 
 			methods: {
+		
 				
+			
 				newOPen: function() {
 				
 				
@@ -2415,7 +2413,7 @@
 						//请求产品
 						this.axios({
 							method: 'delete',
-							url: '/api/f/storages/' + this.warehouseId + '/finisheds/' + id,
+							url: '/api/f/storages/' + this.warehouseId + '/finisheds/' + id
 
 						}).then(function(res) {
 							setTimeout(msg, 100);
@@ -2466,7 +2464,7 @@
 							//                    /
 							this.axios({
 								method: 'put',
-								url: '/api/f/storages/' + this.warehouseId + '/finisheds/' + id + '/items/' + itemid,
+								url: '/api/f/storages/50sv0c7rjjeo/finisheds/' + id + '/items/' + itemid,
 
 								data: {
 									"notes": notes,
@@ -2539,7 +2537,7 @@
 						//请求产品
 						this.axios({
 							method: 'delete',
-							url: '/api/f/storages/' + this.warehouseId + '/finisheds/' + id + '/items/' + itemid,
+							url: '/api/f/storages/50sv0c7rjjeo/finisheds/' + id + '/items/' + itemid
 
 						}).then(function(res) {
 							setTimeout(msg, 100);
@@ -2687,7 +2685,7 @@
 						//                    /
 						this.axios({
 							method: 'put',
-							url: '/api/f/storages/' + this.warehouseId + '/finisheds/' + id + '/warehousing/' + itemid,
+							url: '/api/f/storages/' + this.warehouseId + '/finisheds/' + id + '/warehousing/' + itemid
 
 						}).then(function(res) {
 							setTimeout(msg, 100);
@@ -2763,9 +2761,9 @@
 							pathurl += 'barcode=' + barcode + "&"
 						}
 
-						if(In != "" && In != null) {
-							pathurl += 'in=' + In + "&"
-						}
+						// if(In != "" && In != null) {
+						// 	pathurl += 'in=' + In + "&"
+						// }
 
 						if(ship != "" && ship != null) {
 							pathurl += 'ship=' + ship + "&"
@@ -2790,7 +2788,7 @@
 						axios.defaults.headers['X-P'] = this.$route.query.pkey + "-" + this.$route.query.key + "-view"
 						this.axios({
 							method: 'get',
-							url: '/api/f/storages/' + this.warehouseId + '/finisheds?' + pathurl + 'pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize,
+							url: '/api/f/storages/finisheds?' + pathurl + 'pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize
 
 						}).then(function(res) {
 							setTimeout(msg, 100);
@@ -3153,7 +3151,6 @@
 						this.axios({
 							method: 'post',
 							url: '/api/f/storages/' + this.warehouseId + '/finisheds/dispatchplan',
-
 							data: {
 								"dispatchBillPlanItems": ids,
 								"note": this.distributionNots
@@ -3174,7 +3171,6 @@
 						}).catch(function(err) {
 							setTimeout(msg, 100);
 							that.$Message.error('出错了，请稍后重试！');
-
 							that.distribution = false
 
 						})
@@ -3262,9 +3258,11 @@
 						var that = this
 
 						this.axios({
+							// method: 'get',
+							// url: '/api/f/storages/' + this.warehouseId + '/finisheds?pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize
 							method: 'get',
-							url: '/api/f/storages/' + this.warehouseId + '/finisheds?pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize,
-
+							url: '/api/f/storages/finisheds?pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize
+							
 						}).then(function(res) {
 							setTimeout(msg, 100);
 
@@ -3329,73 +3327,75 @@
 				},
 
 				mounted: function() {
-
+				
 					this.pathchange()
 
 					var that = this
 
 					//查询成品库所用订单
 
+// 					this.axios({
+// 						method: 'get',
+// 						url: '/api/f/customorders/finishedorders'
+// 
+// 					}).then(function(res) {
+// 										
+// 						
+// 						if(Isjurisdiction.isright(res, that) == false) {
+// 							return false
+// 						}
+// 
+// 						var orderDatacache = {}
+// 						var data = res.data.data
+// 
+// 						for(var i = 0; i < data.length; i++) {
+// 
+// 							orderDatacache[data[i].id] = data[i]
+// 						}
+// 
+// 						that.orderData = data
+// 						that.orderDataCache = orderDatacache
+// 
+// 					}).catch(function(err) {
+// 
+// 						that.$Message.error('出错了，请稍后重试！');
+// 
+// 					})
+// 
+// 					this.axios({
+// 						method: 'get',
+// 						url: '/api/f/customorders/finishedorders/all'
+// 
+// 					}).then(function(res) {
+// 
+// 						if(Isjurisdiction.isright(res, that) == false) {
+// 							return false
+// 						}
+// 
+// 						var orderDatacache = {}
+// 						var data = res.data.data
+// 
+// 						for(var i = 0; i < data.length; i++) {
+// 
+// 							orderDatacache[data[i].id] = data[i]
+// 						}
+// 
+// 						that.orderDataAll = data
+// 						that.orderDataCache = orderDatacache
+// 
+// 					}).catch(function(err) {
+// 
+// 						that.$Message.error('出错了，请稍后重试！');
+// 
+// 					})
+// 
 					this.axios({
 						method: 'get',
-						url: '/api/f/customorders/finishedorders',
+						url: '/api/f/depts/members'
 
 					}).then(function(res) {
-
-						if(Isjurisdiction.isright(res, that) == false) {
-							return false
-						}
-
-						var orderDatacache = {}
-						var data = res.data.data
-
-						for(var i = 0; i < data.length; i++) {
-
-							orderDatacache[data[i].id] = data[i]
-						}
-
-						that.orderData = data
-						that.orderDataCache = orderDatacache
-
-					}).catch(function(err) {
-
-						that.$Message.error('出错了，请稍后重试！');
-
-					})
-
-					this.axios({
-						method: 'get',
-						url: '/api/f/customorders/finishedorders/all',
-
-					}).then(function(res) {
-
-						if(Isjurisdiction.isright(res, that) == false) {
-							return false
-						}
-
-						var orderDatacache = {}
-						var data = res.data.data
-
-						for(var i = 0; i < data.length; i++) {
-
-							orderDatacache[data[i].id] = data[i]
-						}
-
-						that.orderDataAll = data
-						that.orderDataCache = orderDatacache
-
-					}).catch(function(err) {
-
-						that.$Message.error('出错了，请稍后重试！');
-
-					})
-
-					this.axios({
-						method: 'get',
-						url: '/api/f/depts/members',
-
-					}).then(function(res) {
-
+						console.log("哈哈哈哈")
+						console.log(res)
 						if(Isjurisdiction.isright(res, that) == false) {
 							return false
 						}
@@ -3408,6 +3408,8 @@
 						that.$Message.error('出错了，请稍后重试！');
 
 					})
+					
+					
 
 				},
 

@@ -58,10 +58,10 @@
 						 class="top_div2_s2">负责人:</span><span class="top_div2_s3" style="margin-left: 1.075rem;"><input :value="data.contacts"
 							 :readOnly="readOnlyTrueOrFalse" id="cpntacts" /></span>
 					</li>
-					<li>
+						<li>
 						<span class="top_div2_s1"><img style="width: 0.475rem ; height: 0.775rem;margin-right: 0.1rem; margin-left: 0.1rem;" src="../../assets/img/supplier/dianhua.png" /></span><span
 						 class="top_div2_s2">电话:</span><span class="top_div2_s3" style="color:rgba(187,174,137,1);"><input :value="data.supplierPhone"
-							 :readOnly="readOnlyTrueOrFalse" id="supplierPhone" /></span>
+							 :readOnly="readOnlyTrueOrFalse" id="supplierPhone" /> &nbsp;<a :href="'tel:' + data.supplierPhone" v-show="suppliertelImg"><span><img  style="width:0.6rem ;height: 0.9rem; margin-left: 0.2rem;" src="../../assets/img/aftersale/as_y_tels.png"></span></a></span>
 					</li>
 					<li v-show="this.readOnlyTrueOrFalse==true"  >
 						<span class="top_div2_s1"><img style="width: 0.675rem ; height: 0.675rem;" src="../../assets/img/supplier/diqu.png" /></span><span
@@ -149,8 +149,8 @@
 				<textarea :readonly="readonlytext" :value="data.remark" id="remark"></textarea>
 			</div>
 		</div>
-			<Address   :show="addsiteshow" @sure='surreAddress' @cancel="addsiteshow=!addsiteshow"></Address>
-	</div>
+			<Address   :show="addsiteshow" @sure='surreAddress' @cancel="addsiteshow=!addsiteshow"></Address>	
+			</div>
 </template>
 <script>
 	import address from '@/components/address'
@@ -159,7 +159,7 @@
 
 		data() {
 			return {
-				
+				suppliertelImg:'',
 				addsiteObj: {},
 				searchObj: {
 					startTime: "",
@@ -688,7 +688,9 @@
 						value:that.hanzi
 					})
 				}
-				
+				if (that.data.supplierPhone.length!=0) {
+					that.suppliertelImg=true
+				}
 				
 			
 				var map = new window.BMap.Map('allmap') //创建地图

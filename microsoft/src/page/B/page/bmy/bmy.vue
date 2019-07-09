@@ -98,8 +98,8 @@
 	   		   </div>
 	   		   
 	   </div>
-			<div  @click="login"  class="quit_out">退出登录</div>
-			<floors :btmuacindex="3"></floors>
+			<div  @click="login()"  class="quit_out">退出登录</div>
+			<floors :btmuacindex="2"></floors>
 	</div>
 </template>
 
@@ -131,6 +131,19 @@
 		
 		methods: {
 			login:function  () {
+				this.axios({
+					method:'put',
+					url:'/wxapi/b/dealers/users/logout'
+				}).then(function(res){
+					console.log(res)
+					console.log("!111")
+				}).catch(function(err){
+					
+				})
+				
+				
+				
+				
 				
 				this.$router.push({ name: 'login'})
 				

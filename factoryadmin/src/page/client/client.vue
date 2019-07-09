@@ -419,7 +419,7 @@
 					
 					{
 						title: '客户地区',
-						key: 'cityAreaId',
+						key: 'cityAreaName',
 
 						
 					},

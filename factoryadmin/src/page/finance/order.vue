@@ -166,7 +166,7 @@
 								<div class="form_nav">
 									<Button type="primary" class="p_lea">导入</Button>
 									<Button type="primary" class="p_lea">导出</Button>
-									<Button type="primary" class="p_lea" @click="newOpen">新建收支</Button>
+									<!--<Button type="primary" class="p_lea" @click="newOpen">新建收支</Button>-->
 									
 
 								</div>
@@ -292,22 +292,6 @@
 						title: '当前状态',
 						key: 'status',
 
-						
-
-						render: (h, params) => {
-
-							var status = params.row.status
-
-							if(status == 0) {
-
-								var texts = '未付款'
-							} else if(status == 1) {
-
-								var texts = '已付款'
-							}
-							return h('div', texts)
-						}
-
 					},
 
 					{
@@ -334,19 +318,7 @@
 						title: '支付款项',
 						key: 'funds',
 						
-						render: (h, params) => {
-
-							var funds = params.row.funds
-
-							if(funds == 32) {
-
-								var texts = '设计金'
-							} else if(funds == 31) {
-
-								var texts = '货款'
-							}
-							return h('div', texts)
-						}
+						
 
 					},
 
@@ -354,29 +326,7 @@
 						title: '订单类型',
 						key: 'type',
 						
-						render: (h, params) => {
-
-							var type = params.row.type
-
-							if(type == 0) {
-
-								var texts = '客户对经销商'
-							} else if(type == 1) {
-
-								var texts = '经销商对客户'
-							} else if(type == 2) {
-
-								var texts = '经销商对厂家'
-							} else if(type == 3) {
-
-								var texts = '厂家对经销商'
-							} else if(type == 4) {
-
-								var texts = '厂家对经销商扣款'
-							}
-
-							return h('div', texts)
-						}
+						
 
 					},
 
@@ -454,14 +404,9 @@
 									on: {
 										click: () => {
 											
-											this.$emit('openWindow', ('financeorderDetails'), ('客户详情页面'), ('3-3'), ('financeorderDetails'), ('financeorderDetails'),(this.tableData[params.index].id))
+											this.$emit('openWindow', ('financeorderDetails'), ('财务详情'), ('3-3'), ('financeorderDetails'), ('financeorderDetails'),(this.tableData[params.index].id))
 
-											this.$router.push({
-												name: '',
-												query: {
-													id: this.tableData[params.index].id
-												}
-											})
+											
 										}
 									}
 								}, '详情'),

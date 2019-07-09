@@ -57,10 +57,36 @@
 			</div>
             <div class="content_show" v-show="cur==2">
 				<div style="padding: 0.5rem 0.5rem;">
-					<div style="text-align: center; padding-top: 10rem;">
+					<!-- <div style="text-align: center; padding-top: 10rem;">
 						<img src="../../assets/img/message/jingqingqd.png" />
+					</div> -->
+					<div class="bodyC">
+						<div id="box">
+							<ul id="ulcontent" style="margin-bottom: 6rem;">
+								<li v-for="(item,index) in datamsg "  :key='index'  >
+									  
+									<div v-show="item.direct==2"  >
+										<p style="padding-bottom: 0; margin-bottom: 0.3rem; text-align: left;  margin-right: 3rem;">{{item.created.substring(5,16)}}</p>
+										<div style="width:auto; height: 2rem; text-align: left; margin-right: 0.5rem;">
+											<img src="../../assets/music.png" style=" vertical-align: top; width: 2rem; height: 2rem; border-radius: 50%;" /><span style=" margin-right: 0.5rem; padding: 0.5rem; display: inline-block; background-color: white; border-radius: 0.5rem;  height:auto;">{{item.message}}</span>
+										</div>
+									</div>
+									<div v-show="item.direct==1"  >
+										<p style="padding-bottom: 0; margin-bottom: 0.3rem; text-align: right;  margin-left: 3rem;">{{item.created.substring(5,16)}}</p>
+										<div style="width:auto; height: 2rem; text-align: right; margin-left: 0.5rem;">
+											<span style=" margin-left: 0.5rem; padding: 0.5rem; display: inline-block; background-color: white; border-radius: 0.5rem;  height:auto;">{{item.message}}</span><img src="../../assets/music.png" style=" vertical-align: top; width: 2rem; height: 2rem; border-radius: 50%;" />
+											
+										</div>
+									</div>
+								</li>
+								
+								<li ></li>
+							</ul>
+						</div>
+						<div style="width: 100%; height: auto; padding-bottom: 0.3rem; padding-top: 0.5rem; position: fixed; left: 0; bottom: 3rem; background-color: white;">
+						<span style="margin:0  2%; width: 8.4%;"><img  style=" width: 8.4%; vertical-align: top;" src="../../assets/xiangji.png" /> </span><span style="margin-right: 0.2rem;"><textarea id="content" v-model="chatmsg" style=" font-size: 0.75rem; height: 1.5rem;  margin-bottom: 0; padding: 0.2rem 2%; width: 68%; border-radius: 1rem;"></textarea></span><span><button style= " display: inline-block; border: none;background:#BFE6FF; border-radius: 1rem; width: 16%; color: white; font-size: 0.7rem;  " id="release" @click="sendBtn()" >发送</button> </span>
+						</div>
 					</div>
-					
 				</div>
 			</div>
            
@@ -73,6 +99,9 @@
 </template>
 
 <script>
+		function $(id){
+			return document.getElementById(id);
+		}
 	import axios from 'axios'
 	import mui from '@/assets/js/mui.js'
 	import floor from '@/components/B_bottom.vue'
@@ -82,8 +111,15 @@
 		data() {
 
 			return {
+					direct:1,
+					type:1,
                    cur:0 ,//默认选中第一个tab
 				   orderList:[],
+				   datamsg:'',
+				   infoCompanyId:"",
+				   chatmsg:'',
+				   infotoUser:'',
+				   infoBranchID:""
 				   
 				
 			}
@@ -97,6 +133,92 @@
 
 	
 		methods: {
+			getmsgdata(){
+				var that=this
+					that.axios({
+					method: 'get',
+					url: '/wxapi/f/companyMessages/messageList?companyId='+that.infoCompanyId
+			
+				}).then(function(res) {
+					console.log(res)
+					that.datamsg=res.data.data.data
+					// that.datamsg1=res.data.data.data.csreated
+				
+				
+				}).catch(function(err) {
+					
+					console.log(err)
+				
+				})
+			},
+			sendBtn(){
+				var that=this
+				var btn=$("release");
+				var textArea=$("content");
+				var box=$("box");
+				var ul=$("ulcontent");
+				
+				
+					//1获取输入的值
+				var content=textArea.value;
+				//获取之后要及时清除原值
+				textArea.value="";
+				if(content==""){
+					that.mui.toast("请输入信息", {
+						duration: 'long',
+						type: 'div'
+					})
+					return false
+				}
+				var li=document.createElement("li");
+				li.innerHTML='<div style="margin-top: 0.5rem;" >'+
+						'<p style="padding-bottom: 0; margin-bottom: 0; text-align: right;  margin-right: 3rem;">'+'16:30'+'</p>'+
+						'<div style="width:auto; height: 2rem; text-align: right; margin-right: 0.5rem;">'+
+							'<span style=" margin-right: 0.5rem; padding: 0.5rem; display: inline-block; background-color: white; border-radius: 0.5rem;  height:auto;">'+content+'</span>'+'<img src="../../assets/music.png" style=" vertical-align: top; width: 2rem; height: 2rem; border-radius: 50%;" />'
+						+'</div>'+'</div>';
+				var childerenLi=ul.children;
+				if (childerenLi.length<0) {
+					ul.appendChild(li,ul);
+				}else{
+					ul.insertBefore(li,ul.lastChild);
+				}
+				//3.获取所有的a标签
+				// var as=document.getElementsByTagName("a");
+				// for (var i=0;i<as.length;i++) {
+				// 	as[i].onclick=function(){
+				// 		ul.removeChild(this.parentNode);
+				// 	}
+				// }
+				console.log(that.infoBranchID)
+				console.log(that.infoCompanyId)
+				console.log(that.direct)
+				console.log(that.infotoUser)
+				console.log(that.chatmsg)
+				console.log(that.type)
+				that.axios({
+					method: 'post',
+					data:{
+						branchId:that.infoBranchID,
+						companyId:that.infoCompanyId,
+						direct:1,
+						fromUser:that.infofromUser,
+						toUser:that.infotoUser,
+						message:that.chatmsg,
+						type:1
+					},
+					url: '/wxapi/b/companyMessages/sendMessage'
+				}).then(function(res) {
+					
+					console.log(res)
+					
+				}).catch(function(err) {
+					
+					console.log(err)
+				
+				})
+				
+				
+			},
 				gotoxq(){
 					 	this.$router.push({ name: 'Bpublicnotice'})
 				},
@@ -119,12 +241,8 @@
 			},
 			getorderdatas(){			
 				   let that = this;
-				   this.axios({
+				   that.axios({
 					method: 'get',
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest',
-						'ContentType': 'application/json;charset=UTF-8'
-					},
 					url: '/wxapi/b/orders/messageOrders'
 				}).then(res => {
 					   console.log(res)
@@ -136,7 +254,34 @@
 			 
 		},
 		mounted: function() {
+				// this.getnoticedatas()
 		        this.getorderdatas();
+				var that =this
+			
+				that.axios({
+					method: 'get',
+					url: '/wxapi/b/dealers/loginUserInfo'
+				}).then(function(res) {
+					console.log("AAA")
+					console.log(res)
+					console.log("AAA")
+					
+					that.infoCompanyId=res.data.data.companyId
+					console.log(that.infoCompanyId)
+					that.infoBranchID=res.data.data.branchId
+					that.infotoUser=res.data.data.userId
+					that.infofromUser=res.data.data.fromUser
+					
+					that.getmsgdata()
+				
+				
+				}).catch(function(err) {
+					
+					console.log(err)
+				
+				})
+				
+			
 
 		}
 		
@@ -194,7 +339,11 @@
 			clear: both;
 		}
 		
-		
+		.bodyC{
+			position: relative;
+			width: 100%;
+			height: auto;
+		}
 		
 		
 </style>

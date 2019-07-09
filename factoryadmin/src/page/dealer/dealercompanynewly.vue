@@ -3,7 +3,7 @@
 		<div class="Breadcrumb">
 			<Breadcrumb>
 				<BreadcrumbItem to="/">首页</BreadcrumbItem>
-				<BreadcrumbItem ><a href="javascript:history.back(-1)">经销商管理</a></BreadcrumbItem>
+				<BreadcrumbItem ><a @click="goback">经销商管理</a></BreadcrumbItem>
 				<BreadcrumbItem>新建经销商</BreadcrumbItem>
 
 			</Breadcrumb>
@@ -204,6 +204,11 @@
 		},
 
 		methods: {
+			
+			goback:function  () {
+				this.$emit('openWindow', ('dealercompany'), ('经销商管理'), ('2'), ('dealercompany'), ('dealercompany'))
+               
+			},
 
 			/*选择市*/
 

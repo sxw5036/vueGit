@@ -6,16 +6,17 @@
       	
       	<ul>
       		
-      		<li v-for=" (item,index) in dataArry" :key="index" @click="changePath">
+      		<li v-for=" (item,index) in dataArry" :key="index" >
+				<router-link :to="{name:'FchatBoard',query:{branchId:item.branchId,companyId:item.companyId,fromUser:item.fromUser,toUser:item.toUser,toUserName:item.toUserName,fromUserName:item.companyName}}">
       			<div class="portrait">
       				<img src="../../assets/img/custom/custom_kh.png"/>
       			</div>
       			
       			<div class="user_msg">
-      				<h3>{{item.fromUserName}}<span v-if="item.cityName!=''&item.cityName!=null">【{{item.cityName}}】</span><span class="createtime">{{item.created}}</span></h3>
+      				<h3>{{item.companyName}}<span v-if="item.cityName!=''&item.cityName!=null">【{{item.cityName}}】</span><span class="createtime">{{item.created}}</span></h3>
       				<div class="notes">{{item.message}}</div>
       			</div>
-      			
+      			</router-link>
       		</li>
       		
       	</ul>
@@ -45,10 +46,11 @@
 		data() {
 			return {
 				apiCount:0,
-				dataArry: [],
+				dataArry: "",
 				pageIndex: 1, //分页页数
 				pageSize: 10,
-				pageIndextotal: 0
+				pageIndextotal: 0,
+				
 			}
 		},
 		
@@ -60,13 +62,6 @@
 		},
 
 		methods: {
-			
-			
-			changePath:function  () {
-			 	
-			 	this.$router.push({ name: 'Fchat'})
-			 	
-			 }
 
 		},
 
@@ -78,11 +73,12 @@
 				url: '/wxapi/f/companyMessages/messageList'
 			}).then(function(res) {
 				 // that.$refs.tipshow.alertshow(5)
-				console.log(res.data)
-				var data = res.data.data.data;
-				 for (var i=0;i<data.length;i++){
-				   that.dataArry.push(data[i]);
-				} 
+				console.log(res)
+				that.dataArry=res.data.data.data
+				// var data = res.data.data.data;
+				//  for (var i=0;i<data.length;i++){
+				//    that.dataArry.push(data[i]);
+				// } 
 			}).catch(function(err) {
 				//console.log(err)
 			

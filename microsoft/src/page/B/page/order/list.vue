@@ -37,7 +37,7 @@
 					<div class="form_nav">
 						<ul>
 							<li class="orderNo">
-								<input type="search" v-model="telNo" name="" id="" value="" placeholder="手机号/客户姓姓名/订单号" />
+								<input type="search" v-model="telNo" name="" id="" value="" placeholder="手机号/客户姓名/订单号" />
 							</li>
 
 							<li class="linkBlock">
@@ -54,16 +54,22 @@
 							</li>
 
 							<li class="linkBlock">
-								<div class="linkBlock_item select" @click="addsiteshow=!addsiteshow">
+								<div class="linkBlock_item select" @click="addsiteshow=!addsiteshow" style=" position: relative; padding-top: 0.15rem; margin: 0.2rem auto;">
 									<p v-show="searchObj.cityId ==null || searchObj.cityId == ''">选择地区</p>
 									<p v-show="searchObj.cityId!=null ||searchObj.cityId !=''  ">{{searchObj.mergerShortName}}</p>
+									<span style="position: absolute; top: 0; width: 0.5rem;  right: 12%;">
+										<img src="../../assets/img/bclient/xjt.png" style="width: 1.3rem;" />
+									</span>
 								</div>
-								<div class="linkBlock_item select">
-									<select v-model="jingliId" style=" color: rgba(99,99,99,0.8); text-align: center;text-align-last: center; padding: 0; border:none; text-align: center; z-index: 111; margin: 0 auto;">
+								<div class="linkBlock_item select "  style=" position: relative; padding-top: 0.15rem; margin: 0.2rem auto;">
+									<select v-model="jingliId" style=" color: rgba(99,99,99,0.8); text-align: center;padding: 0 0 0 2.2rem;  border:none; z-index: 111; margin:0 ; ">
 										<option style=" text-align: center; border:none;" value="">业务经理</option>
 										<option :value="item.salesmanId" :key='index'  v-for="(item,index)  in jldata " >{{item.salemanName}}</option>
 									
 									</select>
+									<span style="position: absolute; top: 0; width: 0.5rem;  right: 12%;">
+										<img src="../../assets/img/bclient/xjt.png" style="width: 1.3rem;" />
+									</span>
 								</div>
 							</li>
 

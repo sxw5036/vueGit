@@ -3,7 +3,7 @@
 		<div class="Breadcrumb">
 			<Breadcrumb>
 				<BreadcrumbItem to="/">首页</BreadcrumbItem>
-				<BreadcrumbItem to="/outsource">外协管理</BreadcrumbItem>
+				<BreadcrumbItem><a @click="goback">外协管理</a></BreadcrumbItem>
 				<BreadcrumbItem>外协订单</BreadcrumbItem>
 			</Breadcrumb>
 		</div>
@@ -11,18 +11,26 @@
 		<div class="panel">
 			<div class="panel_nav">
 				<div class="panel_center">
-					<h3 class="head">基本信息</h3>
+					<h3 class="head">基本信息<span class="right_icon">
+						<Poptip
+					        confirm
+					        title="外协删除后所有数据不可恢复，您确认要删除吗？"
+					        @on-ok="deleteData"
+					        >
+					      <Button size="small" type="error" icon="ios-trash-outline">删除</Button>
+					    </Poptip>
+						</span></h3>
 					<div class="panel_con" style="padding: 0px;">
 						<div class="summarize">
 							<ul>
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>拆单编号</h3>
-									<p>20190605-02</p>
+									<p>{{outsource.no}}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>订单编号</h3>
-									<p>J20190605-06</p>
+									<p>{{outsource.customOrderNo}}</p>
 								</li>
 
 								<li>
@@ -84,6 +92,17 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 
 									<div class="ivu-tabs-content ivu-tabs-content-animated" :style="[minusTabstransform()]">
 										<div class="ivu-tabs-tabpane padding">
+											
+											<div class="Tab_head">
+												<div class="item right">
+													<Button size="small" class="Tab_redact" v-show="redactVisible.tab1" @click="activateRedact(1)"  type="primary" icon="md-create">编辑</Button>
+													<Button size="small" class="Tab_success" v-show="!redactVisible.tab1" @click="sureRedact" type="success" icon="md-checkmark">完成</Button>
+													<!--<Button size="small" class="Tab_close" v-show="!redactVisible.tab1" @click="" type="warning" icon="md-close">取消</Button>-->
+													<Button size="small" class="Tab_print" type="info" icon="ios-albums-outline">打印</Button>
+
+												</div>
+											</div>
+
 
 											<div class="dealer_tab_nav">
 												<div class="tab_center ">
@@ -93,49 +112,49 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 																<li>
 																	<span class="lable">拆单编号：</span>
 																	<div class="value">
-																		<p>20190605-02</p>
+																		<Input readonly="readonly" class="borderNone" v-model="outsource.no"></Input>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">订单编号：</span>
 																	<div class="value">
-																		<p>J20190605-06</p>
+																		<Input readonly="readonly" class="borderNone" v-model="outsource.customOrderNo"></Input>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">状态：</span>
 																	<div class="value">
-																		<p>已完成</p>
+																		<p>{{outsource.stateName}}</p>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">拆单类型：</span>
 																	<div class="value">
-																		<p>门板</p>
+																		<p>{{outsource.typeName}}</p>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">生产方式：</span>
 																	<div class="value">
-																		<p>外协</p>
+																		<p>{{outsource.wayName}}</p>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">是否付款：</span>
 																	<div class="value">
-																		<p>已付款</p>
+																		<p>{{outsource.payName}}</p>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">外协金额：</span>
 																	<div class="value">
-																		<p>1000</p>
+																		<Input :readonly="redactVisible.tab1" :class="{borderNone:redactVisible.tab1==true}" v-model="outsource.amount"></Input>
 																	</div>
 																</li>
 															</ul>
@@ -144,28 +163,50 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 													<div class=" tab_item">
 														<div class="supplier_msg">
 															<ul>
+																
+																<li>
+																	<span class="lable">外协数量：</span>
+																	<div class="value">
+																		<Input :readonly="redactVisible.tab1" :class="{borderNone:redactVisible.tab1==true}" v-model="outsource.count"></Input>
+																	</div>
+																</li>
 																<li>
 																	<span class="lable">外协厂家名称：</span>
 																	<div class="value">
-																		<p>小菠萝</p>
+																		<Input :readonly="redactVisible.tab1" :class="{borderNone:redactVisible.tab1==true}" v-model="outsource.coordinationName"></Input>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">外协厂家开户行：</span>
 																	<div class="value">
-																		<p>中国银行</p>
+																		<Input :readonly="redactVisible.tab1" :class="{borderNone:redactVisible.tab1==true}" v-model="outsource.coordinationBank"></Input>
 																	</div>
 																</li>
 
 																<li>
 																	<span class="lable">外协厂家账户：</span>
 																	<div class="value">
-																		<p>4158416213215461321</p>
+																		<Input :readonly="redactVisible.tab1" :class="{borderNone:redactVisible.tab1==true}" v-model="outsource.coordinationAccount"></Input>
+																	</div>
+																</li>
+																
+																
+																<li>
+																	<span class="lable">创建人：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="outsource.creatorName"></Input>
+																	</div>
+																</li>
+																
+																<li>
+																	<span class="lable">创建时间：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="outsource.created"></Input>
 																	</div>
 																</li>
 
-																<li>
+																<!--<li>
 																	<span class="lable">完成时间：</span>
 																	<div class="value">
 																		<p>2019-05-16 00:00:00</p>
@@ -184,49 +225,115 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 																	<div class="value">
 																		<p>019-05-16 00:00:00</p>
 																	</div>
-																</li>
+																</li>-->
 
-																<li>
-																	<span class="lable">创建人：</span>
-																	<div class="value">
-																		<p>老板电器</p>
-																	</div>
-																</li>
+																
 
 															</ul>
 														</div>
 													</div>
-
-													<div class=" tab_item">
+													
+													
+														<div class=" tab_item">
 														<div class="supplier_msg">
 															<ul>
-
+																
 																<li>
-																	<span class="lable">创建时间：</span>
+																	<span class="lable">外协备注：</span>
 																	<div class="value">
-																		<p>019-05-16 00:00:00</p>
+																		<Input type="textarea"  :readonly="redactVisible.tab1" :class="{borderNone:redactVisible.tab1==true}" v-model="outsource.notes"></Input>
 																	</div>
 																</li>
-
+																
+																
 																<li>
-																	<span class="lable">创建日期：</span>
+																	<span class="lable">附件：</span>
 																	<div class="value">
-																		<p>2019-06-03 09:41:16</p>
+																		<div class="pl">
+																			<div class="demo-upload-list" v-for="(item,index) in outsource.uploadFiles">
+																				<template >
+																					<img :src="item.path">
+																					<div class="demo-upload-list-cover">
+																						<Icon type="ios-eye-outline" @click.native="handleView(item.path)"></Icon>
+																						<Icon  v-show="!redactVisible.tab1" type="ios-trash-outline" @click.native="handleRemove(item.id,index)"></Icon>
+																					</div>
+																				</template>
+																				
+																			</div>
+																			<Upload v-show="!redactVisible.tab1" multiple ref="upload" :show-upload-list="false" :data="uparry" :default-file-list="defaultList" :on-success="handleSuccess" :format="['jpg','jpeg','png']" :max-size="5120" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" multiple type="drag" :action="uploadpathdata" name="multipartFileList" style="display: inline-block;width:58px;">
+																				<div style="width: 58px;height:58px;line-height: 58px;">
+																					<Icon type="ios-camera" size="20"></Icon>
+																				</div>
+																			</Upload>
+																		</div>
 																	</div>
 																</li>
+																
+
+																
 
 															</ul>
 														</div>
-
 													</div>
+
 												</div>
 
 											</div>
 
 										</div>
 										<div class="ivu-tabs-tabpane padding">
-											<div class="order_table">
-												<Table border :columns="outsourcePhead" :data="outsourcePdata" ref="table"></Table>
+												<div class="dealer_tab_nav">
+												<div class="tab_center ">
+													<div class=" tab_item">
+														<div class="supplier_msg">
+															<ul>
+																<li>
+																	<span class="lable">产品类型：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="orderProductDto.typeName"></Input>
+																	</div>
+																</li>
+																
+																<li  v-show="orderProductDto.type==0||orderProductDto.type==1">
+																	<span class="lable">产品系列：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="orderProductDto.seriesName"></Input>
+																	</div>
+																</li>
+																
+																
+																
+																<li  v-show="orderProductDto.type==0||orderProductDto.type==1">
+																	<span class="lable">产品颜色：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="orderProductDto.color"></Input>
+																	</div>
+																</li>
+																
+																<li  v-show="orderProductDto.type==0||orderProductDto.type==1">
+																	<span class="lable">门型：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="orderProductDto.door"></Input>
+																	</div>
+																</li>
+																
+																<li>
+																	<span class="lable">产品价格：</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="orderProductDto.price"></Input>
+																	</div>
+																</li>
+																
+																<li>
+																	<span class="lable">备注</span>
+																	<div class="value">
+																		<Input readonly="readonly" class="borderNone" v-model="orderProductDto.notes"></Input>
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
 											</div>
 
 										</div>
@@ -429,21 +536,7 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 					</div>
 				</div>
 
-				<div class="panel marBtm">
-					<div class="panel_nav">
-						<div class="panel_center">
-							<h3 class="head">通用操作区</h3>
-							<div class="panel_con">
-								<div class="but_op">
-									<button class="details_opBut">编辑</button>
-									<button class="details_opBut">删除</button>
-									<button class="details_opBut">打印</button>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
+				
 				<div class="Quick_navigation">
 					<div class="panel">
 						<div class="panel_nav">
@@ -482,6 +575,31 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 	export default {
 		data() {
 			return {
+                 
+                customOrderId:'',
+				outsourceId: "",
+				outsource:{
+					
+					uploadFiles:[]
+				},
+				orderProductDto:{},
+				
+				redactVisible: {
+					tab1: true,
+					tab2: true,
+					tab3: true,
+					tab4: true
+				},
+				
+				
+				uploadpathdata: '',
+				defaultList: [],
+				imgName: '',
+				visible: false,
+				uploadList: [],
+				uparry: {
+					multipartFileList: []
+				},
 
 				outsourcePhead: [{
 						title: '类型',
@@ -569,42 +687,335 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 					}
 				],
 				outsourcePdata: [],
-				tabIndexs:0
+				tabIndexs: 0
 
 			}
 		},
 
 		methods: {
 			
-			
+			goback: function() {
+				this.$emit('openWindow', ('outsource'), ('外协管理'), ('4'), ('outsource'), ('outsource'))
+			},
 
+			TabsChange: function(index) {
+				this.tabIndexs = index
+			},
 
-TabsChange:function  (index) {				
-                    this.tabIndexs=index						
+			Tabstransform: function() {
+				var index = this.tabIndexs
+				let style = {}
+				style['transform'] = 'translate3D(' + index * 100 + '%' + ', 0px,0px)'
+
+				return style
+
+			},
+
+			minusTabstransform: function() {
+				var index = this.tabIndexs
+				let style = {}
+				style['transform'] = 'translate3D(' + -index * 100 + '%' + ', 0px,0px)'
+
+				return style
+
 			},
 			
-			Tabstransform:function  () {
-				var index=this.tabIndexs
-				 let style = {}
-                 style['transform'] = 'translate3D(' + index*100 + '%' + ', 0px,0px)'
-                 
-                 return style
+			
+			
+			//up
+
+			handleView(path) {
+				this.imgName = path;
+				this.visible = true;
+			},
+			handleRemove(fileId, index) {
+				
+				
+				
+				var id = this.customOrderId
+
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+				var that = this							
+
+				this.axios({
+					method: 'delete',
+					url: '/api/f/customorders/' + id + '/files/' + fileId,
+
+				}).then(function(res) {
+					setTimeout(msg, 100);
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					that.outsource.uploadFiles.splice(index, 1)
+					
+					that.$Message.success("删除图片成功")
+
+				}).catch(function(err) {
+					setTimeout(msg, 100);
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
+
+			},
+			handleSuccess(res, file) {
+
+				var data = res.data
+
+				for(var i = 0; i < data.length; i++) {
+					this.outsource.uploadFiles.push(data[i])
+				
+
+				}
+				
+				this.$Message.success("上传图片成功")
+
+				/*	dsDataCache[this.dsData[this.designersIndex].id].designFile.push(obj)
+					this.dsDataCache = dsDataCache*/
+
+			},
+			handleFormatError(file) {
+				this.$Notice.warning({
+					title: '文件格式不正确',
+					desc: '' + file.name + '文件格式不正确，请选择jpg,jpeg或png'
+				});
+			},
+			handleMaxSize(file) {
+				this.$Notice.warning({
+					title: '超过文件大小限制',
+					desc: '' + file.name + '文件太大，不超过5M'
+				});
+			},
+			handleBeforeUpload(file) {
+
+				this.file = file
+				this.uparry.multipartFileList.push(this.file)
+
+			},
+			
+			
+			
+			//触发编辑
+
+			activateRedact: function(index) {
+
+				if(index == 1) {
+					this.redactVisible.tab1 = !this.redactVisible.tab1;
+					
+				}
+
+			},
+			
+			
+			sureRedact:function  () {
+				
+				var outsource=this.outsource
+				
+
+			
+				var amount = outsource.amount+'';
+				var coordinationName = outsource.coordinationName;
+				var coordinationAccount = outsource.coordinationAccount;
+				var coordinationBank = outsource.coordinationBank;				
+				var count = outsource.count+'';
+				var notes = outsource.notes;
+
+				amount = amount.trim();
+				coordinationName = coordinationName.trim();
+				coordinationAccount = coordinationAccount.trim();
+				coordinationBank = coordinationBank.trim();
+				count = count.trim()
+				notes = notes.trim()
+				
+			    var fileIds=[]			   
+			    var files=outsource.uploadFiles
+			    
+			    for(var i=0; i<files.length ;i++){
+			    	fileIds.push(files[i].id)
+			    }
+			   
+			 
+				
+				
+				var amountVerify = /^([0-9])+(.[0-9]{2})?$/
+				
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+
+				var that = this
+
+				this.axios({
+					method: 'put',
+					url: '/api/f/customorders/'+this.customOrderId+'/produces/'+this.outsourceId,
+
+					data: {
+							
+						amount: (amount == "") ? undefined : amount,
+						coordinationName: (coordinationName == "") ? undefined : coordinationName,
+						coordinationBank: (coordinationBank == "") ? undefined : coordinationBank,
+						coordinationAccount: (coordinationAccount == "") ? undefined : coordinationAccount,
+						count: (count == "") ? undefined : count,
+						notes: (notes == "") ? undefined : notes,
+					
+					}
+
+				}).then(function(res) {
+
+					var verify = [
+
+						{
+							"name": "way",
+							"note": "拆单类型"
+						}, {
+							"name": "type",
+							"note": "生产方式"
+						},
+						{
+							"name": "no",
+							"note": "拆单编号 "
+						},
+						{
+							"name": "coordinationName",
+							"note": "外协厂家"
+						},
+						{
+							"name": "coordinationBank",
+							"note": "银行账户"
+						},
+
+						{
+							"name": "coordinationAccount",
+							"note": "开户行"
+						},
+						{
+							"name": "count",
+							"note": "数量"
+						},
+						{
+							"name": "notes",
+							"note": "描述"
+						},
+
+					]
+
+					setTimeout(msg, 100);
+					if(Isjurisdiction.isright(res, that, verify) == false) {
+						return false
+					}
+					var data = res.data.data
+
+					that.$Message.success("修改成功")
+					that.redactVisible.tab1=!that.redactVisible.tab1
+
+					
+
+				}).catch(function(err) {
+
+					that.$Message.error('出错了，请稍后重试！');
+					setTimeout(msg, 100);
+					
+				})
+				
 				
 			},
 			
+			//查询外协详情
+			getOutsource:function  () {
+				let that = this
+
+
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+				this.axios({
+					method: 'get',
+					url: '/api/f/customorders/'+this.customOrderId+'/produces/'+this.outsourceId,
+					
+
+				}).then(function(res) {
+					setTimeout(msg, 100);					
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					var data = res.data.data
+					
+					that.outsource=data
+					that.orderProductDto=data.orderProductDto
+					
+
+				}).catch(function(err) {
+					setTimeout(msg, 100);
+
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
+			},
 			
-			minusTabstransform:function  () {
-				var index=this.tabIndexs
-				 let style = {}
-                 style['transform'] = 'translate3D(' + -index*100 + '%' + ', 0px,0px)'
-                 
-                 return style
+			
+			//删除外协数据
+			deleteData:function  () {
+				
+				
+				let that = this
+
+
+				const msg = this.$Message.loading({
+					content: 'Loading...',
+					duration: 0
+				});
+				this.axios({
+					method: 'delete',
+					url: '/api/f/customorders/'+this.customOrderId+'/produces/'+this.outsourceId,
+					
+
+				}).then(function(res) {
+					setTimeout(msg, 100);					
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					var data = res.data.data
+					that.$Message.success("删除成功")
+					setTimeout(function() {
+
+						that.goback()
+
+					}, 2000);
+
+				}).catch(function(err) {
+					setTimeout(msg, 100);
+
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
 				
 			},
 
 		},
 
-		mounted: function() {}
+		mounted: function() {
+
+			if(this.$route.query.pathUrl) {
+				
+				let pathArry = this.$route.query.pathUrl.split(',')
+				this.customOrderId = pathArry[0]
+				this.outsourceId = pathArry[1]
+				this.uploadpathdata = '/api/f/customorders/'+this.customOrderId+'/4/'+this.outsourceId+'/files' //附件上传路径
+				this.getOutsource()
+
+			}
+
+		}
 
 	}
 </script>

@@ -3,7 +3,7 @@
 	<div class="login registerNav">
 		<div class="login_close"></div>
 		<div class="login_hello">
-			<p class="hello">欢迎登录上海红田</p>
+			<p class="hello">欢迎登录掌上管家</p>
 
 			<!--手机号登录-->
 
@@ -78,7 +78,7 @@
 
 		data() {
 			return {
-
+				BASE_URL1:'',
 				loginName: "",
 				loginPassword: "",
 				passwordVisible: false,
@@ -167,7 +167,7 @@
 			//登录
 
 			loginEnter: function() {
-
+				console.log(this.BASE_URL1)
 				var that = this
 				if(this.logindisabled == true) {
 					mui.toast('请输入正确的手机号格式', {
@@ -209,9 +209,9 @@
 						axios.defaults.headers['X-ATOKEN']=data.token
 						
 						if(type==0){
-							window.location.href = "https://erp4.hnlwxf.com/#/F?token=" + data.token
+							window.location.href = that.BASE_URL1+"/F?token=" + data.token
 						}else if(type==1){
-							window.location.href = "https://erp4.hnlwxf.com/#/B?token=" + data.token
+							window.location.href = that.BASE_URL1+"/B?token=" + data.token
 						}
 						
                          
@@ -230,8 +230,18 @@
 		},
 
 		mounted: function() {
+		
+		console.log("123456")
+			var that= this
 			mui.init()
-
+			that.axios.get('/config.json').then((res) => {
+				// 基础地址			res
+				console.log(res)
+				var data=res.data
+				that.BASE_URL1=data.BASE_URL1
+				
+			})
+			
 		}
 	}
 </script>

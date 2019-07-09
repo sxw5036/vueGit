@@ -395,31 +395,33 @@
 
 						
 					},*/
+//
+//					{
+//						type: 'selection',
+//						width: 60,
+//						align: 'center',
+//						fixed: "left",
+//
+//					}, 
 
-					{
-						type: 'selection',
-						width: 60,
-						align: 'center',
-						fixed: "left",
-
-					}, {
+{
 						title: '拆单编号',
 						key: "no",
-						width: 200,
+						
 
 					},
 
 					{
 						title: '订单编号',
 						key: "customOrderNo",
-						width: 200,
+						
 
 					},
 
 					{
 						title: '状态',
 						key: 'state',
-						width: 200,
+						
 
 						render: (h, params) => {
 
@@ -440,7 +442,7 @@
 					{
 						title: '拆单类型 ',
 						key: 'type',
-						width: 200,
+						
 						render: (h, params) => {
 
 							var type = params.row.type
@@ -459,7 +461,7 @@
 					{
 						title: '生产方式 ',
 						key: 'way ',
-						width: 200,
+						
 						render: (h, params) => {
 
 							var way = params.row.way
@@ -478,7 +480,7 @@
 					{
 						title: '是否付款 ',
 						key: 'pay',
-						width: 200,
+						
 						render: (h, params) => {
 
 							var pay = params.row.pay
@@ -495,7 +497,7 @@
 					{
 						title: '外协金额',
 						key: 'amount',
-						width: 150,
+						
 						render: (h, params) => {
 							var amount = params.row.amount + '';
 
@@ -511,58 +513,13 @@
 						}
 					},
 
-					{
-						title: '外协厂家名称',
-						key: 'coordinationName',
-						width: 150,
-					},
 
-					{
-						title: '外协厂家开户行',
-						key: 'coordinationBank',
-						width: 150,
-					},
-					{
-						title: '外协厂家账户',
-						key: 'coordinationAccount',
-						width: 150,
-					},
-
-					{
-						title: '完成时间',
-						key: 'completionTime',
-						width: 150,
-					},
-
-					{
-						title: '修改人',
-						key: 'updateUser',
-						width: 150,
-					},
-
-					{
-						title: '修改时间',
-						key: 'updateUserName',
-						width: 150,
-					},
-
-					{
-						title: '创建人',
-						key: 'creatorName',
-						width: 150,
-					},
-
-					{
-						title: '创建时间',
-						key: 'created',
-						width: 150,
-					},
 
 					{
 						title: '操作',
 						key: 'action',
 						width: 120,
-						fixed: 'right',
+						
 						align: 'center',
 						render: (h, params) => {
 
@@ -584,116 +541,13 @@
 										},
 										on: {
 											click: () => {
-												this.$emit('openWindow', ('outsourcedetails'), ('外协详情'), ('4-3'), ('outsourcedetails'), ('outsourcedetails'),(this.tableData[params.index].id))
+												this.$emit('openWindow', ('outsourcedetails'), ('外协详情'), ('4-3'), ('outsourcedetails'), ('outsourcedetails'),(this.tableData[params.index].customOrderId+','+this.tableData[params.index].id))
 											}
 										}
 									}, '详情'),
 
 								]);
 						
-							/*else if(state == 0 && pay == 0) {
-								return h('div', [
-
-									h('Button', {
-										props: {
-											type: 'info',
-											size: 'small',
-											//disabled: !this.operation.edit
-										},
-										style: {
-											marginRight: '5px',
-											//display: (this.operation.edit == true) ? "link-block" : "none"
-										},
-										on: {
-											click: () => {
-												this.outsourceModel = true;
-												this.outsourceMsg = this.tableData[params.index]
-
-											}
-										}
-									}, '详情'),
-
-								]);
-							}
-							else if(state == 1) {
-								return h('div', [
-
-									h('Button', {
-										props: {
-											type: 'info',
-											size: 'small',
-											//disabled: !this.operation.edit
-										},
-										style: {
-											marginRight: '5px',
-											//display: (this.operation.edit == true) ? "link-block" : "none"
-										},
-										on: {
-											click: () => {
-
-												//												this.outsourceModel = true;
-												//												this.outsourceMsg = this.tableData[params.index]
-												this.$router.push({
-													name: 'outsourcedetails',
-													query: {
-														id: this.tableData[params.index].id
-													}
-												})
-											}
-										}
-									}, '详情'),
-
-									h('Button', {
-										props: {
-											type: 'primary',
-											size: 'small',
-											//disabled: !this.operation.edit
-										},
-										style: {
-											marginRight: '5px',
-											//display: (this.operation.edit == true) ? "link-block" : "none"
-										},
-										on: {
-											click: () => {
-												this.SetIndex = params.index
-												this.accomplishproduction = true
-											}
-										}
-									}, '已完成'),
-
-								]);
-							} else if(state == 2) {
-								return h('div', [
-
-									h('Button', {
-										props: {
-											type: 'info',
-											size: 'small',
-											//disabled: !this.operation.edit
-										},
-										style: {
-											marginRight: '5px',
-											//display: (this.operation.edit == true) ? "link-block" : "none"
-										},
-										on: {
-											click: () => {
-												
-												this.$emit('openWindow', ('outsourcedetails'), ('外协详情'), ('4-3'), ('outsourcedetails'), ('outsourcedetails'),(this.tableData[params.index].id))
-
-												//												this.outsourceModel = true;
-												//												this.outsourceMsg = this.tableData[params.index]
-//												this.$router.push({
-//													name: '',
-//													query: {
-//														id: this.tableData[params.index].id
-//													}
-//												})
-											}
-										}
-									}, '详情'),
-
-								]);
-							}*/
 
 						}
 

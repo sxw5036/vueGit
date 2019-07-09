@@ -2293,102 +2293,17 @@
 					},
 					{
 						title: '类型',
-						key: 'type',					
+						key: 'typeName',					
 						ellipsis: true,
-						render: (h, params) => {
-							const row = params.row;
-							var text
-							if(row.type == 0) {
-								text = '正常订单'
-							} else if(row.type == 1) {
-								text = '补产订单'
-							} else if(row.type == 2) {
-								text = '返货单'
-							} else if(row.type == 3) {
-								text = '打样订单'
-							} else if(row.type == 4) {
-								text = '样板订单'
-							} else if(row.type == 5) {
-								text = '展厅订单'
-							} else if(row.type == 6) {
-								text = '补发订单'
-							}
-							return h('Tag', {
-								props: {
-									type: 'border',
-								}
-							}, text)
-						}
+					
 					},
 
 					{
 						title: '订单状态',
-						key: 'status',
+						key: 'orderStatus',
+						align: 'left',
 
 						
-						ellipsis: true,
-						render: (h, params) => {
-							const status = params.row.status;
-							var texts
-							if(status == 0) {
-
-								var texts = '待处理'
-							} else if(status == 1) {
-
-								var texts = '设计费待评估'
-							} else if(status == 2) {
-
-								var texts = '设计费待确认'
-							} else if(status == 3) {
-
-								var texts = '设计费待审核'
-							} else if(status == 4) {
-
-								var texts = '待设计'
-							} else if(status == 5) {
-
-								var texts = '设计中'
-							} else if(status == 6) {
-
-								var texts = '设计待确认'
-							} else if(status == 7) {
-
-								var texts = '出厂价待确认'
-							} else if(status == 8) {
-
-								var texts = '经销商待确认出厂价'
-							} else if(status == 9) {
-
-								var texts = '货款支付审核'
-							} else if(status == 10) {
-
-								var texts = '待生产'
-							} else if(status == 11) {
-
-								var texts = '生产中'
-							} else if(status == 12) {
-
-								var texts = '待入库'
-							} else if(status == 13) {
-
-								var texts = '待出库'
-							} else if(status == 14) {
-
-								var texts = '待配送'
-							} else if(status == 15) {
-
-								var texts = '配送中'
-							} else if(status == 16) {
-
-								var texts = '已完成'
-							}
-
-							return h('Tag', {
-								props: {
-									type: 'border',
-								}
-							}, texts);
-						}
 					},
 
 					{
@@ -3011,7 +2926,7 @@
 					
 				})
 				
-				this.$emit('openWindow', ('newlyOrder'), ('订单详情页面'), ('6-1'), ('newlyOrder'), ('newlyOrder'))
+				this.$emit('openWindow', ('newlyOrder'), ('新建订单'), ('6'), ('newlyOrder'), ('newlyOrder'))
 				return false;
 				this.orderadd = true;
 				this.orderisDesign = "0";

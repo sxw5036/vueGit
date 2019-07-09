@@ -86,10 +86,10 @@
 					<div v-show="orderchoose==3" style="height: 1rem; width: 100%;">
 				
 					</div> -->
-					<div class="keepContentShow1" style=" position: relative; height: 15.5rem; width: 95%; margin: 1rem auto; padding-top: 1rem;  background: white; border-radius: 0.25rem;">
+				<!-- 	<div class="keepContentShow1" style=" position: relative; height: 15.5rem; width: 95%; margin: 1rem auto; padding-top: 1rem;  background: white; border-radius: 0.25rem;">
 						<div class="show1YB" id="show1DD" style="height: 15.5rem; width: 95%; margin: 0 auto;">
 				
-						</div>
+						</div> -->
 <!-- 						<div    class="show1YBtext" style=" position: absolute; left: 18%; bottom: 5%; font-size: 0.6rem; ">
 							<p style="margin-bottom: 0rem;font-size: 0.6rem;"><span style="color: #000000; width: 7rem ; display: inline-block; ">实木特供：&nbsp;<span style="color: rgba(129, 119, 91, 1);font-size: 0.75rem;">7</span>&nbsp;单</span><span style="color: #000000;">美克：&nbsp;<span style="color: rgba(129, 119, 91, 1);font-size: 0.75rem;">7</span>&nbsp;单</span></p>
 							<p style="margin-bottom: 0rem;font-size: 0.6rem;"><span style="color: #000000; width: 7rem ; display: inline-block; ">实木定制：&nbsp;<span style="color: rgba(129, 119, 91, 1);font-size: 0.75rem;">7</span>&nbsp;单</span><span style="color: #000000;">康奈：&nbsp;<span style="color: rgba(129, 119, 91, 1);font-size: 0.75rem;">7</span>&nbsp;单</span></p>
@@ -100,10 +100,10 @@
 							<p style="margin-bottom: 0rem;font-size: 0.6rem;"><span style="color: #000000; width: 7rem ; display: inline-block; ">利友物流：&nbsp;<span style="color: rgba(129, 119, 91, 1);">7</span>&nbsp;单</span></p>
 						</div> -->
 						
-						<div style="position: absolute; top: 5.5%; left: 50%; margin-left: -2.8rem;">
+					<!-- 	<div style="position: absolute; top: 5.5%; left: 50%; margin-left: -2.8rem;">
 							<span  style="font-weight: 500; color: #000000; font-size: 0.75rem;">今日订单执行分布</span>
 						</div>
-					</div>
+					</div> -->
 					
 				</div>
 			</div>
@@ -201,7 +201,7 @@
 				
 				that.axios({
 					method:'get',
-					url:'/wxapi/f/customOrderStatements/?'+(that.allId == '' ? '' : 'cityId=' + that.allId)+(that.jingliId == '' ? '' : '&salesmanId=' + that.jingliId)+(that.searchObj.startTime == '' ? '' : '&startTime=' + that.searchObj.startTime)+(that.searchObj.endTime == '' ? '' : '&endTime=' + that.searchObj.endTime)+(that.orderchoose == '' ? '' : '&countType=' + that.orderchoose)
+					url:'/wxapi/f/customOrderStatements?countType='+that.orderchoose+(that.allId == '' ? '' : '&cityId=' + that.allId)+(that.jingliId == '' ? '' : '&salesmanId=' + that.jingliId)+(that.searchObj.startTime == '' ? '' : '&startTime=' + that.searchObj.startTime)+(that.searchObj.endTime == '' ? '' : '&endTime=' + that.searchObj.endTime)+(that.orderchoose == '' ? '' : '&countType=' + that.orderchoose)
 				}).then(function(res) {
 					console.log(res.data.data.result)
 					var data1=res.data.data.result
@@ -229,11 +229,11 @@
 			getprovince(){
 				var that=this
 				that.citydata=''
-				that.getcity()
+				
 				that.axios({
 					method: 'get',
 				
-					//url: '//api/addresses/1234567890000'
+					
 					url: '/api/f/cities?levelType=1'
 				
 				}).then(function(res) {
@@ -244,7 +244,7 @@
 						name: "-省-"
 					})
 					
-					
+					that.getcity()
 					
 				}).catch(function(err) {
 					//				console.log(err)
@@ -353,8 +353,20 @@
 					url: '/wxapi/f/customOrderStatements/week/' + that.orderchoose
 			
 				}).then(function(res) {
-					// console.log(res.data.data)
-					that.weekdata = res.data.data
+					console.log(res)
+				   
+					var s1=[]
+					
+					s1.push(res.data.data.chart1.mon.toString())
+					s1.push(res.data.data.chart1.tues.toString())
+					s1.push(res.data.data.chart1.wed.toString())
+					s1.push(res.data.data.chart1.thur.toString())
+					s1.push(res.data.data.chart1.fri.toString())
+					s1.push(res.data.data.chart1.sat.toString())
+					s1.push(res.data.data.chart1.sun.toString())
+								
+					
+					that.weekdata=s1
 					console.log("本周")
 					console.log(that.weekdata)
 				
@@ -384,7 +396,14 @@
 			
 				}).then(function(res) {
 					// console.log(res.data.data)
-					that.monthdata = res.data.data
+					var s1=[]
+					
+					s1.push(res.data.data.chart1.point1.toString())
+					s1.push(res.data.data.chart1.point2.toString())
+					s1.push(res.data.data.chart1.point3.toString())
+					s1.push(res.data.data.chart1.point4.toString())
+					
+					that.monthdata = s1
 					// console.log(that.monthdata)
 					console.log("本月")
 					console.log(that.monthdata)
@@ -415,8 +434,13 @@
 				}).then(function(res) {
 					console.log("本季")
 					console.log(res)
+					var s1=[]
+					
+					s1.push(res.data.data.chart1.month1.toString())
+					s1.push(res.data.data.chart1.month2.toString())
+					s1.push(res.data.data.chart1.month3.toString())
 					that.seasondataA=res.data.data
-					that.seasondata = res.data.data[0]
+					that.seasondata = s1
 					that.seasondata1 = res.data.data[1]
 					// console.log(that.seasondata)
 			
@@ -452,7 +476,7 @@
 					that.yeardata = res.data.data
 					// console.log(that.yeardata)
 					console.log("本年")
-					console.log(res)
+					console.log(that.yeardata)
 					that.zhuzhuangtu()
 				}).catch(function(err) {
 					console.log(err)
@@ -460,26 +484,25 @@
 				})
 			},
 			zhuzhuangtu(){
-			
-			// if (this.week == 1) {
-			// 	dataAxis = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-			// 	data = this.weekdata
-			// } else if (this.month == 1) {
-			// 	dataAxis = ['第一周', '第二周', '第三周', '第四周'];
-			// 	data = this.monthdata
-			// } else if (this.season == 1) {
-			// 	dataAxis = this.seasondata1
-			// 	data = this.seasondata
-			// } else if(this.year==1) {
-			// 	// dataAxis = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
-			// 	dataAxis = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-			// 	data = this.yeardata
-			// }else if(this.sousuo==1){
-			// 	dataAxis=this.sdata1
-			// 	data=this.sdata2
-			// }
-			var dataAxis = ["1","2"]
-			var data = ["1","2"]
+			var dataAxis = []
+			var data = []
+			if (this.week == 1) {
+				dataAxis = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+				data = this.weekdata
+			} else if (this.month == 1) {
+				dataAxis = ['第一周', '第二周', '第三周', '第四周'];
+				data = this.monthdata
+			} else if (this.season == 1) {
+				dataAxis = this.seasondata1
+				data = this.seasondata
+			} else if(this.year==1) {
+				// dataAxis = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
+				dataAxis = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+				data = this.yeardata
+			}else if(this.sousuo==1){
+				dataAxis=this.sdata1
+				data=this.sdata2
+			}
 				// var yMax = 500;
 				var dataShadow = [];
 				// for (var i = 0; i < data.length; i++) {
@@ -657,32 +680,75 @@
 					
 					calculable: false,
 					series: [
-						
 				
 				
-						{
-							name: '详细信息',
-							type: 'pie',
-							radius: [40, 65],
-							 center: ['50%', '50%'], 
-							// for funnel
-							x: '60%',
-							width: '35%',
-							funnelAlign: 'left',
-							// max: 1048,
 				
-							data:data11
-							,
-							itemStyle: {
-								normal: {
-									borderColor: "#FFFFFF",
-									borderWidth: 5,
+					{
+						// 		name: '详细信息',
+						// 		type: 'pie',
+						// 		radius: [40, 65],
+						// 		 center: ['50%', '50%'], 
+						// 		// for funnel
+						// 		x: '60%',
+						// 		width: '35%',
+						// 		funnelAlign: 'left',
+						// 		// max: 1048,
+						// 
+						// 		data: listdata,
+						// 		itemStyle: {
+						// 			normal: {
+						// 				borderColor: "#FFFFFF",
+						// 				borderWidth: 5,
+						// 			}
+						// 		},
+				
+						funnelAlign: 'left',
+						type: 'pie',
+						radius: ['40%', '55%'],
+						label: {
+							normal: {
+								formatter: '{b}\n{c} {per|{d}%}  ',
+								backgroundColor: '#eee',
+								borderColor: '#aaa',
+								
+								borderRadius: 4,
+								rich: {
+									a: {
+										color: '#999',
+										lineHeight: 22,
+										align: 'center',
+										
+									},
+									// abg: {
+									//     backgroundColor: '#333',
+									//     width: '100%',
+									//     align: 'right',
+									//     height: 22,
+									//     borderRadius: [4, 4, 0, 0]
+									// },
+									hr: {
+										borderColor: '#aaa',
+										width: '100%',
+										borderWidth: 0.5,
+										height: 0
+									},
+									b: {
+										fontSize: 12,
+										lineHeight: 20
+									},
+									per: {
+										color: '#eee',
+										backgroundColor: 'rgba(84, 128, 120, 1)',
+										padding: [2, 4],
+										borderRadius: 2
+									}
 								}
-							},
+							}
+						},
+						data: listdata
 				
-				
-						}
-					]
+					}
+				]
 				});
 				var ecConfig = require('echarts/lib/config');
 				// myChart1.on(ecConfig.EVENT.PIE_SELECTED, function(param) {
@@ -716,16 +782,17 @@
 
 		mounted: function() {
 			mui.init()
+				this.getprovince();
 			this.yewujl();
 			this.thisweek();
 			
 			// 柱状统计图开始
 			this.zhuzhuangtu();
 			
-			this.getprovince();
+		
 			this.getcity();
 			this.getqu();
-			this.yewujl();
+
 			
 			// 柱状统计图开始
 			

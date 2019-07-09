@@ -249,11 +249,8 @@
 			mui.init()
 			var that=this
 			that.axios({
-				method: 'get',
-			
-				url: '/wxapi/f/dealer/index'
-			
-			
+				method: 'get',		
+				url: '/wxapi/b/dealer/index'		
 			}).then(function(res) {
 				console.log(res)
 				that.data = res.data.data;

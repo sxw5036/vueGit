@@ -1,1 +1,4 @@
-{"BASE_URL": "http://192.168.1.57:8088"}
+{
+	"BASE_URL": "http://192.168.1.57:8088",
+	"BASE_URL1": "https://erp4.hnlwxf.com/#"
+}

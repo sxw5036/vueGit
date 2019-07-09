@@ -50,8 +50,13 @@
 						<div class="mui-input-row">
 							<input v-model="condation" type="text" class="mui-input-clear" placeholder="手机号/客户姓名/订单编号">
 						</div>
-						<div style="position: relative;"><span style="position:absolute;top:30%; left: 40%;"><img style="width: 0.5rem;" src="../../assets/img/dealer/left_ar.png"/></span>
-							 <input v-model="startTime"   style="width: 48%; margin-right: 4%; float: left; margin-top: 0.5rem;" type="date" name="" id="starttime"  />
+						<div style="position: relative;">
+							<p v-show="startTime.length<=0" style="position:absolute ; top: 30%; ;  margin-left: 2.3rem;">开始时间</p>
+						
+							<span style="position:absolute;top:30%; left: 40%;"><img style="width: 0.5rem;" src="../../assets/img/dealer/left_ar.png"/></span>
+							 <input v-model="startTime"   style="width: 48%; margin-right: 4%; float: left; margin-top: 0.5rem ; background: none; " type="date" name="" id="starttime"  />
+							 	<p v-show="endTime.length<=0" style="position:absolute ; top: 30%; ;  margin-left: 10.8rem;">结束时间</p>
+					
 							  <span style="position:absolute;top:30%; right: 7%;"><img style="width: 0.5rem;" src="../../assets/img/dealer/left_ar.png"/></span>
 							 <input v-model="endTime"  style="width: 48%; float: left; margin-top: 0.5rem;" type="date" name="" id="endtime"  />
 							  
@@ -59,13 +64,13 @@
 						 </div>
 					   <div style="margin-bottom: 0.5rem; margin-top: 0.5rem;">
 					  						  <div style="float: left; width: 48%; margin-right: 4%; color:#a4a4a4;  height: 2rem; border-radius: 0.25rem;  position: relative;">
-					  						     <input :readonly="onlyread" style="width: 100%; border: 1px solid #dcdee2; box-sizing: border-box; text-align: left; padding-left: 0.6rem;"  v-model="searchObj.cityIdName"  @click="addsiteshow=!addsiteshow" placeholder="选择地区">
+					  						     <input :readonly="onlyread" style="width: 100%; border: 1px solid #dcdee2; box-sizing: border-box; text-align: left; padding-left: 2.2rem;"  v-model="searchObj.cityIdName"  @click="addsiteshow=!addsiteshow" placeholder="选择地区">
 					  							 <span style="position:absolute;top:0.4rem;left:83%;"><img style="width: 0.5rem;" src="../../assets/img/dealer/left_ar.png"/></span>
 					  						  </div>
 					  						  <div style="float: left;width: 48%; color:#a4a4a4; height: 2rem; border-radius: 0.25rem;border: 1px solid #dcdee2; box-sizing: border-box; position: relative;">
-					  						      <select v-model="companyId"  style="width: 100%;  font-size: 0.85rem; height: 1.85rem;  border: 0;  " @change="getdealer($event)">
+					  						      <select v-model="companyId"  style="width: 100%;  font-size: 0.85rem; height: 1.85rem;  margin: 0; padding: 0 0 0 2.2rem; border: 0;  " @change="getdealer($event)">
 					  						      						        <option disabled value="">经销商</option>
-					  						      						   	    <option :value="coupon.companyId"  v-for="coupon in dealerList" >{{coupon.companyName}}</option>
+					  						      						   	    <option :value="coupon.companyId" :key='index'  v-for="(coupon,index) in dealerList" >{{coupon.companyName}}</option>
 					  						      </select>
 					  							  <span style="position:absolute;top:0.35rem;left:80%;"><img style="width: 0.5rem;" src="../../assets/img/dealer/left_ar.png"/></span>
 					  						   </div>
@@ -85,18 +90,18 @@
 		   </div>
 		   <div  v-show="aftersalelist.length>0" style="background-color: white; border-radius:0.25rem; padding:0.5rem ">
 			  <ul class="mui-table-view">
-					<li class="mui-table-view-cell" v-for="item in aftersalelist"  @click="changePath(item.aftersaleId)">
+					<li class="mui-table-view-cell" :key='index' v-for="(item,index) in aftersalelist"  @click="changePath(item.aftersaleId)">
 						<a class="mui-navigate-right">
 							<div>
 								<div style="color: #bdb08a; font-size: 1rem;  margin:0 0 0.4rem 0;">
 									<span v-show="item.type==5">反馈单</span>
 									<span v-show="item.type==4">补料单</span>
 								</div>
-								<ul class="mui_ul_li">
-									<li style=" float: left;">经销商：<span style="  color: black;">{{item.companyName}}</span></li>
-									<li style=" float: right;">终端客户：<span style=" color: black;">{{item.customerName}}</span></li>
+								<ul class="mui_ul_li" >
+									<li style=" float: left;">经销商：<p style="  color: black;font-size: 0.7rem; display: inline-block;">{{item.companyName}}</p></li>
+									<li style=" float: right;padding-left: 0.5rem; ">终端客户：<span style=" color: black;font-size: 0.7rem; ">{{item.customerName}}</span></li>
 									<li style=" float: left;font-size: 0.6rem;margin-bottom: 0.3rem; color: #a4a4a4;">订单编号：<span style="color: #5B92B9FF; text-decoration:underline">{{item.orderNo}}</span></li>
-									<li style=" float: right; margin-bottom: 0.3rem;font-size: 0.6rem;"><span>{{item.created.substring(0,10)}}</span></li>
+									<li style=" float: right; margin-bottom: 0.3rem;font-size: 0.6rem; padding-left: 0.5rem;"><span>{{item.created.substring(0,10)}}</span></li>
 									<div class="clearfix"></div>
 								</ul>
 							</div>
@@ -365,7 +370,16 @@
 		color: rgba(255,255,255,0);
 		background-color:  rgba(255,255,255,0);
 		
-	} 
+	}
+	input[type=date]::-webkit-datetime-edit-fields-wrapper {
+	     /* placeholder颜色  */
+	     color: rgba(255,255,255,0);
+	    
+	 }
+	 input::-webkit-input-placeholder {
+	      /* placeholder颜色  */
+	   color: #A4A4A4;
+	  }
 	 ul li {
 
             margin: 0;

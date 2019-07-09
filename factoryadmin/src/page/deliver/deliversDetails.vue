@@ -16,34 +16,42 @@
 					<div class="panel_con" style="padding: 0px;">
 						<div class="summarize">
 							<ul>
-								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>包裹编号</h3>
-									<p>J20190605-06-BZ07</p>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>发货单号</h3>
+									<p>{{dataFHmsg.no}}</p>
 								</li>
 
-								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>所属订单</h3>
-									<p>J20190605-06</p>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>发货时间</h3>
+									<p>{{dataFHmsg.actualDate}}</p>
 								</li>
 
-								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>经销商姓名</h3>
-									<p>经销商123</p>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>发货人</h3>
+									<p>{{dataFHmsg.consignorName}}</p>
 								</li>
 
-								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>经销商电话</h3>
-									<p>18595828636</p>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>物流单号</h3>
+									<p>{{dataFHmsg.logisticsNo}}</p>
 								</li>
 
-								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>包裹类型</h3>
-									<p>门板-自产</p>
-								</li>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>承运人</h3>
+									<p>{{dataFHmsg.logisticsName}}</p>
+								</li >
 
-								<li>
-									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>订单收货人	</h3>
-									<p>李帅</p>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>收货人</h3>
+									<p>{{dataFHmsg.consignee}}</p>
+								</li>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>收货电话</h3>
+									<p>{{dataFHmsg.consigneeTel}}</p>
+								</li>
+								<li style="width: 12.5%;">
+									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>收货人地址</h3>
+									<p>{{dataFHmsg.address}}</p>
 								</li>
 							</ul>
 						</div>
@@ -92,53 +100,43 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 													<div class="supplier_msg">
 														<ul>
 															<li>
-																<span class="lable">包裹编号：</span>
+																<span class="lable">发货单号：</span>
 																<div class="value">
-																	<p>J20190605-06-BZ07</p>
+																	<p>{{dataFHmsg.no}}</p>
 																</div>
 															</li>
 
 															<li>
-																<span class="lable">所属订单：</span>
+																<span class="lable">发货时间：</span>
 																<div class="value">
-																	<p>J20190605-06</p>
+																	<p>{{dataFHmsg.actualDate}}</p>
+																</div>
+															</li>
+															<li>
+																<span class="lable">发货人：</span>
+																<div class="value">
+																	<p>{{dataFHmsg.consignorName}}</p>
+																</div>
+															</li>
+															<li>
+																<span class="lable">物流单号：</span>
+																<div class="value">
+																	<p>{{dataFHmsg.logisticsNo}}</p>
 																</div>
 															</li>
 
 															<li>
-																<span class="lable">经销商姓名：</span>
+																<span class="lable">承运人：</span>
 																<div class="value">
-																	<p>经销商123</p>
+																	<p>{{dataFHmsg.logisticsName}}</p>
 																</div>
 															</li>
+															
+															
 
-															<li>
-																<span class="lable">经销商电话：</span>
-																<div class="value">
-																	<p>18595828636</p>
-																</div>
-															</li>
+														
 
-															<li>
-																<span class="lable">包裹类型：</span>
-																<div class="value">
-																	<p>门板-自产</p>
-																</div>
-															</li>
-
-															<li>
-																<span class="lable">订单收货人：</span>
-																<div class="value">
-																	<p>李帅</p>
-																</div>
-															</li>
-
-															<li>
-																<span class="lable">地址：</span>
-																<div class="value">
-																	<p> 北京,北京市,朝阳区[经销商123]地址456646</p>
-																</div>
-															</li>
+															
 														</ul>
 													</div>
 												</div>
@@ -146,13 +144,34 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 												<div class=" tab_item">
 													<div class="supplier_msg">
 														<ul>
+								
 															<li>
-																<span class="lable">发货计划备注：</span>
+																<span class="lable">收货人：</span>
 																<div class="value">
-																	<p>快点发货</p>
+																	<p>{{dataFHmsg.consignee}}</p>
 																</div>
 															</li>
-
+															
+															<li>
+																<span class="lable">收货人电话：</span>
+																<div class="value">
+																	<p>{{dataFHmsg.consigneeTel}}</p>
+																</div>
+															</li>
+															
+															<li>
+																<span class="lable">收货人地址：</span>
+																<div class="value">
+																	<p>{{dataFHmsg.address}}</p>
+																</div>
+															</li>
+															
+															<li>
+																<span class="lable">备注：</span>
+																<div class="value">
+																	<p>{{dataFHmsg.notes}}</p>
+																</div>
+															</li>
 															
 														</ul>
 													</div>
@@ -235,7 +254,7 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 	export default {
 		data() {
 			return {
-
+				dataFHmsg:'',
 				tabIndexs: 0
 			};
 		},
@@ -266,7 +285,18 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 		},
 
 		mounted: function() {
-
+			var orderId=this.$route.query.id
+				let that=this
+			this.axios({
+				methods:'get',
+				url:'/api/f/dispatchs?logisticsNo=' +orderId
+			}).then(function(res){
+				console.log(res.data.data)
+				that.dataFHmsg=res.data.data[0]
+				
+			}).catch(function(res){
+				console.log(err)
+			})
 		}
 
 	}

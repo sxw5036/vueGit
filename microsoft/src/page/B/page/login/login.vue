@@ -3,7 +3,7 @@
 	<div class="login registerNav">
 		<div class="login_close"><img src="../../assets/img/close.png" /></div>
 		<div class="login_hello">
-			<p class="hello">欢迎登录上海红田</p>
+			<p class="hello">欢迎登录掌上管家</p>
 
 			<!--手机号登录-->
 

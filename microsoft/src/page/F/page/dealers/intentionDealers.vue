@@ -69,9 +69,9 @@
 						<div @click="getsearchdealerdatas" class="check_more">查询</div>
 					</div>
 				</div>
-				<div style="padding:0 0rem">
-					<div style="background-color: white; border-radius:0.25rem; padding:0rem 0">
-						<ul class="mui-table-view">
+				<div style="padding:0 0rem ; width: 100%;">
+					<div style="background-color: white; border-radius:0.25rem;width: 95%; border-radius: 0.25rem; margin: 0 auto; padding:0rem 0">
+						<ul class="mui-table-view" style="border-radius: 0.25rem;">
 							<li class="mui-table-view-cell" v-for="item in dealerLists" @click="changePath(item.id)">
 								<a class="mui-navigate-right">
 									<div>

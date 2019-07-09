@@ -95,7 +95,7 @@
 							<li style="margin: 0.25rem 0 0.5rem 0;">
 								<div style="float: left; width: 25%; margin-right: 2%; text-align: right; height: 2rem; line-height: 2rem; ">电话：</div>
 								<div style="float: left; width: 70%;color:#a4a4a4;"><input v-model="telphone_sign" type="text" name="tel"
-									 placeholder="请输入电话" style="width: 100%;color:#a4a4a4; height: 2rem; border-radius: 0.25rem; border:1px #d5d5d5 solid ;"></div>
+									 placeholder="请输入电话" @blur.prevent="yanzhengTel()" style="width: 100%;color:#a4a4a4; height: 2rem; border-radius: 0.25rem; border:1px #d5d5d5 solid ;"></div>
 								<div class="clearfix"></div>
 							</li>
 							<li style="margin: 0.25rem 0 1rem 0;">
@@ -169,7 +169,7 @@
 									<div class="form_item" style="margin-bottom: 0.5rem;">
 										<div class="lable">店铺封面:</div>
 										<div class="center" style="margin: 0.5rem 0; ">
-											<div class="demo-upload-list" v-for="item in dataimg">
+											<div class="demo-upload-list" :key='index' v-for="(item,index) in dataimg">
 												<img :src="item">
 												<span @click="cancelUp()" class="mui-icon mui-icon-closeempty cancel"></span>
 											</div>
@@ -285,6 +285,20 @@
 		},
 
 		methods: {
+			yanzhengTel() {
+				var that=this
+				var myreg = /^1[3458]\d{9}$/;
+				if (!myreg.exec(that.telphone_sign)) {
+					that.telphone_sign=''
+					that.telphone_sign=null
+					mui.toast('请输入正确的手机号格式', {
+						duration: 'long',
+						type: 'div'
+					})
+					
+					
+				}
+			},
 			baiduMap() {
 				var that = this
 				var map = new window.BMap.Map('map_03') //创建地图
@@ -390,12 +404,12 @@
 
 			gotoitn: function() {
 				this.$router.push({
-					name: 'intentionDealers'
+					name: 'FintentionDealers'
 				})
 			},
 			gotosign: function() {
 				this.$router.push({
-					name: 'signedDealers'
+					name: 'FsignedDealers'
 				})
 			},
 			suretoaddintentDdaler() {
@@ -459,7 +473,7 @@
 						cityAreaId: that.searchObj.cityId,
 						name: that.name_sign,
 						type: that.type_sign,
-						// fileId:that.imgsId,
+						fileId:that.imgsId,
 						lng: that.lng,
 						lat: that.lat,
 

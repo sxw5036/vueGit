@@ -68,6 +68,19 @@ import financeorderDetails from '@/page/finance/orderDetails'
 import financeorderNewly from '@/page/finance/newly'
 import financeorderRedact from '@/page/finance/redact'
 
+//财务记账
+
+import keepAccounts from '@/page/keepAccounts/index'
+import keepAccountsDetails from '@/page/keepAccounts/details'
+import keepAccountsNewly from '@/page/keepAccounts/newly'
+import keepAccountsRedact from '@/page/keepAccounts/redact'
+
+
+//日常账管理
+import paymentSimple from '@/page/paymentSimple/paymentSimpleList'
+import paymentSimpleDetails from '@/page/paymentSimple/details'
+import paymentSimpleNewly from '@/page/paymentSimple/newly'
+import paymentSimpleRedact from '@/page/paymentSimple/redact'
 
 
 
@@ -585,7 +598,7 @@ export default new Router({
 					}
 				},
 				
-				//10 发货管理
+				//10发货管理
 				
 				{
 					path: '/delivers',
@@ -768,6 +781,84 @@ export default new Router({
 						title: "组织详情"
 					},
 				},
+				
+				//16.财务记账
+				   {
+						path: '/keepAccounts',
+						name: 'keepAccounts',
+						component: keepAccounts,
+						meta: {
+							title: "财务记账"  //财务记账一级菜单
+						}
+					},
+					
+					{
+						path: '/keepAccounts/details',
+						name: 'keepAccountsDetails',
+						component: keepAccountsDetails,
+						meta: {
+							title: "记账详情" 
+						}
+					},
+					
+					{
+						path: '/keepAccounts/newly',
+						name: 'keepAccountsNewly',
+						component: keepAccountsNewly,
+						meta: {
+							title: "新建记账" 
+						}
+					},
+					
+					{
+						path: '/keepAccounts/redact',
+						name: 'keepAccountsRedact',
+						component: keepAccountsRedact,
+						meta: {
+							title: "编辑记账" 
+						}
+					},
+				
+				
+				//17.日常账管理
+				   {
+						path: '/paymentSimple',
+						name: 'paymentSimple',
+						component: paymentSimple,
+						meta: {
+							title: "日常账管理"  //日常账管理一级菜单
+						}
+					},
+					
+					{
+						path: '/paymentSimple/details',
+						name: 'paymentSimpleDetails',
+						component: paymentSimpleDetails,
+						meta: {
+							title: "日常账详情" 
+						}
+					},
+					
+					{
+						path: '/paymentSimple/newly',
+						name: 'paymentSimpleNewly',
+						component: paymentSimpleNewly,
+						meta: {
+							title: "新建收支" 
+						}
+					},
+					
+					{
+						path: '/paymentSimple/redact',
+						name: 'paymentSimpleRedact',
+						component: paymentSimpleRedact,
+						meta: {
+							title: "日常账编辑" 
+						}
+					},
+					
+				
+				
 				
 				
 				

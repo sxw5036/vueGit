@@ -18,32 +18,32 @@
 							<ul>
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>所属订单</h3>
-									<p>20190527-03</p>
+									<p>{{datamsg.orderNo}}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>包装产品</h3>
-									<p>柜体</p>
+									<p>{{textType}}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>是否入库</h3>
-									<p>是</p>
+									<p>{{textRuku}}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>入库人</h3>
-									<p>蓝墨云</p>
+									<p>{{datamsg.operatorName}}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>入库时间</h3>
-									<p>2019-6-28 16:00:02</p>
+									<p>{{datamsg.operated}}</p>
 								</li>
 
 								<li>
 									<h3><div class="icon"><img src="../../assets/lwxflogo.png"/></div>是否创建配送计划</h3>
-									<p>是</p>
+									<p>{{textPeisong}}</p>
 								</li>
 							</ul>
 						</div>
@@ -94,49 +94,49 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 															<li>
 																<span class="lable">所属订单：</span>
 																<div class="value">
-																	<p>JB201902003</p>
+																	<p>{{datamsg.orderNo}}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">包装编号/条形码：</span>
 																<div class="value">
-																	<p>JB201902003=02</p>
+																	<p>{{datamsg.barcode}}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">包装产品：</span>
 																<div class="value">
-																	<p>柜体</p>
+																	<p>{{textType}}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">是否入库：</span>
 																<div class="value">
-																	<p>是</p>
+																	<p>{{textRuku}}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">入库人：</span>
 																<div class="value">
-																	<p>蓝墨云</p>
+																	<p>{{datamsg.operatorName}}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">入库时间：</span>
 																<div class="value">
-																	<p>2019-6-21</p>
+																	<p>{{datamsg.operated}}</p>
 																</div>
 															</li>
 
 															<li>
 																<span class="lable">是否创建配送计划：</span>
 																<div class="value">
-																	<p>是</p>
+																	<p>{{textPeisong}}</p>
 																</div>
 															</li>
 														</ul>
@@ -241,7 +241,10 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 	export default {
 		data() {
 			return {
-				
+				textPeisong:"",
+				textRuku:'',
+				textType:'',
+				datamsg:'',
 				orderPhead:[
 				{
 						title: '类型',
@@ -716,6 +719,8 @@ ink-bar-animated" style="width: 88px;"  :style="[Tabstransform()]"></div>-->
 		methods: {
 			
 			
+			
+			
 TabsChange:function  (index) {				
                     this.tabIndexs=index						
 			},
@@ -742,7 +747,46 @@ TabsChange:function  (index) {
 		},
 
 		mounted: function() {
-
+			var bzbhID=this.$route.query.id
+			var that=this
+			this.axios({
+				method:'get',
+				url:'/api/f/storages/finisheds?barcode='+bzbhID
+			}).then(function(res){
+				console.log("1111")
+				console.log(res.data.data[0])
+				that.datamsg=res.data.data[0]
+				var text=''
+				if (that.datamsg.type == 0) {
+					text = '橱柜'
+				} else if (that.datamsg.type == 1) {
+					text = '衣柜'
+				} else if (that.datamsg.type == 2) {
+					text = '成品家具'
+				}else if (that.datamsg.type == 3) {
+					text = '电器'
+				}else if (that.datamsg.type == 4) {
+					text = '五金'
+				}
+				that.textType=text
+				var ruku=''
+				if (that.datamsg.in == false) {
+					ruku = '未入库'
+				}else{
+					ruku = '已入库'
+				}
+				that.textRuku=ruku
+				
+				var peisong=''
+					if (that.datamsg.shipped == false) {
+					peisong = '否'
+				}else{
+					peisong = '是'
+				}
+				that.textPeisong=peisong
+			}).catch(function(err){
+				console.log(err)
+			})
 		}
 
 	}

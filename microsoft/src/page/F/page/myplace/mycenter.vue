@@ -251,15 +251,11 @@
 			 
 				getmycenterdatas(){			
 				   let that = this;
-				   this.axios({
+				   that.axios({
 					method: 'get',
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest',
-						'ContentType': 'application/json;charset=UTF-8'
-					},
 					url: '/wxapi/f/branchs/info'
-				}).then(res => {
-					   // mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					}).then(res => {
+					 
 					  console.log(res)
 			          
 					   that.mycenter=res.data.data;
@@ -273,13 +269,12 @@
 				       for (var i=0;i<data.length;i++){
 				         that.mycenterdepts.push(data[i].name);
 				      } 
-					//  
-					//   var countdata=res.data.data.count;
-					// 
-					
-			  
-				 })
-			},
+
+				 }).catch(function(err) {	
+			
+						
+				})
+			}
 			 
 		},
 		 computed : {

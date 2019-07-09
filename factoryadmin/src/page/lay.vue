@@ -362,7 +362,7 @@
 							<Layout>
 								<div class="layMu_sider">
 									<!-- borderRight:'2px solid  rgb(221, 222, 225)', -->
-									<Sider class="layMu_siderMu" hide-trigger :style="{position: 'fixed', zIndex:'100', height: '100vh',  overflow: 'auto',background: '#fff',boxSizing: 'border-box'} ">
+									<Sider class="layMu_siderMu" hide-trigger :style="{position: 'fixed', zIndex:'100', height: '100vh',  overflowY: 'auto',background: '#fff',boxSizing: 'border-box'} ">
 										
 										  
 										
@@ -421,8 +421,18 @@
 											</MenuItem>
 
 											<MenuItem name="7">
-											<a @click="tabs('financeorder','财务管理',7,'financeorder','financeorder')">
-												<Icon class="lay_right" type="ios-disc-outline"></Icon>财务管理</a>
+											<a @click="tabs('financeorder','财务审核',7,'financeorder','financeorder')">
+												<Icon class="lay_right" type="ios-disc-outline"></Icon>财务审核</a>
+											</MenuItem>
+											
+											<MenuItem name="16">
+											<a @click="tabs('keepAccounts','财务记账',16,'keepAccounts','keepAccounts')">
+												<Icon class="lay_right" type="ios-disc-outline"></Icon>财务记账</a>
+											</MenuItem>
+											
+											<MenuItem name="17">
+											<a @click="tabs('paymentSimple','日常账管理',17,'paymentSimple','paymentSimple')">
+												<Icon class="lay_right" type="ios-disc-outline"></Icon>日常账管理</a>
 											</MenuItem>
 
 											<MenuItem name="8">
@@ -460,8 +470,8 @@
 												<Icon class="lay_right" type="ios-disc-outline"></Icon>组织管理</a>
 											</MenuItem>
 
-											<MenuItem name="16">
-											<a @click="tabs('setting','系统设置',16,'setting','setting')">
+											<MenuItem name="15">
+											<a @click="tabs('setting','系统设置',15,'setting','setting')">
 												<Icon class="lay_right" type="ios-disc-outline"></Icon>系统设置</a>
 											</MenuItem>
 

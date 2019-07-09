@@ -41,6 +41,8 @@ import Fsend from '@/page/F/page/statement/send'
 import Fmessage from '@/page/F/page/message/index'
 import Flinkman from '@/page/F/page/message/linkman'
 import Fchat from '@/page/F/page/message/chat'
+import FchatBoard from '@/page/F/page/message/chatBoard'
+
 
 //登录
 import login from '@/page/login/login'
@@ -380,6 +382,14 @@ export default new Router({
 			path: '/F/message/chat',
 			name: 'Fchat',
 			component: Fchat,
+			meta: {
+				title: "聊天窗口"
+			}
+		},
+		{
+			path: '/F/message/chatBoard',
+			name: 'FchatBoard',
+			component: FchatBoard,
 			meta: {
 				title: "聊天窗口"
 			}

@@ -3,7 +3,7 @@
 		<div class="Breadcrumb">
 			<Breadcrumb>
 				<BreadcrumbItem to="/">首页</BreadcrumbItem>
-				<BreadcrumbItem to="/orderlist">订单管理</BreadcrumbItem>
+				<BreadcrumbItem ><a @click="goback">订单管理</a></BreadcrumbItem>
 				<BreadcrumbItem>新建订单</BreadcrumbItem>
 
 			</Breadcrumb>
@@ -31,7 +31,7 @@
 				<Form :label-width="150" style="padding:10px;">
 
 					<FormItem label="经销商">
-						<Select style="width: 300px;" :disabled="dealerDisabled==true" filterable v-model="newlyobj.companyId" @on-change="getClient(newlyobj.companyId)" placeholder="请选择经销商...">
+						<Select :disabled="dealerDisabled==true" filterable v-model="newlyobj.companyId" @on-change="getClient(newlyobj.companyId)" placeholder="请选择经销商...">
 							<Option v-for="item in companyData" :value="item.id" :key="item.id">{{ item.name }}-{{ item.founderName }}</Option>
 						</Select>
 						
@@ -45,7 +45,7 @@
 					</FormItem>
 
 					<FormItem label="客户">
-						<Select style="width: 300px;" :disabled="clientDisabled==true" filterable v-model="newlyobj.client" @on-change="getdocumentary(newlyobj.client)" placeholder="请选择客户...">
+						<Select :disabled="clientDisabled==true" filterable v-model="newlyobj.client" @on-change="getdocumentary(newlyobj.client)" placeholder="请选择客户...">
 							<Option v-for="item in clientdata" :value="item.id" :key="item.id">{{ item.name }}</Option>
 						</Select>
 
@@ -58,7 +58,10 @@
 					</FormItem>
 
 					<FormItem label="业务经理">
-						<Input disabled="disabled" v-model="newlyobj.customerManagerName" placeholder="请输入业务经理..."></Input>
+						
+						<Select filterable v-model="newlyobj.customerManager" placeholder="请选择经销商业务经理...">
+									<Option v-for="item in dealerMembers" :value="item.userId" :key="item.userId">{{ item.userName}}</Option>
+								</Select>
 					</FormItem>
 
 					<FormItem label="收货人姓名">
@@ -103,6 +106,13 @@
 					<FormItem label="下单时间">
 						<DatePicker type="date" placeholder="请选择下单时间" style="width: 100%" :value="newlyobj.orderTime" @on-change="handleChange"></DatePicker>
 					</FormItem>
+					
+					<FormItem label="跟单员">
+								<Select filterable v-model="newlyobj.merchandiser" placeholder="请选择跟单员...">
+									<Option v-for="item in members" :value="item.userId" :key="item.userId">{{ item.userName}}</Option>
+								</Select>
+							</FormItem>
+					
 					<FormItem label="是否设计">
 						<RadioGroup true-value v-model="newlyobj.isDesign">
 							<Radio label="0">不需要</Radio>
@@ -110,9 +120,7 @@
 						</RadioGroup>
 					</FormItem>
 
-					<FormItem label="">
-						<Button type="primary" @click="sure">确认</Button>
-					</FormItem>
+					
 					<!--<FormItem label="订单设计费" v-show="orderisDesign==0">
 						<Input v-model="orderdesignFee" placeholder="请输入订单设计费..."></Input>
 					</FormItem>
@@ -120,7 +128,7 @@
 						<Input v-model="orderfactoryPrice" placeholder="请输入订单货款..."></Input>
 					</FormItem>
 -->
-					<!--<FormItem label="订单产品">
+					<FormItem label="订单产品">
 						<div class="order_product">
 
 							<div class="p_itemAdd">
@@ -134,8 +142,11 @@
 										<Button shape="circle" icon="ios-trash-outline" @click="delProduct(index)"></Button>
 									</div>
 
-									<FormItem label="产品类型">
-										<Select style="width: 300px;" v-model="item.type" placeholder="请选择产品类型...">
+									<FormItem >
+										
+										<p class="p_Ptitle">产品类型</p>
+										
+										<Select style="width: 300px;" @on-change="item.series='',item.color='',item.door=''" v-model="item.type" placeholder="请选择产品类型...">
 											<Option value="0">橱柜(J)</Option>
 											<Option value="1">衣柜(B)</Option>
 											<Option value="2">成品家具(J)</Option>
@@ -145,8 +156,9 @@
 										</Select>
 									</FormItem>
 
-									<FormItem label="产品系列">
-										<Select style="width: 300px;" v-model="item.series" placeholder="请选择产品系列...">
+									<FormItem v-show="item.type==0||item.type==1">
+										<p class="p_Ptitle">产品系列</p>
+										<Select style="width: 300px;" @on-change="item.color='',item.door=''" v-model="item.series" placeholder="请选择产品系列...">
 											<Option value="0">定制实木 </Option>
 											<Option value="1">特供实木</Option>
 											<Option value="2">美克</Option>
@@ -156,22 +168,34 @@
 										</Select>
 									</FormItem>
 
-									<FormItem label="产品颜色">
+									<FormItem v-show="item.type==0||item.type==1">
+										<p class="p_Ptitle">产品颜色</p>
 										<Input style="width: 300px;" v-model="item.color" placeholder="请输入产品颜色..."></Input>
 									</FormItem>
 
-									<FormItem label="门型">
+									<FormItem v-show="item.type==0||item.type==1">
+										<p class="p_Ptitle">门型</p>
 										<Input style="width: 300px;" v-model="item.door" placeholder="请输入门型..."></Input>
 									</FormItem>
+									
+										<FormItem label="">
+												<p>产品价格</p>
+												<Input style="width: 300px;" v-model="item.price" placeholder="请输入产品价格..."></Input>
+											</FormItem>
 
-									<FormItem label="备注">
+									<FormItem >
+										<p class="p_Ptitle">备注</p>
 										<Input style="width: 300px;" type="textarea" v-model="item.notes" placeholder="请输入备注..."></Input>
 									</FormItem>
 
 								</li>
 							</ul>
 						</div>
-					</FormItem>-->
+					</FormItem>
+					
+					<FormItem label="">
+						<Button type="primary" @click="sure">确认</Button>
+					</FormItem>
 
 					<!--<FormItem label="生产拆单">
 						<div class="order_product">
@@ -386,12 +410,15 @@
 					consigneeName: "",
 					consigneeTel: '',
 					address: "",
-
+          
 					notes: "",
 					type: "",
 					orderTime: "",
-					isDesign: "0"
+					isDesign: "0",
+					merchandiser:''
 				},
+				
+				orderProducts:[],//订单下产品
 
 				provinceData: [], //省份数据
 				cityData: [], //城市数据
@@ -573,6 +600,8 @@
 				iscompanySearch: false,
 
 				clientdata: [],
+				members:[],
+				dealerMembers:[],
 				newClientModel: false,
 				objmsg: {
 					name: "",
@@ -591,6 +620,10 @@
 		},
 
 		methods: {
+			
+			goback: function() {
+				this.$emit('openWindow', ('orderlist'), ('订单列表'), ('6'), ('orderlist'), ('orderlist'))
+			},
 
 			handleChange(data) {
 				this.newlyobj.orderTime = data;
@@ -951,6 +984,13 @@
 
 			//根据经销商查询客户
 			getClient: function(cid) {
+				
+				if(!cid){
+					return false;
+				}
+				
+				this.getDealerMembers(cid)
+				
 				var that = this
 				that.orderclient = ""
 				that.orderdocumentary = ""
@@ -962,6 +1002,8 @@
 											this.newlyobj.consigneeTel = data.leaderTel;
 //											this.newlyobj.location = data.address
 											this.newlyobj.address = data.address*/
+				
+											
 						this.newlyobj.consigneeName = this.companyData[i].leaderName;
 						this.newlyobj.consigneeTel = this.companyData[i].leaderTel;
 						this.newlyobj.address = this.companyData[i].address
@@ -996,15 +1038,46 @@
 
 				})
 			},
+			
+			//根据经销商
+			
+			getDealerMembers:function  (cid) {
+				
+				let that=this
+				
+				this.axios({
+					method: 'get',
+					url: '/api/f/depts/members?companyId=' + cid,
+
+				}).then(function(res) {
+					
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					var data = res.data.data
+					
+					
+					that.dealerMembers=data
+
+
+				}).catch(function(err) {
+
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
+				
+			},
 
 			//选择客户
 
 			getdocumentary: function(cid) {
 
+                      console.log(cid)
+
 				for(var i = 0; i < this.clientdata.length; i++) {
 					if(cid == this.clientdata[i].id) {
-
-						this.newlyobj.customerTel = this.clientdata[i].mobile
+						this.newlyobj.customerTel = this.clientdata[i].phone
 						this.newlyobj.customerManagerName = this.clientdata[i].customerManagerName
 					}
 				}
@@ -1164,6 +1237,30 @@
 				})
 
 			},
+			
+			
+			addProduct: function() {
+				
+				this.pushProduct=!this.pushProduct
+				
+				var obj = {
+					"type": "",
+					"series": "",
+					"color": "",
+					"door": "",
+					"price": "",
+					"notes": "",
+
+				}
+
+
+				this.orderProducts.unshift(obj)
+			},
+			
+			
+				delProduct:function  (index) {
+					this.orderProducts.splice(index,1)
+				},
 
 			sure: function() {
 
@@ -1184,13 +1281,43 @@
 				var type = newlyobj.type
 				var orderTime = newlyobj.orderTime
 				var isDesign = newlyobj.isDesign
+				
+				var customerManager=newlyobj.customerManager
+				var merchandiser=newlyobj.merchandiser
+				
+				var orderProducts = []
+				
+				/*type": "",
+					"series": "",
+					"color": "",
+					"door": "",
+					"price": "",
+					"notes": "",*/
 
-				console.log(newlyobj)
+				for(var i = 0; i < this.orderProducts.length; i++) {
+
+					var data = this.orderProducts[i]
+
+					var obj = {
+						type: (data.type == "") ? undefined : data.type,
+						series: (data.series == "") ? undefined : data.series,
+						color: (data.color == "") ? undefined : data.color,
+						door: (data.door == "") ? undefined : data.door,
+						price: (data.price == "") ? undefined : data.price,
+						notes: (data.notes == "") ? undefined : data.notes,
+						
+					}
+					orderProducts.push(obj)
+				}
+	
 
 				if(companyId == "" || companyId == null) {
 					this.$Message.info('请选择经销商');
 					return false;
-				} else if(consigneeName.length < 1) {
+				} else if(customerManager == "" || customerManager == null) {
+					this.$Message.info('请选择经销商业务经理');
+					return false;
+				} else  if(consigneeName.length < 1) {
 					this.$Message.info('请输入收货人姓名');
 					return false;
 				} else if(consigneeTel.length < 0) {
@@ -1213,6 +1340,12 @@
 					return false;
 				} else if(orderTime == "" || orderTime == null) {
 					this.$Message.info('请输入下单时间');
+					return false;
+				}  else if(merchandiser == "" || merchandiser == null) {
+					this.$Message.info('请选择工厂跟单员');
+					return false;
+				} else if(orderProducts.length<1) {
+					this.$Message.info('请录入订单产品');
 					return false;
 				} else {
 					var newDate = new Date()
@@ -1245,15 +1378,21 @@
 								notes: notes,
 								consigneeTel: consigneeTel,
 								consigneeName: consigneeName,
-
+                             
 								type: type,
 								customerTel: customerTel,
 								isDesign: isDesign,
 								orderTime: orderTime,
 								estimatedDeliveryDate: time,
-								"cityAreaId": this.districMsg
+								"cityAreaId": this.districMsg,
+								merchandiser:merchandiser,
+								salesman:customerManager,
+								
+								
 
 							},
+							
+							orderProducts:orderProducts
 
 						}
 					}).then(res => {
@@ -1265,14 +1404,67 @@
 						}
 
 						that.$Message.info('订单添加成功');
+						that.formeReset()
 
 					}).catch(function(err) {
 						setTimeout(msg, 100);
-						that.$Message.info('订单添加成功');
+						that.$Message.error('出错了，请稍后重试！');
+					
 
 					})
 				}
 
+			},
+			
+			
+			//查询全部员工
+			getMembers: function() {
+				let that = this
+
+				this.axios({
+					method: 'get',
+					url: '/api/f/depts/members/?pageNum=1&pageSize=999999',
+
+				}).then(function(res) {
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					var data = res.data.data
+					that.members = data
+
+				}).catch(function(err) {
+
+					that.$Message.error('出错了，请稍后重试！');
+
+				})
+			},
+			
+			
+			formeReset() {
+				this.newlyobj ={
+					companyId: "",
+					companyName: "",
+					companyFince: "",
+					client: "",
+					customerManagerName: "",
+					consigneeName: "",
+					consigneeTel: '',
+					address: "",
+          
+					notes: "",
+					type: "",
+					orderTime: "",
+					isDesign: "0",
+					merchandiser:''
+				}
+				
+				this.orderProducts=[]
+				this.provinceMsg="", 
+				this.cityMsg="",
+				this.districMsg=""
+				
 			},
 
 			//是否为跳转
@@ -1299,6 +1491,7 @@
 
 		mounted: function() {
 			this.getdealerdata()
+			this.getMembers()
 
 			var that = this
 
@@ -1343,5 +1536,189 @@
 </script>
 
 <style scoped="scoped">
-
+.upload-list {
+		display: inline-block;
+		width: 90px;
+		height: 90px;
+		text-align: center;
+		line-height: 90px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		overflow: hidden;
+		background: #fff;
+		position: relative;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+		margin-right: 4px;
+	}
+	
+	.upload-list img {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.upload-list-cover {
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(0, 0, 0, .6);
+	}
+	
+	.upload-list:hover .upload-list-cover {
+		display: block;
+	}
+	
+	.upload-list-cover i {
+		color: #fff;
+		font-size: 20px;
+		cursor: pointer;
+		margin: 0 2px;
+	}
+	
+	.order_product ul li.p_item {
+		background: whitesmoke;
+		padding: 10px;
+		margin-bottom: 10px;
+		position: relative;
+	}
+	
+	.order_product ul li.p_item .op {
+		z-index: 9;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	
+	.order_product .p_itemAdd {
+		margin-bottom: 10px;
+	}
+	
+	.order_product ul li .item {
+		margin-bottom: 10px;
+	}
+	
+	.order_center {
+		display: inline-block;
+		width: 100%;
+	}
+	
+	.order_center .item {
+		width: 50%;
+		height: 500px;
+		overflow: auto;
+		float: left;
+		box-sizing: border-box;
+	}
+	
+	.order_center .item .ordermsg li {
+		line-height: 30px;
+	}
+	
+	.demo-upload-list {
+		display: inline-block;
+		width: 60px;
+		height: 60px;
+		text-align: center;
+		line-height: 60px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		overflow: hidden;
+		background: #fff;
+		position: relative;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+		margin-right: 4px;
+	}
+	
+	.demo-upload-list img {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.demo-upload-list-cover {
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(0, 0, 0, .6);
+	}
+	
+	.demo-upload-list:hover .demo-upload-list-cover {
+		display: block;
+	}
+	
+	.demo-upload-list-cover i {
+		color: #fff;
+		font-size: 20px;
+		cursor: pointer;
+		margin: 0 2px;
+	}
+	
+	.border_none {
+		border: 0px;
+	}
+	
+	.item_head {
+		display: inline-block;
+		padding-left: 18px;
+	}
+	
+	.item_head span {
+		display: ;
+		float: left;
+		line-height: 30px;
+		margin-bottom: 6px;
+		margin-right: 20px;
+		font-size: 14px;
+		cursor: pointer;
+	}
+	
+	.item_head span.active {
+		color: #0B61A4;
+		border-bottom: solid 2px #0B61A4;
+	}
+	
+	.item_center {
+		display: none;
+	}
+	
+	.item_center.active {
+		display: block;
+		padding-left: 18px;
+	}
+	
+	.order_head_statistics {
+		height: 158px;
+		font-size: 0px;
+	}
+	
+	.order_head_statistics ul {
+		width: 100%;
+		display: inline-block;
+	}
+	
+	.order_head_statistics ul li {
+		float: left;
+		width: 16.66%;
+		text-align: center;
+		padding-top: 20px;
+	}
+	
+	.order_head_statistics ul li h3 {
+		font-size: 55px;
+		font-weight: 100;
+		color: cornflowerblue;
+	}
+	
+	.order_head_statistics ul li p {
+		font-size: 14px;
+		color: #000000;
+	}
+	
+	.p_Ptitle{
+		
+	}
 </style>

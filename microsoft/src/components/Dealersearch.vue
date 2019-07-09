@@ -25,11 +25,11 @@
 				<div class="linkman_nav">
 
 					<ul class="linkman_lsit">
-						<li class="linkman_item mui-table-view-cell"  style="border: none;" v-for="(item,index) in dataArry"  >
-                             <div class="mui-slider-right mui-disabled">
+						<li class="linkman_item mui-table-view-cell" :key='index'  style="border: none;" v-for="(item,index) in dataArry"  >
+                          <!--   <div class="mui-slider-right mui-disabled">
 						<a class="mui-btn mui-btn-red" style="font-size: 0.7rem;" @click="sure(item)">选择</a>
-					</div>
-							<div class="user_msg mui-slider-handle">
+					</div> -->
+							<div class="user_msg mui-slider-handle" @click="sure(item)" >
 								<h3>{{item.companyName}}<span>{{item.dealerMobile}}</span></h3>
 								<div class="notes">
 									<p>{{item.mergerName}}</p>

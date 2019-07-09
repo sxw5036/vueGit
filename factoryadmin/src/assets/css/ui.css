@@ -268,8 +268,14 @@
 
 .ivu-table-border thead th {
 	background: #F7F7F7;
-	font-size: 14px;
+	
 	height: 46px;
+}
+
+
+.ivu-table th{
+	height: 46px;
+	font-size: 12px;
 }
 
 .ivu-table tr td {
@@ -298,6 +304,12 @@
 		background: #FFFFFF;
 		border-radius: 6px;
 	}
+
+.borderNone .ivu-input{
+	border: none;
+	outline: none;
+	box-shadow: none;
+}
 
 .iv_form_but {
 	margin-top: 68px;
@@ -688,15 +700,16 @@
 
 .supplier_msg {
 	display: block;
+	padding: 0px 20px;
 }
 
 .supplier_msg ul {
-	padding: 0px 20px;
+	
 }
 
 .supplier_msg ul li {
 	position: relative;
-	margin-bottom: 30px;
+	
 	line-height: 1.5em;
 	min-height: 20px;
 	
@@ -714,15 +727,27 @@
 	width: 100px;
 	font-weight: bold;
 	color: #000000;
+	line-height: 32px;
 }
 
 .supplier_msg ul li .value {
 	padding-left: 100px;
+    padding-bottom: 30px;
 }
+
+
 
 .supplier_msg ul li .value p {
 	display: block;
+	/*padding-top:6px;*/
 	width: 100%;
+	line-height: 32px;
+	min-height: 32px;
+	padding:0px 7px;
+}
+
+.supplier_msg ul li:last-child .value{
+	padding-bottom: 0px;
 }
 
 .details_opBut {
@@ -735,6 +760,7 @@
 	border-radius: 3px;
 	font-size: 14px;
 	cursor: pointer;
+	margin: 0px auto;
 }
 
 .details_opBut.linkBlock {
@@ -960,6 +986,7 @@
 
 .ivu-tabs-bar {
 	box-sizing: border-box;
+	margin-bottom: 0px;
 }
 
 
@@ -1054,3 +1081,126 @@
 		color: #000000;
 		
 	}
+	
+   .Tab_head{
+   	font-size: 0px;
+   	width: 100%;
+   	display: inline-block;
+   }
+
+  .Tab_head .item{
+  	display: inline-block;
+  }
+
+
+ .Tab_head .item.right{
+ 	float: right;
+ }
+
+
+ .Tab_head .item.right button{
+ 	margin-left: 6px;
+ }
+
+
+.Tab_head .Tab_print{
+	background: #36cfc9;
+}
+
+
+.Tab_head .Tab_print{
+	background: #36cfc9;
+	border: solid 1px #36cfc9;
+}
+
+.Tab_head .Tab_success{
+	/*background: #36cfc9;*/
+}
+
+.Tab_head .Tab_close{
+	/*background: #36cfc9;*/
+}
+
+.Collapse_item{
+	margin-bottom: 20px;
+}
+
+.print_table table{
+	border-left:solid 1px #333 ;
+}
+
+.print_table table thead{
+	
+}
+
+.print_table table thead tr th{
+	padding:0px 10px;
+	font-size: 12px;
+	text-align: left;
+	box-sizing: border-box;
+	border:solid 1px #333;
+	border-left: none;
+	font-weight: 100;
+	color: #666;
+	height: 40px;
+	line-height: 40px;
+	
+	
+}
+
+.print_table table  tr{
+    box-sizing: border-box;
+	border-right:solid 1px #333;
+	
+}
+
+
+.print_table table tbody tr td{
+	height: 40px;
+	padding:0px 10px;
+	font-size: 12px;
+	text-align: left;
+	box-sizing: border-box;
+	border:solid 1px #333;
+	border-left: none;
+	font-weight: 100;
+	color: #666;
+	
+	border-top: none;
+}
+
+.print_table table tbody tr td span{
+	line-height: 40px;
+}
+
+
+
+
+
+
+.print_table table thead.center tr th{
+	text-align: center;
+	
+}
+
+
+.print_table table tbody tr td .icon_leftOp{
+	float: right;
+	font-weight: 100;
+	cursor: pointer;
+}
+
+
+.print_table table tbody tr td .icon_leftOp:hover{
+	color: #333;
+}
+
+.must_lable{
+	color: red;
+	font-size: 12px;
+}
+
+.ivu-poptip-confirm .ivu-poptip-body .ivu-picker-panel-icon-btn i.ivu-icon{
+	color: #c5c8ce;
+}
+ 
