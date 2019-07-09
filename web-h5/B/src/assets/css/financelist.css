@@ -1,0 +1,291 @@
+.finance_nav{
+	padding: 0.5rem;
+}
+
+
+
+.finance_list{
+	display: block;
+	width: 100%;
+	background: white;
+	padding: 0.5rem 0.5rem;
+
+	border-radius: 0.2rem;
+	
+	overflow: hidden;
+
+	
+}
+
+.finance_list a{
+	color: #000000;
+}
+
+
+
+.finance_list .list_H{
+	padding-bottom: 0.5rem;
+}
+
+
+.finance_list .list_H span{
+	float: right;
+	color: #bbbbbb;
+}
+
+.finance_list .item_list{
+	position: relative;
+	display: block;
+	width: 100%;
+	margin-bottom: 1.02rem;
+}
+
+
+.finance_list .item_list:last-child{
+	margin-bottom: 0rem;
+}
+
+
+
+.finance_list .item_list .iconAndtxet{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 2.04rem;
+	height: 2.04rem;
+	
+	
+	
+}
+
+
+.finance_list .item_list .iconAndtxet img.icon{
+	
+	width: 100%;
+	margin-right: 0.5rem;
+	float: left;
+	
+}
+
+
+
+.finance_list .item_list .c{
+	padding-left: 2.04rem;
+	
+}
+
+.finance_list .item_list .c .cn{
+	border-bottom: solid 1px #e0e0e0;
+	min-height: 1.04rem;
+}
+
+
+.finance_list .item_list:last-child .c .cn{
+	border: none;
+	
+}
+
+
+
+
+
+
+
+
+
+
+/**/
+.finance_statistics .finance_list{
+	padding: 0.95rem 0.5rem;
+}
+
+
+.finance_statistics .statistics_nav p.statistics_title{
+	font-size: 0.7rem;
+	color: #000000;
+	margin: 0px;
+}
+
+
+.finance_statistics .statistics_nav .statistics_title span{
+	float: right;
+	font-size: 0.9rem;
+	color: #CC0202;
+	font-weight: 500;
+}
+
+
+.finance_statistics .statistics_nav .statistics_title span small{
+	font-size: 0.7rem;
+}
+
+
+ 
+ 
+ .finance_statistics  .progressbar{
+ 	margin: 0.5rem 0rem;
+ }
+
+
+ .finance_statistics .statistics_nav.expend .statistics_title span{
+ 	color: #63678D;
+ }
+
+ .finance_statistics .statistics_nav.profit .statistics_title span{
+ 	color: #bbaf8d;
+ }
+
+
+
+
+.finance_search{
+	margin: 0.5rem 0rem
+}
+
+
+.finance_listNav .finance_list .list_H{
+	color: #9f7d4f;
+	font-size: 0.9rem;
+	line-height: 1rem;
+}
+
+.finance_listNav .finance_list .list_H span{
+	font-size: 0.6rem;
+}
+
+.finance_listNav .finance_list .item_list .iconAndtxet{
+	font-size: 0.7rem;
+	width: 5rem;
+}
+
+
+.finance_listNav .list_msg{
+	font-size: 0.7rem;
+	color: #636363;
+	padding-left: 1.1rem;
+	padding-bottom: 0.8rem;
+}
+
+
+
+.finance_but{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 50px;
+	background: white;
+}
+
+
+.finance_but ul{
+	font-size: 0px;
+	width: 100%;
+}
+
+
+.finance_but ul li{
+	float: left;
+	width: 50%;
+	
+	text-align: center;
+	line-height: 50px;
+	font-size: 0.6rem;
+	color: #636363;
+}
+
+.finance_but ul li img{
+	float: left;
+	width: 18px;
+	margin-right: 8px;
+	margin-top: 14px;
+	
+	
+	
+}
+
+
+.finance_but ul li a{
+	color: #636363;
+	display: inline-block;
+	margin: 0px auto;
+	
+}
+
+/**/
+
+
+.finance_listdetails{
+	padding: 0.5rem;
+}
+
+
+.finance_listdetails .finance_list .item_list .iconAndtxet{
+	width: 6.15rem;
+	font-size: 0.7rem;
+	line-height: 0.7rem;
+}
+
+
+.finance_listdetails .finance_list .item_list .iconAndtxet .icon{
+	width: 0.7rem;
+	
+}
+
+.finance_listdetails .finance_list .item_list .c{
+	padding-left: 6.15rem;
+}
+
+
+.finance_listdetails .list_msg{
+	padding-bottom: 0.8rem;
+	font-size: 0.7rem;
+	color: #636363;
+}
+
+.finance_listdetails .item_list:last-child .list_msg{
+	padding: 0px;
+}
+
+
+.finance_listdetails .finance_list .item_list{
+	margin-bottom: 0.8rem;
+}
+
+
+.newfinance{
+	padding: 0.5rem;
+}
+
+.newfinance .ik_form_nav {
+	padding-right: 1rem;
+}
+
+.newfinance .ik_form_nav .form_item .lable{
+	font-size: 0.7rem;
+	color: #000000;
+}
+
+
+
+
+.newfinance .operation{
+	display: block;
+	width: 100%;
+	
+	font-size: 0.6rem;
+	line-height: 0.6rem;
+	color: #000000;
+	padding-top: 1rem;
+	border-top: dashed 1px #b1b1b1;
+}
+
+
+.newfinance .operation span:last-child{
+	float: right;
+}
+
+
+.newfinance .operation span small{
+	color: #636363;
+}

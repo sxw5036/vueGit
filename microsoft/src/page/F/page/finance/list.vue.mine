@@ -1,0 +1,715 @@
+<template>
+
+	<div>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+
+			<div class="mui-scroll">
+
+				<div class="finance_nav">
+
+					<!--		<header class="mui-bar mui-bar-nav mui-bar-transparent" data-top='0' data-offset='150' data-duration='16' data-scrollby=".mui-scroll-wrapper">
+	<h1 class="mui-title">标题</h1>
+</header>-->
+
+					<div class="finance_statistics">
+
+						<div class="finance_list">
+							<ul>
+								<li class="left" style="padding-top: 0.65rem;">
+									<p><span><img src="../../assets/img/finance/todayIncome.png"/></span>今日收入</p>
+								</li>
+								<li class="right" style="padding-top: 0.65rem;">
+									<p><span>￥</span>{{report.income}}</p>
+								</li>
+
+								<li class="left">
+									<p><span><img src="../../assets/img/finance/todayExpend.png"/></span>今日支出</p>
+								</li>
+								<li class="right">
+									<p style="color: #63678D;"><span>￥</span>{{report.outlay}}</p>
+								</li>
+
+								<li class="left" style="border-bottom: none; 	padding-bottom: 0.6rem;">
+									<p><span><img src="../../assets/img/finance/todyprofit.png"/></span>今日盈余</p>
+								</li>
+								<li class="right">
+									<p style="color: #000000;"><span>￥</span>{{(report.income)-(report.outlay)}}</p>
+								</li>
+
+							</ul>
+						</div>
+
+					</div>
+
+					<!--检索-->
+
+					<div class="finance_search">
+						<div class="searching" style="padding: 0rem;">
+							<div class="nav">
+								<div class="title">
+									<img class="icon" src="../../assets/img/search.png" />
+									<p>检索</p>
+								</div>
+
+								<div class="form_nav">
+
+									<ul>
+										<li class="linkBlock">
+											<div class="linkBlock_item select">
+												<p>开始时间 {{searchObj.beginTime}}</p>
+												<input class="hide" v-model="searchObj.beginTime" type="date" name="" id="" />
+												<span class="select_icon"><img src="../../assets/img/calendar.png"/></span>
+											</div>
+											<div class="linkBlock_item select">
+												<p>结束时间 {{searchObj.endTime}}</p>
+												<input class="hide" v-model="searchObj.endTime" type="date" name="" id="" />
+												<span class="select_icon"><img src="../../assets/img/calendar.png"/></span>
+											</div>
+										</li>
+
+										<li class="linkBlock">
+											<div class="linkBlock_item select">
+												<p>请选择收支</p>
+												<!--<input class="hide" v-model="searchObj.begin" type="date" name="" id="" />-->
+
+												<select class="hide" v-model="searchObj.type" @change="getfunds(searchObj.type)">
+													<option :value="item.id" v-for="(item,index) in fundsdataAll">{{item.name}}</option>
+												</select>
+
+												<span class="select_icon"><img src="../../assets/img/calendar.png"/></span>
+											</div>
+											<div class="linkBlock_item select">
+												<p>请选择一级科目 </p>
+												<select class="hide" v-model="searchObj.funds" @change="getsecondfunds(searchObj.funds)">
+													<option :value="item.id" v-for="(item,index) in fundsdata">{{item.name}}</option>
+												</select>
+												<span class="select_icon"><img src="../../assets/img/calendar.png"/></span>
+											</div>
+										</li>
+
+										<li class="linkBlock" v-show="secondfundsdata.length!=0||thirdlyfundsdata.length!=0">
+											<div class="linkBlock_item select" v-show="secondfundsdata.length!=0">
+												<p>请选择二级科目</p>
+												<!--<input class="hide" v-model="searchObj.begin" type="date" name="" id="" />-->
+
+												<select class="hide" v-model="searchObj.secondfunds" @change="getthirdlyfunds(searchObj.secondfunds)">
+													<option :value="item.id" v-for="(item,index) in secondfundsdata">{{item.name}}</option>
+												</select>
+
+												<span class="select_icon"><img src="../../assets/img/calendar.png"/></span>
+											</div>
+											<div class="linkBlock_item select" v-show="thirdlyfundsdata.length!=0">
+												<p v-show="searchObj.thirdlyfunds==''">请选择三级科目 </p>
+												<select class="hide" v-model="searchObj.thirdlyfunds" @change="getfourthlyfunds(searchObj.thirdlyfunds)">
+													<option :value="item.id" v-for="(item,index) in thirdlyfundsdata">{{item.name}}</option>
+												</select>
+												<span class="select_icon"><img src="../../assets/img/calendar.png"/></span>
+											</div>
+										</li>
+
+										<!--<li class="input_s">
+											<div class="but">
+												<select name="">
+													<option value=""></option>
+												</select>
+											</div>
+											<div class="but"> 货款收入</div>
+										</li>-->
+
+									</ul>
+
+								</div>
+
+								<button class="search_but" @click="clicksearch">查询</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="finance_listNav">
+
+						<div class="finance_list" v-for="(item,index) in dataArry" @click="changePath(item)">
+							<!--<router-link :to="{name:'financelistdetails',query:{type:'1'}}">-->
+							<div class="list_H">
+								{{item.typeName}} <span>{{item.created}}</span>
+							</div>
+
+							<div class="item_list">
+								<div class="iconAndtxet">
+									科目
+								</div>
+								<div class="c">
+									<div class="cn">
+										<!---->
+										<div class="list_msg">{{item.fundsName}}</div>
+										<!---->
+									</div>
+								</div>
+							</div>
+
+							<div class="item_list">
+								<div class="iconAndtxet">金额</div>
+								<div class="c">
+									<div class="cn">
+										<!---->
+										<div class="list_msg">{{item.amount}}</div>
+										<!---->
+									</div>
+								</div>
+							</div>
+
+							<div class="item_list">
+								<div class="iconAndtxet">经手人</div>
+								<div class="c">
+									<div class="cn">
+										<!---->
+										<div class="list_msg">{{item.operatorName}}</div>
+										<!---->
+									</div>
+								</div>
+							</div>
+
+							<div class="item_list">
+								<div class="iconAndtxet">支付时间</div>
+								<div class="c">
+									<div class="cn">
+										<!---->
+										<div class="list_msg">{{item.paymentDate}}</div>
+										<!---->
+									</div>
+								</div>
+							</div>
+
+							<!--</router-link>-->
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div class="finance_but" style="z-index: 9;">
+			<ul>
+				<li>
+					<router-link :to="{name:'newfinance',query:{type:'2'}}"><img src="../../assets/img/finance/newExpend.png" />新建支出</router-link>
+				</li>
+				<li>
+					<router-link :to="{name:'newfinance',query:{type:'1'}}"><img src="../../assets/img/finance/newIncome.png" />新建收入</router-link>
+				</li>
+			</ul>
+		</div>
+
+		<Backtop></Backtop>
+
+	</div>
+
+</template>
+
+<script>
+	import axios from 'axios'
+	import mui from '../../assets/js/mui.js'
+	import backtop from '../../components/backtop.vue'
+	export default {
+
+		name: 'financelist',
+
+		data() {
+			return {
+
+				report: {
+					income: "",
+					outlay: "",
+				},
+
+				fundsdata: [],
+				secondfundsdata: [],
+				thirdlyfundsdata: [],
+				fundsdataAll: [],
+
+				searchObj: {
+					beginTime: "",
+					endTime: "",
+					fund: "",
+					type: "",
+					funds: "",
+					secondfunds: "",
+					typethirdlyfunds: ""
+				},
+				isSearch: false,
+
+				dataArry: [],
+				pageIndex: 1, //分页页数
+				pageSize: 10,
+				pageIndextotal: 0,
+			}
+		},
+
+		components: {
+
+			Backtop: backtop,
+
+		},
+
+		methods: {
+
+			getfunds: function(type) {
+
+				this.searchObj.fund = "";
+				this.searchObj.funds = "";
+				this.searchObj.secondfunds = "";
+				this.searchObj.thirdlyfunds = ""
+				this.secondfundsdata = [];
+				this.thirdlyfundsdata = [];
+				this.searchObj.amount = "";
+				this.searchObj.operator = "";
+				this.searchObj.paymentDate = "";
+				this.searchObj.notes = "";
+				this.searchObj.files = []
+
+				for(var i = 0; i < this.fundsdataAll.length; i++) {
+					if(type == this.fundsdataAll[i].id) {
+						this.fundsdata = this.fundsdataAll[i].items
+					}
+				}
+
+			},
+
+			getsecondfunds: function(id) {
+
+				this.searchObj.fund = "";
+				this.searchObj.secondfunds = ""
+				this.searchObj.thirdlyfunds = ""
+				this.secondfundsdata = [];
+				this.thirdlyfundsdata = [];
+
+				for(var i = 0; i < this.fundsdata.length; i++) {
+
+					if(id == this.fundsdata[i].id) {
+
+						if(!this.fundsdata[i].items) {
+							this.searchObj.fund = id
+							this.secondfundsdata = []
+						} else {
+							this.secondfundsdata = this.fundsdata[i].items
+
+						}
+					}
+
+				}
+
+			},
+
+			getthirdlyfunds: function(id) {
+
+				this.searchObj.fund = "";
+				this.searchObj.thirdlyfunds = ""
+				this.thirdlyfundsdata = [];
+				for(var i = 0; i < this.secondfundsdata.length; i++) {
+
+					if(id == this.secondfundsdata[i].id) {
+
+						if(!this.secondfundsdata[i].items) {
+							this.searchObj.fund = id
+							this.thirdlyfundsdata = []
+						} else {
+							this.thirdlyfundsdata = this.secondfundsdata[i].items
+
+						}
+					}
+
+				}
+			},
+
+			getfourthlyfunds: function(id) {
+				this.searchObj.fund = "";
+				for(var i = 0; i < this.thirdlyfundsdata.length; i++) {
+
+					if(id == this.thirdlyfundsdata[i].id) {
+
+						if(!this.thirdlyfundsdata[i].items) {
+							this.searchObj.fund = id
+
+						}
+					}
+
+				}
+
+			},
+
+			//检索
+
+			clicksearch: function() {
+				this.isSearch = false
+				var searchobj = this.searchObj
+
+				var type = searchobj.type
+				var funds = searchobj.fund
+				var beginTime = searchobj.beginTime
+				var endTime = searchobj.endTime
+
+				if(type == "" && funds == "" && endTime == "" && beginTime == "") {
+					this.newData();
+
+					return false;
+				} else {
+					this.pageIndex = 1
+					this.searchData()
+				}
+
+			},
+
+			//调用检索api接口
+			searchData: function() {
+
+				var searchobj = this.searchObj
+
+				var type = searchobj.type
+				var funds = searchobj.fund
+				var beginTime = searchobj.beginTime
+				var endTime = searchobj.endTime
+
+				var pathurl = ""
+
+				if(type != "" && type != null && type.length != 0) {
+					pathurl += 'type=' + type + "&"
+				}
+
+				if(funds != "" && funds != null && funds.length != 0) {
+					pathurl += 'funds=' + funds + "&"
+				}
+
+				if(beginTime != "" && beginTime != null) {
+					pathurl += 'beginTime=' + beginTime + "&"
+				}
+
+				if(endTime != "" && endTime != null) {
+					pathurl += 'endTime=' + endTime + "&"
+				}
+
+				var that = this
+
+				this.axios({
+					method: 'get',
+					url: '/wxapi/f/paymentSimples?' + pathurl + 'pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize,
+
+				}).then(function(res) {
+
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+
+					if(that.isSearch == false) {
+						that.dataArry = [];
+						var data = res.data
+						that.dataArry = data.data
+
+					} else if(that.isSearch == true) {
+						var data = res.data.data
+
+						for(var i = 0; i < data.length; i++) {
+							that.dataArry.push(data[i])
+						}
+
+					}
+					that.mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					that.pageIndextotal = data.pagination.pages
+					that.isSearch = true
+
+				}).catch(function(err) {
+
+					console.log(err)
+
+				})
+			},
+
+			//刷新数据
+
+			newData: function() {
+				this.isSearch = false
+				this.searchObj = {
+
+						"type": "",
+						"fund": "",
+						"funds": "",
+						"secondfunds": "",
+						"thirdlyfunds": "",
+						"Time": "",
+						"beginTime": "",
+						"endTime": "",
+					},
+					this.pageIndex = 1
+				this.getData()
+
+			},
+
+			changePath: function(obj) {
+
+				this.$router.push({
+					name: 'financelistdetails',
+					query: {
+						id: obj.id
+					}
+				})
+
+			},
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			pulldownRefresh: function() {
+				this.pageIndex = 1
+				this.getData()
+			},
+
+			/**
+			 * 上拉加载具体业务实现
+			 */
+
+			pullupRefresh: function() {
+
+				let that = this
+
+				this.pageIndex++
+
+					if(this.pageIndex > this.pageIndextotal) {
+						this.mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+						this.mui.toast("没有更多数据了", {
+							duration: 'long',
+							type: 'div'
+						})
+
+						return false;
+					}
+
+				if(this.isSearch == true) {
+					this.searchData()
+
+				} else {
+
+					this.axios({
+						method: 'get',
+
+						url: '/wxapi/f/paymentSimples?pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize
+
+					}).then(function(res) {
+
+						that.mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+
+						if(Isjurisdiction.isright(res, that) == false) {
+							return false
+						}
+
+						var data = res.data.data
+
+						for(var i = 0; i < data.length; i++) {
+							that.dataArry.push(data[i])
+						}
+
+					}).catch(function(err) {
+						console.log(err)
+						that.mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //取消上拉加载*/
+						that.mui.toast("请求失败请稍后重试" + err, {
+							duration: 'long',
+							type: 'div'
+						})
+
+					})
+
+				}
+
+			},
+
+			getData: function() {
+				let that = this
+
+				this.axios({
+					method: 'get',
+
+					url: '/wxapi/f/paymentSimples?pageNum=' + this.pageIndex + '&pageSize=' + this.pageSize
+
+				}).then(function(res) {
+					that.mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //取消下拉刷新
+					that.mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+					if(Isjurisdiction.isright(res, that) == false) {
+						return false
+					}
+					that.dataArry = [];
+					var data = res.data
+					that.dataArry = data.data
+					that.pageIndextotal = data.pagination.pages
+
+				}).catch(function(err) {
+					console.log(err)
+					that.mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //取消下拉刷新
+					that.mui.toast("请求失败请稍后重试" + err, {
+						duration: 'long',
+						type: 'div'
+					})
+
+				})
+			}
+
+		},
+
+		mounted: function() {
+
+			//			this.getData()
+
+			var that = this
+
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style: 'circle',
+						callback: that.pulldownRefresh,
+						auto: true,
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: that.pullupRefresh
+					}
+				}
+			})
+
+			mui("#pullrefresh").on('tap', '.finance_list', function(event) {
+				this.click();
+			});
+
+			this.axios({
+				method: 'get',
+				url: '/wxapi/f/paymentSimples/viewIndex',
+
+			}).then(function(res) {
+				if(Isjurisdiction.isright(res, that) == false) {
+					return false
+				}
+				var data = res.data.data
+				that.report = data.report
+			}).catch(function(err) {
+
+				that.mui.toast("请求失败请稍后重试" + err, {
+					duration: 'long',
+					type: 'div'
+				})
+
+			})
+
+			this.axios({
+				method: 'get',
+
+				url: '/api/f/payment_simples/funds',
+
+			}).then(function(res) {
+				if(Isjurisdiction.isright(res, that) == false) {
+					return false
+				}
+				var data = res.data
+
+				that.fundsdataAll = data.data
+
+			}).catch(function(err) {
+				console.log(err)
+
+				that.mui.toast("请求失败请稍后重试" + err, {
+					duration: 'long',
+					type: 'div'
+				})
+
+			})
+
+		},
+
+		created: function() {
+			for(var i = mui.hooks.inits.length - 1, item; i >= 0; i--) {
+
+				item = mui.hooks.inits[i];
+				if(item.name == "pullrefresh") {
+					item.repeat = true;
+				}
+			}
+
+		}
+	}
+</script>
+
+<style  './../../assets/css/financelist.css'></style>
+
+<style scoped="scoped">
+	.finance_list {
+		display: block;
+		width: 100%;
+	}
+	
+	.finance_list ul {
+		display: inline-block;
+		width: 100%;
+	}
+	
+	.finance_list ul li {
+		width: 50%;
+		float: left;
+		display: block;
+		padding: 1.15rem 0rem;
+		box-sizing: border-box;
+	}
+	
+	.finance_list ul li p {
+		height: 1rem;
+		line-height: 1rem;
+	}
+	
+	.finance_list ul li.left {
+		font-size: 0.7rem;
+		text-align: center;
+		border-right: solid 1px #E0E0E0;
+		border-bottom: solid 1px #E0E0E0;
+	}
+	
+	.finance_list ul li.left:last-child {
+		border: none;
+		padding-bottom: 0.8rem;
+	}
+	
+	.finance_list ul li.left p {
+		display: inline-block;
+		margin: 0px auto;
+		color: #000000;
+	}
+	
+	.finance_list ul li.left span {
+		float: left;
+		width: 0.95rem;
+		float: left;
+		margin-right: 0.6rem;
+	}
+	
+	.finance_list ul li.left span img {
+		display: block;
+		width: 100%;
+	}
+	
+	.finance_list ul li.right {
+		font-size: 0.9rem;
+		text-align: center;
+		border-bottom: solid 1px #E0E0E0;
+	}
+	
+	.finance_list ul li.right:last-child {
+		border: none;
+		padding-bottom: 0.6rem;
+	}
+	
+	.finance_list ul li.right p {
+		display: inline-block;
+		margin: 0px auto;
+		color: #CC0202;
+		font-size: 0.9rem;
+	}
+	
+	.finance_list ul li.right span {
+		font-size: 0.6rem;
+		font-weight: bold;
+	}
+</style>

@@ -1,0 +1,114 @@
+.statement_nav {
+	padding: 0.5rem;
+}
+
+.statement_nav .board_nav {
+	background: white;
+	padding-top: 1rem;
+	color: #000000;
+	padding-bottom: 0px;
+	padding-bottom: 0.5rem;
+}
+
+.statement_nav .board_nav .header {
+	font-size: 0.8rem;
+}
+
+.statement_list{
+	padding:0rem 0.5rem;
+}
+
+
+
+.statement_nav .statement_list .nav_list {
+	display: inline-block;
+	width: 100%;
+	margin-top: 0.5rem;
+}
+
+.statement_nav .statement_list .nav_list .item {
+	display: block;
+	text-align: center;
+	float: left;
+	width: 50%;
+	box-sizing: border-box;
+	padding: 0.6rem 0.5rem;
+	border-bottom: solid 1px rgb(227, 227, 227);
+}
+
+.statement_nav .statement_list .nav_list .item .left{
+	padding-right: 1rem;
+}
+
+.statement_nav .statement_list .nav_list .item .right{
+	padding-left: 1rem;
+}
+
+
+.statement_nav .statement_list .nav_list .item p {
+	color: #000000;
+	margin: 0px;
+	padding-bottom: 0.4rem;
+	font-size: 1rem;
+	
+}
+
+
+
+.statement_nav .statement_list .nav_list .item p img {
+	display: inline-block;
+	width: 0.6rem;
+	margin-right: 0.3rem;
+}
+
+.statement_nav .statement_list .nav_list .item span {
+	color: #acacac;
+	font-size: 0.7rem;
+}
+
+.statement_nav .statement_list .nav_list .item.income p {
+	color: RGBA(255, 33, 33, 1)
+}
+
+.statement_nav .statement_list .nav_list .item.expend p {
+	color: rgba(91, 146, 185, 1)
+}
+
+.more_statement {
+	padding: 0rem 0.5rem;
+}
+
+.more_statement .board_nav {
+	padding-top: 1rem;
+	padding-bottom: 0rem;
+}
+
+.more_statement .statement_list {
+	font-size: 0px;
+}
+
+.more_statement .statement_list .nav_list {
+	display: inline-block;
+	width: 100%;
+}
+
+.more_statement .statement_list .nav_list .item {
+	display: block;
+	text-align: center;
+	float: left;
+	width: 25%;
+	box-sizing: border-box;
+	padding: 0.5rem 0rem;
+}
+
+.more_statement .statement_list .nav_list .item .icon {
+	width: 50%;
+	display: block;
+	margin: 0px auto;
+	padding-bottom: 0.6rem;
+}
+
+.more_statement .statement_list .nav_list .item span {
+	color: #000;
+	font-size: 0.7rem;
+}

@@ -1,0 +1,115 @@
+.user_msg{
+	position: relative;
+	height: 10.8rem;
+	background: #db6f66;
+	border-bottom-left-radius: 4rem;
+}
+
+
+.user_msg .content{
+	padding-top: 4rem;
+	
+}
+.user_msg .content .user_name{
+	color: white;
+	padding-left: 5rem;
+	font-size: 1.15rem;
+}
+
+.user_msg .content .user_name a{
+	border-bottom: solid 0.1rem white;
+	color: white;
+}
+
+
+.user_msg .content .user_more {
+	display: inline-block;
+	width: 100%;
+	margin-top: 0.5rem;
+}
+
+
+.user_msg .content .user_more span{
+	display: block;
+	
+	
+}
+
+
+.user_msg .content .user_more  .user_a{
+	width: 2.5rem;
+	height: 2.5rem;
+	background: wheat;
+	overflow: hidden;
+	border-radius: 50%;
+	margin-left: 2.5rem;
+	float: left;
+}
+
+
+.user_msg .content .user_more  .user_address{
+	color: white;
+	float: left;
+	margin-left: 2.5rem;
+	font-size: 0.5rem;
+	
+	
+}
+
+.user_msg .content .user_more  .user_address p{
+	color: white;
+	line-height: 1rem;
+}
+
+.user_msg .content .user_more  .user_address p:last-child{margin-left: 1rem;}
+
+
+
+
+.user_list{
+	padding: 1.25rem 1.25rem 0rem 0rem ;
+}
+
+
+.user_list .nav{
+	background: white;
+	border-top-right-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+	padding-left: 1.4rem;
+	font-size: 0px;
+}
+
+.user_list .nav p{
+	line-height: 1.4rem;
+	display: inline-block;
+	font-size: 0.7rem;
+	width: 100%;
+	padding: 0.7rem 0rem;
+	margin: 0px;
+}
+
+.user_list .nav p:first-child{
+	border-bottom: solid 1px #f3f3f3;
+}
+
+.user_list .nav p a{
+	color: #000000;
+}
+
+.user_list .nav p .right{
+	float: right;
+	
+}
+
+.user_list .nav p .right img{
+	display: block;
+	width: 1.4rem;
+	height: 1.4rem;
+}
+
+
+.user_list .nav p .left img{
+	display: block;
+	width: 1.4rem;
+	height: 1.4rem;
+}

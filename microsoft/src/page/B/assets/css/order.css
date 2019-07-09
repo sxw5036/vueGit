@@ -1,0 +1,323 @@
+.order_listNav {
+	padding: 0.5rem;
+}
+
+.order_statement .board_nav {
+	color: white;
+}
+
+.order_statement .board_nav .header {
+	font-size: 0.75rem;
+	line-height: 0.75rem;
+}
+
+.order_statement .board_nav .header .right_icon {
+	color: #7F7E7E;
+	font-size: 0.6rem;
+	line-height: 0.75rem;
+}
+
+.order_statement .board_nav .header .right_icon .mui-icon {
+	font-size: 0.6rem;
+}
+
+.order_statement_list {
+	display: block;
+	width: 100%;
+}
+
+.order_statement_list ul {
+	display: inline-block;
+	width: 100%;
+}
+
+.order_statement_list ul li {
+	position: relative;
+	float: left;
+	width: 33.33%;
+	padding: 1.7rem;
+	text-align: center;
+}
+
+.order_statement_list ul li p {
+	font-size: 1.1rem;
+	color: white;
+	margin-bottom: 0.3rem;
+}
+
+.order_statement_list ul li span {
+	font-size: 0.6rem;
+	color: #ACACAC;
+}
+
+
+
+.order_statement_list ul li .border {
+	position: absolute;
+	right: 0px;
+	top: 50%;
+	width: 1px;
+	height: 1.25rem;
+	background: #9A9A9A;
+	margin-top: -0.625rem;
+}
+
+.order_statement_list ul li:last-child .border{
+	position: absolute;
+	right: 0px;
+	top: 50%;
+	width: 1px;
+	height: 1.25rem;
+	background: none;
+	margin-top: -0.625rem;
+}
+.order_search .searching {
+	padding: 0px;
+	margin: 0.5rem 0rem;
+}
+
+.list_data {
+	display: block;
+	width: 100%;
+	background: white;
+	border-radius: 0.4rem;
+}
+
+.list_data ul {
+	display: block;
+	padding: 0rem 0.5rem;
+	font-size: 0px;
+}
+
+.list_data ul li {
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
+	border-bottom: solid 1px #E0E0E0;
+	padding-top: 0.75rem;
+}
+
+.list_data ul li:last-child {
+	border: none;
+}
+
+.list_data ul li .icon {
+	position: relative;
+	padding: 0.7rem 0.5rem;
+	padding-right: 1rem;
+	float: left;
+	margin-right: 0.5rem;
+	height: 100%;
+}
+
+.list_data ul li .icon img {
+	display: block;
+	width: 1.5rem;
+	margin: 0px auto;
+}
+
+
+
+	
+
+.list_data ul li .icon small.border {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 0px;
+	width: 1px;
+	height: 1rem;
+	margin-top: -0.5rem;
+	background: #B1B1B1;
+}
+
+.list_data ul li .icon p {
+	text-align: center;
+	font-size: 0.6rem;
+	color: #636363;
+	margin: 0px;
+}
+
+.list_data ul li .cen {}
+
+.list_data ul li .cen h3 {
+	margin: 0px;
+	font-size: 0.75rem;
+	color: #BBAE87;
+	font-weight: 100;
+	padding-bottom: 0.5rem;
+}
+
+.list_data ul li .cen p {
+	margin: 0px;
+	color: #000000;
+	font-size: 0.65rem;
+}
+
+.list_data ul li .cen span {
+	font-size: 0.55rem;
+	color: #636363;
+	display: block;
+}
+
+.list_data ul li .cen span small {
+	float: right;
+}
+
+.list_data ul li .cen span a {
+	color: #92B3CD;
+}
+
+
+/*订单详情*/
+
+.order_details {
+	padding: 0.5rem;
+}
+
+.order_details_list ul li {
+	position: relative;
+	font-size: 0.65rem;
+	line-height: 0.7rem;
+}
+
+.order_details_list ul li .lable {
+	position: absolute;
+	top: 0.8rem;
+	left: 2.2rem;
+	color: #000000;
+}
+
+
+.order_details_list ul li .lable .icon{
+	float: left;
+	width: 0.8rem;
+	margin-right: 0.5rem;
+}
+
+.order_details_list ul li .cen {
+	margin-left: 6.5rem;
+	box-sizing: border-box;
+	border-bottom: solid 1px #E0E0E0;
+	padding: 0.8rem 0rem;
+}
+
+.order_details_list ul li .cen P {
+	margin: 0px;
+}
+
+.order_details_list ul li:last-child .cen {
+	border: none;
+}
+
+.order_details_list ul.dealer {
+	border-top: dashed 1px #B1B1B1;
+}
+
+.order_details_dealerfince {
+	margin: 0.5rem 0rem;
+}
+
+.order_details_dealerfince .order_details_list ul:last-child {
+	border: none;
+}
+
+
+/*订单状态*/
+
+.order_status {
+	display: block;
+	width: 100%;
+	font-size: 0px;
+}
+
+.order_status .status_icon {
+	display: inline-block;
+	width: 100%;
+}
+
+.order_status .status_icon .icon_list {
+	display: block;
+	width: 2.1rem;
+	float: left;
+	opacity: 0.5;
+	color: #636363;
+	text-align: center;
+	margin-right: 1.8rem;
+}
+
+.order_status .status_icon .icon_list:last-child {
+	margin-right: 0px;
+}
+
+.order_status .status_icon .icon_list img.icon {
+	display: block;
+	width: 1.1rem;
+	margin: 0px auto;
+}
+
+.order_status .status_icon .icon_list p {
+	margin: 0.2rem 0rem;
+	color: #636363;
+	font-size: 0.55rem;
+}
+
+.order_status .status_icon .icon_list.ac {
+	opacity: 1;
+	box-sizing: border-box;
+	border-bottom: solid 0.1rem #DCCF61;
+}
+
+.order_status .status_icon .icon_lis.ac p {
+	color: #000000;
+}
+
+
+/*
+.order_status .status_icon .icon_list img.icon.block{
+  display: block;
+}
+
+
+.order_status .status_icon .icon_list img.icon.hide{
+  display: none;
+}*/
+
+
+
+/*.order_status .status_icon .icon_list.ac img.icon.block{
+  display: none;
+}*/
+
+
+/*.order_status .status_icon .icon_list.ac img.icon.hide{
+  display: block;
+}*/
+
+
+.status_msg .order_details_list ul li .lable{
+	
+	left:0.9rem
+}
+
+
+
+.status_msg  .order_details_list ul li{
+	line-height: 0.8rem;
+}
+
+
+.status_msg .order_details_list ul {
+	border-bottom: dashed 1px #B1B1B1;
+}
+
+
+.status_msg .order_details_list ul:last-child{
+	border: none;
+}
+
+
+.icon_nav.hover{
+	border-bottom: solid 0.1rem #d20000;
+	display: block;
+}

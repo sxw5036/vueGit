@@ -1,0 +1,54 @@
+{{#if true }}
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+{{/if }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">	
+    <title>登录—红田家居</title>
+		{{#if true }}
+		<%@ include file="/WEB-INF/views/common/common_header.jsp"%>
+		{{/if }}
+		<style type="text/css">
+			*{
+				margin: 0px;
+				padding: 0px;
+				font-family: "微软雅黑";
+				box-sizing: border-box;
+			}
+			
+			ul,ol{
+				list-style: none;
+			}
+			
+			
+		</style>
+		
+		
+		
+		
+  </head>
+  <body style="background: #f5f7f9;">
+    <div id="flogin"></div>
+    <!-- built files will be auto injected -->
+		
+		<script type="text/javascript">
+		      
+		
+					
+					var cacse = document.getElementById("lwxf_preload")
+		
+					if(cacse){
+						var pfcfg = cacse.innerText.replace(/_e@gt@e_/g, '>').replace(/_e@lt@e_/g, '<')
+						var cfg = JSON.parse(pfcfg.trim())						
+						window.lwxfPreload=cfg					
+					}else{
+						window.lwxfPreload={
+						/* 	"nameType":0 */
+						} 
+				}
+		</script>
+  </body>
+</html>
+

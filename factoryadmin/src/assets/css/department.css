@@ -1,0 +1,18 @@
+.departmentModel ul{
+	display: block;
+	width: 100%;
+}
+
+
+.departmentModel ul li{
+	display: block;
+	width: 100%;
+	padding-bottom: 10px;
+}
+
+
+.departmentModel ul li p{
+	display: block;
+	width: 100%;
+	padding-bottom: 10px;
+}
